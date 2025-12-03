@@ -10,22 +10,29 @@ interface ChatSidebarProps {
   onToggle: () => void;
 }
 
-const mockMessages = [
+interface Message {
+  id: string;
+  sender: 'user' | 'nova';
+  content: string;
+  timestamp: string;
+}
+
+const mockMessages: Message[] = [
   {
     id: '1',
-    sender: 'nova' as const,
+    sender: 'nova',
     content: 'Hello! I\'m Nova, your AI learning assistant. How can I help you today?',
     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   },
 ];
 
 export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
-  const [messages, setMessages] = useState(mockMessages);
+  const [messages, setMessages] = useState<Message[]>(mockMessages);
 
   const handleSendMessage = async (content: string) => {
-    const newMessage = {
+    const newMessage: Message = {
       id: Date.now().toString(),
-      sender: 'user' as const,
+      sender: 'user',
       content,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
@@ -51,9 +58,9 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
       const data = await response.json();
 
       if (data.success) {
-        const novaResponse = {
+        const novaResponse: Message = {
           id: (Date.now() + 1).toString(),
-          sender: 'nova' as const,
+          sender: 'nova',
           content: data.message,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
@@ -63,9 +70,9 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
       }
     } catch (error) {
       console.error('Error sending message:', error);
-      const errorMessage = {
+      const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        sender: 'nova' as const,
+        sender: 'nova',
         content: 'I apologize, but I\'m having trouble connecting right now. Please try again in a moment.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
