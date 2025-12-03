@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "Nova - E-Learning Platform",
@@ -22,9 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <AuthProvider>
+        <Providers>
           {children}
-        </AuthProvider>
+        </Providers>
       </body>
     </html>
   );
