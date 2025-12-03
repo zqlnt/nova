@@ -1,0 +1,292 @@
+
+> nova-elearning@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.5
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 2.3s
+ ○ Compiling / ...
+ ✓ Compiled / in 4s (567 modules)
+ GET / 200 in 4343ms
+ ✓ Compiled in 508ms (284 modules)
+ GET / 200 in 35ms
+ ○ Compiling /student/dashboard ...
+ ✓ Compiled /student/dashboard in 669ms (580 modules)
+ ✓ Compiled /student/chat in 339ms (592 modules)
+ ✓ Compiled /student/settings in 327ms (598 modules)
+ ✓ Compiled /login in 280ms (604 modules)
+ ○ Compiling /teacher/dashboard ...
+ ✓ Compiled /teacher/dashboard in 870ms (608 modules)
+ GET / 200 in 230ms
+ GET /student/dashboard 200 in 192ms
+ ✓ Compiled in 1541ms (617 modules)
+ ✓ Compiled in 642ms (617 modules)
+ ✓ Compiled in 643ms (617 modules)
+ ✓ Compiled in 422ms (617 modules)
+ ✓ Compiled in 619ms (617 modules)
+ ✓ Compiled in 796ms (617 modules)
+ ✓ Compiled in 275ms (617 modules)
+ ✓ Compiled in 324ms (617 modules)
+ ✓ Compiled in 183ms (617 modules)
+ ✓ Compiled in 281ms (617 modules)
+ ✓ Compiled in 290ms (617 modules)
+ GET / 200 in 135ms
+ ✓ Compiled in 609ms (617 modules)
+ ✓ Compiled in 710ms (617 modules)
+ GET / 200 in 120ms
+ GET / 200 in 30ms
+ GET / 200 in 35ms
+ ✓ Compiled in 287ms (617 modules)
+ ✓ Compiled in 536ms (617 modules)
+ ✓ Compiled in 846ms (609 modules)
+ GET / 200 in 225ms
+ GET / 200 in 50ms
+ ✓ Compiled in 305ms (609 modules)
+ GET / 200 in 88ms
+ ✓ Compiled in 883ms (609 modules)
+ GET / 200 in 44ms
+ GET / 200 in 37ms
+ ✓ Compiled in 1042ms (609 modules)
+ ✓ Compiled in 451ms (609 modules)
+ GET / 200 in 69ms
+ GET / 200 in 32ms
+ ✓ Compiled in 331ms (609 modules)
+ ✓ Compiled in 581ms (609 modules)
+ ○ Compiling /student/chat ...
+ ✓ Compiled /student/chat in 540ms (309 modules)
+ ✓ Compiled in 1389ms (614 modules)
+ ✓ Compiled in 914ms (614 modules)
+ ✓ Compiled in 868ms (614 modules)
+ GET /student/dashboard 200 in 276ms
+ ✓ Compiled in 686ms (609 modules)
+ ✓ Compiled in 599ms (609 modules)
+ ✓ Compiled in 622ms (609 modules)
+ GET /student/dashboard 200 in 433ms
+ ✓ Compiled in 499ms (609 modules)
+ ✓ Compiled in 485ms (609 modules)
+ ✓ Compiled in 564ms (609 modules)
+ ✓ Compiled in 393ms (609 modules)
+ ✓ Compiled in 386ms (609 modules)
+ ✓ Compiled in 735ms (609 modules)
+ GET /student/dashboard 200 in 151ms
+ ○ Compiling /student/chat ...
+ ✓ Compiled /student/chat in 544ms (309 modules)
+ ✓ Compiled in 876ms (614 modules)
+ ✓ Compiled in 1128ms (614 modules)
+ ✓ Compiled in 769ms (610 modules)
+ ✓ Compiled in 692ms (610 modules)
+ ✓ Compiled in 958ms (610 modules)
+ ✓ Compiled /student/settings in 226ms (309 modules)
+ ✓ Compiled in 1873ms (610 modules)
+ ✓ Compiled in 750ms (610 modules)
+ ✓ Compiled in 560ms (610 modules)
+ ✓ Compiled in 427ms (305 modules)
+ ✓ Compiled in 490ms (305 modules)
+ ✓ Compiled in 345ms (305 modules)
+ ✓ Compiled in 294ms (305 modules)
+ ✓ Compiled in 4.1s (610 modules)
+ ✓ Compiled in 893ms (610 modules)
+ ✓ Compiled in 641ms (610 modules)
+ ✓ Compiled in 890ms (610 modules)
+ ✓ Compiled in 815ms (610 modules)
+ ✓ Compiled in 1324ms (610 modules)
+ ✓ Compiled in 765ms (610 modules)
+ ✓ Compiled in 790ms (610 modules)
+ ✓ Compiled in 450ms (610 modules)
+ ✓ Compiled in 281ms (305 modules)
+ ✓ Compiled in 267ms (305 modules)
+ ✓ Compiled in 596ms (610 modules)
+ ✓ Compiled in 543ms (610 modules)
+ ✓ Compiled in 298ms (305 modules)
+ ○ Compiling /teacher/settings ...
+ ✓ Compiled /teacher/settings in 539ms (616 modules)
+ ✓ Compiled in 1910ms (616 modules)
+ ○ Compiling /api/chat ...
+ ✓ Compiled /api/chat in 2.6s (726 modules)
+Chat API Error: NotFoundError: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-20241022"},"request_id":"req_011CVjtqEsHWS28CucwsKcf7"}
+    at APIError.generate (webpack-internal:///(rsc)/./node_modules/@anthropic-ai/sdk/error.mjs:63:20)
+    at Anthropic.makeStatusError (webpack-internal:///(rsc)/./node_modules/@anthropic-ai/sdk/core.mjs:312:65)
+    at Anthropic.makeRequest (webpack-internal:///(rsc)/./node_modules/@anthropic-ai/sdk/core.mjs:356:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async POST (webpack-internal:///(rsc)/./app/api/chat/route.ts:34:26)
+    at async /Users/user/nova/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:55038
+    at async ek.execute (/Users/user/nova/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:45808)
+    at async ek.handle (/Users/user/nova/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:56292)
+    at async doRender (/Users/user/nova/node_modules/next/dist/server/base-server.js:1377:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/user/nova/node_modules/next/dist/server/base-server.js:1599:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:1507:28)
+    at async DevServer.renderPageComponent (/Users/user/nova/node_modules/next/dist/server/base-server.js:1931:24)
+    at async DevServer.renderToResponseImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:1969:32)
+    at async DevServer.pipeImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:920:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/user/nova/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:816:17)
+    at async /Users/user/nova/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/user/nova/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/user/nova/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async requestHandlerImpl (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:377:13)
+    at async Server.requestListener (/Users/user/nova/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  status: 404,
+  headers: {
+    'anthropic-organization-id': '06dd17ef-5f4d-469f-9664-1ef1b4181585',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '9a83ad226be7776e-LHR',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Wed, 03 Dec 2025 14:15:28 GMT',
+    'request-id': 'req_011CVjtqEsHWS28CucwsKcf7',
+    server: 'cloudflare',
+    'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+    'transfer-encoding': 'chunked',
+    'x-envoy-upstream-service-time': '56',
+    'x-robots-tag': 'none',
+    'x-should-retry': 'false'
+  },
+  request_id: 'req_011CVjtqEsHWS28CucwsKcf7',
+  error: {
+    type: 'error',
+    error: {
+      type: 'not_found_error',
+      message: 'model: claude-3-5-sonnet-20241022'
+    },
+    request_id: 'req_011CVjtqEsHWS28CucwsKcf7'
+  }
+}
+ POST /api/chat 500 in 3228ms
+ ✓ Compiled in 1730ms (726 modules)
+Chat API Error: NotFoundError: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-20241022"},"request_id":"req_011CVjtqU7GDgFvX1iahCfrt"}
+    at APIError.generate (webpack-internal:///(rsc)/./node_modules/@anthropic-ai/sdk/error.mjs:63:20)
+    at Anthropic.makeStatusError (webpack-internal:///(rsc)/./node_modules/@anthropic-ai/sdk/core.mjs:312:65)
+    at Anthropic.makeRequest (webpack-internal:///(rsc)/./node_modules/@anthropic-ai/sdk/core.mjs:356:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async POST (webpack-internal:///(rsc)/./app/api/chat/route.ts:34:26)
+    at async /Users/user/nova/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:55038
+    at async ek.execute (/Users/user/nova/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:45808)
+    at async ek.handle (/Users/user/nova/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:56292)
+    at async doRender (/Users/user/nova/node_modules/next/dist/server/base-server.js:1377:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/user/nova/node_modules/next/dist/server/base-server.js:1599:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:1507:28)
+    at async DevServer.renderPageComponent (/Users/user/nova/node_modules/next/dist/server/base-server.js:1931:24)
+    at async DevServer.renderToResponseImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:1969:32)
+    at async DevServer.pipeImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:920:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/user/nova/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:816:17)
+    at async /Users/user/nova/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/user/nova/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/user/nova/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async requestHandlerImpl (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:377:13)
+    at async Server.requestListener (/Users/user/nova/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  status: 404,
+  headers: {
+    'anthropic-organization-id': '06dd17ef-5f4d-469f-9664-1ef1b4181585',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '9a83ad366ae4a5eb-LHR',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Wed, 03 Dec 2025 14:15:31 GMT',
+    'request-id': 'req_011CVjtqU7GDgFvX1iahCfrt',
+    server: 'cloudflare',
+    'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+    'transfer-encoding': 'chunked',
+    'x-envoy-upstream-service-time': '60',
+    'x-robots-tag': 'none',
+    'x-should-retry': 'false'
+  },
+  request_id: 'req_011CVjtqU7GDgFvX1iahCfrt',
+  error: {
+    type: 'error',
+    error: {
+      type: 'not_found_error',
+      message: 'model: claude-3-5-sonnet-20241022'
+    },
+    request_id: 'req_011CVjtqU7GDgFvX1iahCfrt'
+  }
+}
+ POST /api/chat 500 in 365ms
+ ✓ Compiled in 1050ms (726 modules)
+ ✓ Compiled in 1197ms (722 modules)
+ ✓ Compiled in 1071ms (722 modules)
+Chat API Error: NotFoundError: 404 {"type":"error","error":{"type":"not_found_error","message":"model: claude-3-5-sonnet-20241022"},"request_id":"req_011CVjtxTEczQgocCg4nKsCW"}
+    at APIError.generate (webpack-internal:///(rsc)/./node_modules/@anthropic-ai/sdk/error.mjs:63:20)
+    at Anthropic.makeStatusError (webpack-internal:///(rsc)/./node_modules/@anthropic-ai/sdk/core.mjs:312:65)
+    at Anthropic.makeRequest (webpack-internal:///(rsc)/./node_modules/@anthropic-ai/sdk/core.mjs:356:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async POST (webpack-internal:///(rsc)/./app/api/chat/route.ts:34:26)
+    at async /Users/user/nova/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:55038
+    at async ek.execute (/Users/user/nova/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:45808)
+    at async ek.handle (/Users/user/nova/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:56292)
+    at async doRender (/Users/user/nova/node_modules/next/dist/server/base-server.js:1377:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/user/nova/node_modules/next/dist/server/base-server.js:1599:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:1507:28)
+    at async DevServer.renderPageComponent (/Users/user/nova/node_modules/next/dist/server/base-server.js:1931:24)
+    at async DevServer.renderToResponseImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:1969:32)
+    at async DevServer.pipeImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:920:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/user/nova/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:816:17)
+    at async /Users/user/nova/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/user/nova/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/user/nova/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async requestHandlerImpl (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:377:13)
+    at async Server.requestListener (/Users/user/nova/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  status: 404,
+  headers: {
+    'anthropic-organization-id': '06dd17ef-5f4d-469f-9664-1ef1b4181585',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '9a83af86af6ee58f-LHR',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Wed, 03 Dec 2025 14:17:06 GMT',
+    'request-id': 'req_011CVjtxTEczQgocCg4nKsCW',
+    server: 'cloudflare',
+    'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+    'transfer-encoding': 'chunked',
+    'x-envoy-upstream-service-time': '303',
+    'x-robots-tag': 'none',
+    'x-should-retry': 'false'
+  },
+  request_id: 'req_011CVjtxTEczQgocCg4nKsCW',
+  error: {
+    type: 'error',
+    error: {
+      type: 'not_found_error',
+      message: 'model: claude-3-5-sonnet-20241022'
+    },
+    request_id: 'req_011CVjtxTEczQgocCg4nKsCW'
+  }
+}
+ POST /api/chat 500 in 565ms
+ ✓ Compiled in 1104ms (722 modules)
+ ✓ Compiled in 1392ms (722 modules)
+ ✓ Compiled in 1113ms (612 modules)
+ ✓ Compiled in 1114ms (612 modules)
+ GET /student/settings 200 in 204ms
+ ✓ Compiled in 1015ms (612 modules)
+ GET /student/settings 200 in 661ms
+ GET / 200 in 70ms
+ ✓ Compiled in 697ms (612 modules)
+ ✓ Compiled in 737ms (612 modules)
+ ✓ Compiled /teacher/settings in 268ms (309 modules)
+ ✓ Compiled in 656ms (611 modules)
+ ✓ Compiled in 285ms (611 modules)
+ ✓ Compiled in 457ms (611 modules)
+ ✓ Compiled in 566ms (611 modules)
+ ✓ Compiled in 321ms (611 modules)
+ ✓ Compiled in 479ms (611 modules)
+ ○ Compiling /teacher/dashboard ...
+ ✓ Compiled /teacher/dashboard in 545ms (309 modules)
+ ✓ Compiled in 495ms (616 modules)
+ ✓ Compiled in 296ms (612 modules)
+ ✓ Compiled in 683ms (612 modules)
+ ✓ Compiled in 646ms (612 modules)
+ ✓ Compiled in 511ms (612 modules)
