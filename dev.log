@@ -373,3 +373,141 @@ Require stack:
  GET /_next/static/chunks/app/page.js 404 in 40ms
  ✓ Compiled in 443ms (839 modules)
  ✓ Compiled in 501ms (839 modules)
+ GET / 200 in 150ms
+ ○ Compiling /signup ...
+ ✓ Compiled /signup in 647ms (349 modules)
+ ✓ Compiled in 576ms (477 modules)
+ ⨯ Error: Cannot find module './948.js'
+Require stack:
+- /Users/user/nova/.next/server/webpack-runtime.js
+- /Users/user/nova/.next/server/app/teacher/dashboard/page.js
+- /Users/user/nova/node_modules/next/dist/server/require.js
+- /Users/user/nova/node_modules/next/dist/server/load-components.js
+- /Users/user/nova/node_modules/next/dist/build/utils.js
+- /Users/user/nova/node_modules/next/dist/server/dev/hot-middleware.js
+- /Users/user/nova/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/user/nova/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/user/nova/node_modules/next/dist/server/lib/router-server.js
+- /Users/user/nova/node_modules/next/dist/server/lib/start-server.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1383:15)
+    at /Users/user/nova/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    at Function._load (node:internal/modules/cjs/loader:1192:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1463:12)
+    at mod.require (/Users/user/nova/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:147:16)
+    at __webpack_require__.f.require (/Users/user/nova/.next/server/webpack-runtime.js:198:28)
+    at /Users/user/nova/.next/server/webpack-runtime.js:111:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (/Users/user/nova/.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (/Users/user/nova/.next/server/webpack-runtime.js:162:22)
+    at /Users/user/nova/.next/server/app/teacher/dashboard/page.js:1:11137
+    at Object.<anonymous> (/Users/user/nova/.next/server/app/teacher/dashboard/page.js:1:11190)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1463:12)
+    at mod.require (/Users/user/nova/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:147:16)
+    at requirePage (/Users/user/nova/node_modules/next/dist/server/require.js:109:84)
+    at /Users/user/nova/node_modules/next/dist/server/load-components.js:98:84
+    at async loadComponentsImpl (/Users/user/nova/node_modules/next/dist/server/load-components.js:98:26)
+    at async DevServer.findPageComponentsImpl (/Users/user/nova/node_modules/next/dist/server/next-server.js:710:36)
+    at async DevServer.findPageComponents (/Users/user/nova/node_modules/next/dist/server/dev/next-dev-server.js:577:20)
+    at async DevServer.renderPageComponent (/Users/user/nova/node_modules/next/dist/server/base-server.js:1917:24)
+    at async DevServer.renderToResponseImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:1969:32)
+    at async DevServer.pipeImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:920:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/user/nova/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/Users/user/nova/node_modules/next/dist/server/base-server.js:816:17)
+    at async /Users/user/nova/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/user/nova/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/user/nova/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async requestHandlerImpl (/Users/user/nova/node_modules/next/dist/server/lib/router-server.js:377:13)
+    at async Server.requestListener (/Users/user/nova/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/user/nova/.next/server/webpack-runtime.js',
+    '/Users/user/nova/.next/server/app/teacher/dashboard/page.js',
+    '/Users/user/nova/node_modules/next/dist/server/require.js',
+    '/Users/user/nova/node_modules/next/dist/server/load-components.js',
+    '/Users/user/nova/node_modules/next/dist/build/utils.js',
+    '/Users/user/nova/node_modules/next/dist/server/dev/hot-middleware.js',
+    '/Users/user/nova/node_modules/next/dist/server/dev/hot-reloader-webpack.js',
+    '/Users/user/nova/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js',
+    '/Users/user/nova/node_modules/next/dist/server/lib/router-server.js',
+    '/Users/user/nova/node_modules/next/dist/server/lib/start-server.js'
+  ],
+  page: '/teacher/dashboard'
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 506ms (836 modules)
+ ⨯ Error: Cannot find module './682.js'
+Require stack:
+- /Users/user/nova/.next/server/webpack-runtime.js
+- /Users/user/nova/.next/server/pages/_document.js
+- /Users/user/nova/node_modules/next/dist/server/require.js
+- /Users/user/nova/node_modules/next/dist/server/load-components.js
+- /Users/user/nova/node_modules/next/dist/build/utils.js
+- /Users/user/nova/node_modules/next/dist/server/dev/hot-middleware.js
+- /Users/user/nova/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/user/nova/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/user/nova/node_modules/next/dist/server/lib/router-server.js
+- /Users/user/nova/node_modules/next/dist/server/lib/start-server.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1383:15)
+    at /Users/user/nova/node_modules/next/dist/server/require-hook.js:55:36
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    at Function._load (node:internal/modules/cjs/loader:1192:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1463:12)
+    at mod.require (/Users/user/nova/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:147:16)
+    at __webpack_require__.f.require (/Users/user/nova/.next/server/webpack-runtime.js:198:28)
+    at /Users/user/nova/.next/server/webpack-runtime.js:111:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (/Users/user/nova/.next/server/webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (/Users/user/nova/.next/server/webpack-runtime.js:162:22)
+    at /Users/user/nova/.next/server/pages/_document.js:1:335
+    at Object.<anonymous> (/Users/user/nova/.next/server/pages/_document.js:1:376)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1463:12)
+    at mod.require (/Users/user/nova/node_modules/next/dist/server/require-hook.js:65:28)
+    at require (node:internal/modules/helpers:147:16)
+    at requirePage (/Users/user/nova/node_modules/next/dist/server/require.js:109:84)
+    at /Users/user/nova/node_modules/next/dist/server/load-components.js:72:65
+    at async Promise.all (index 0)
+    at async loadComponentsImpl (/Users/user/nova/node_modules/next/dist/server/load-components.js:71:33)
+    at async DevServer.findPageComponentsImpl (/Users/user/nova/node_modules/next/dist/server/next-server.js:710:36) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/user/nova/.next/server/webpack-runtime.js',
+    '/Users/user/nova/.next/server/pages/_document.js',
+    '/Users/user/nova/node_modules/next/dist/server/require.js',
+    '/Users/user/nova/node_modules/next/dist/server/load-components.js',
+    '/Users/user/nova/node_modules/next/dist/build/utils.js',
+    '/Users/user/nova/node_modules/next/dist/server/dev/hot-middleware.js',
+    '/Users/user/nova/node_modules/next/dist/server/dev/hot-reloader-webpack.js',
+    '/Users/user/nova/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js',
+    '/Users/user/nova/node_modules/next/dist/server/lib/router-server.js',
+    '/Users/user/nova/node_modules/next/dist/server/lib/start-server.js'
+  ]
+}
+ ✓ Compiled in 568ms (836 modules)
+ ✓ Compiled in 443ms (836 modules)
+ ✓ Compiled in 1045ms (847 modules)

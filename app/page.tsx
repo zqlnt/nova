@@ -10,14 +10,17 @@ export default function Home() {
   const router = useRouter();
   const { signInWithGoogle } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
+    setError('');
     try {
       await signInWithGoogle();
       router.push('/student/dashboard');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error signing in with Google:', error);
+      setError(error.message || 'Failed to sign in');
     } finally {
       setLoading(false);
     }
@@ -190,6 +193,12 @@ export default function Home() {
             </div>
 
             <div className="space-y-3">
+              {error && (
+                <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                  {error}
+                </div>
+              )}
+              
               <button
                 onClick={handleGoogleSignIn}
                 disabled={loading}
