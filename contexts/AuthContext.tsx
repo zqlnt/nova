@@ -30,15 +30,31 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
+    try {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setUser(user);
+        setLoading(false);
+      }, (error) => {
+        console.error('Auth state error:', error);
+        setError(error.message);
+        setLoading(false);
+      });
 
-    return unsubscribe;
+      return unsubscribe;
+    } catch (error: any) {
+      console.error('Auth initialization error:', error);
+      setError(error.message);
+      setLoading(false);
+    }
   }, []);
+
+  if (error) {
+    console.error('Auth error:', error);
+    // Don't block the app, just log the error and show content
+  }
 
   const signIn = async (email: string, password: string) => {
     await signInWithEmailAndPassword(auth, email, password);
