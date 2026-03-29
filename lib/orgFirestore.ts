@@ -218,7 +218,7 @@ export async function replaceOrgSubcollection<T extends { id: string }>(
 ): Promise<void> {
   const name = ORG_SUBCOLLECTIONS[key];
   const nextIds = new Set(rows.map((r) => r.id));
-  const toDelete = [...previousIds].filter((id) => !nextIds.has(id));
+  const toDelete = Array.from(previousIds).filter((id) => !nextIds.has(id));
 
   for (const part of chunk(toDelete, BATCH_LIMIT)) {
     const batch = writeBatch(firestore);
