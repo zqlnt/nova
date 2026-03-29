@@ -12,6 +12,14 @@ body {
   min-width: 320px;
 }
 
+/* Safe area for notched devices (iOS, etc.) */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.safe-area-pt {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
 /* Ensure cards and grids are responsive */
 @media (max-width: 640px) {
   .grid {
@@ -54,6 +62,16 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
   }
+
+  .bento-card {
+    @apply rounded-2xl border border-gray-200/80 bg-white;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .bento-bubble {
+    @apply rounded-xl;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  }
   
   /* Custom scrollbar styles */
   .custom-scrollbar::-webkit-scrollbar {
@@ -89,5 +107,104 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+/* Math Display Styles */
+.math-content {
+  font-family: 'Cambria Math', 'Latin Modern Math', 'STIX Two Math', Georgia, serif;
+}
+
+.math-content sup {
+  font-size: 0.75em;
+  vertical-align: super;
+}
+
+.math-content sub {
+  font-size: 0.75em;
+  vertical-align: sub;
+}
+
+.math-content .fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 0.2em;
+}
+
+.math-content .frac-num {
+  border-bottom: 1px solid currentColor;
+  padding: 0 0.2em 0.1em;
+  font-size: 0.85em;
+}
+
+.math-content .frac-den {
+  padding: 0.1em 0.2em 0;
+  font-size: 0.85em;
+}
+
+.math-content .inline-frac {
+  font-feature-settings: "frac" 1;
+}
+
+.math-block {
+  font-family: 'Fira Code', 'SF Mono', 'Consolas', 'Liberation Mono', Menlo, monospace;
+  line-height: 1.8;
+}
+
+.math-block br {
+  display: block;
+  margin-top: 0.5em;
+  content: "";
+}
+
+/* Animation for floating orbs */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(-5deg); }
+}
+
+.animate-float {
+  animation: float 8s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 10s ease-in-out infinite;
+}
+
+/* Welcome screen squircles - premium subtle animations */
+@keyframes squircle-float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(8px, -12px) rotate(3deg); }
+  50% { transform: translate(-6px, 8px) rotate(-2deg); }
+  75% { transform: translate(4px, 6px) rotate(2deg); }
+}
+
+@keyframes squircle-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(15px, -25px); }
+  66% { transform: translate(-10px, 15px); }
+}
+
+.animate-squircle-float {
+  animation: squircle-float 12s ease-in-out infinite;
+}
+
+.animate-squircle-pulse {
+  animation: squircle-pulse 3s ease-in-out infinite;
+}
+
+.animate-orb-drift {
+  animation: orb-drift 20s ease-in-out infinite;
 }
 

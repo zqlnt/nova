@@ -18,10 +18,10 @@ export default function ChatMessageList({ messages }: ChatMessageListProps) {
           className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
         >
           <div
-            className={`max-w-[80%] rounded-2xl px-5 py-3 ${
+            className={`max-w-[80%] rounded-2xl px-5 py-3 shadow-sm ${
               message.sender === 'user'
-                ? 'bg-ios-blue text-white'
-                : 'glass-card text-gray-800'
+                ? 'bg-blue-600 text-white'
+                : 'bg-white/90 border border-gray-100 text-gray-800'
             }`}
           >
             {message.sender === 'nova' && (

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import ChatMessageList from './ChatMessageList';
 import ChatInput from './ChatInput';
+import MathSymbolAnimation from './MathSymbolAnimation';
 
 interface ChatSidebarProps {
   collapsed: boolean;
@@ -17,17 +18,23 @@ interface Message {
   timestamp: string;
 }
 
-const mockMessages: Message[] = [
-  {
-    id: '1',
-    sender: 'nova',
-    content: 'Hello! I\'m Nova, your AI learning assistant. How can I help you today?',
-    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-  },
+const PROMPT_SUGGESTIONS = [
+  'Explain quadratic equations simply',
+  'Help me with a practice question',
+  'What topics should I revise?',
+  'Summarise my progress',
+  'Show me a worked example',
+];
+
+const QUICK_ACTIONS = [
+  { label: 'Explain', icon: '📖' },
+  { label: 'Practice', icon: '✏️' },
+  { label: 'Summarise', icon: '📋' },
+  { label: 'Examples', icon: '💡' },
 ];
 
 export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
-  const [messages, setMessages] = useState<Message[]>(mockMessages);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const handleSendMessage = async (content: string) => {
     const newMessage: Message = {
@@ -36,35 +43,43 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
       content,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
-    
-    const updatedMessages = [...messages, newMessage];
+
+    const isFirstMessage = messages.length === 0;
+    const updatedMessages = isFirstMessage
+      ? [
+          {
+            id: 'welcome',
+            sender: 'nova' as const,
+            content: "Hello! I'm Nova, your AI learning assistant. How can I help you today?",
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          },
+          newMessage,
+        ]
+      : [...messages, newMessage];
     setMessages(updatedMessages);
-    
+
     try {
-      // Call Nova API
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: updatedMessages,
-          context: {
-            role: 'student',
-          }
+          message: content,
+          context: { role: 'student' },
         }),
       });
 
       const data = await response.json();
 
-      if (data.success) {
+      if (data.success || data.response) {
+        const novaContent = data.message ?? data.response ?? "I'm here to help! What would you like to know?";
         const novaResponse: Message = {
           id: (Date.now() + 1).toString(),
           sender: 'nova',
-          content: data.message,
+          content: novaContent,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         };
-        setMessages(prev => [...prev, novaResponse]);
+        setMessages((prev) => [...prev, novaResponse]);
       } else {
         throw new Error(data.error || 'Failed to get response');
       }
@@ -73,11 +88,15 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'nova',
-        content: 'I apologize, but I\'m having trouble connecting right now. Please try again in a moment.',
+        content: "I'm having trouble connecting. Please try again in a moment.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     }
+  };
+
+  const handleSuggestionClick = (text: string) => {
+    handleSendMessage(text);
   };
 
   if (collapsed) {
@@ -97,7 +116,7 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
+      <div className="p-4 border-b border-gray-200/80 bg-gradient-to-b from-white to-gray-50/30 flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center p-1">
             <Image 
@@ -126,14 +145,46 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
-        <ChatMessageList messages={messages} />
+        {messages.length === 0 ? (
+          <div className="flex flex-col h-full min-h-[200px] justify-center">
+            <div className="flex items-center gap-2 mb-4">
+              <MathSymbolAnimation size="sm" colorIndex={0} />
+              <span className="text-sm text-gray-500">AI learning assistant</span>
+            </div>
+            <p className="text-gray-600 text-sm mb-4">Ask Nova anything about maths or English. Try a suggestion below:</p>
+            <div className="space-y-2 mb-6">
+              {PROMPT_SUGGESTIONS.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => handleSuggestionClick(s)}
+                  className="w-full text-left px-3 py-2.5 rounded-xl bg-gray-50 hover:bg-blue-50 hover:border-blue-200 border border-transparent text-sm text-gray-700 hover:text-blue-700 transition-all"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {QUICK_ACTIONS.map((a) => (
+                <button
+                  key={a.label}
+                  onClick={() => handleSuggestionClick(a.label + ' a topic')}
+                  className="px-3 py-1.5 rounded-full bg-white border border-gray-200 hover:border-blue-300 hover:bg-blue-50 text-xs text-gray-600 hover:text-blue-600 transition-all"
+                >
+                  {a.icon} {a.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <ChatMessageList messages={messages} />
+        )}
       </div>
 
       {/* Input */}
-      <div className="p-3 border-t border-gray-200 flex-shrink-0">
+      <div className="p-3 border-t border-gray-200/80 bg-gradient-to-t from-gray-50/50 to-transparent flex-shrink-0">
         <ChatInput 
           onSend={handleSendMessage}
-          placeholder="Ask Nova..."
+          placeholder="Ask Nova anything..."
           compact={true}
         />
       </div>

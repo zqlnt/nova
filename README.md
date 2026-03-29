@@ -63,7 +63,27 @@ NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-MDPB7BGQH7
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [http://localhost:3000](http://localhost:3000) in your browser (or the port shown if 3000 is in use)
+
+### Production build
+```bash
+npm run build
+npm start
+```
+
+### Troubleshooting: "Cannot find module './948.js'" or blank screen
+If you see webpack chunk errors or a blank page, clear the build cache and restart:
+```bash
+npm run dev:clean
+```
+Or manually: `rm -rf .next` then `npm run dev`
+
+### Troubleshooting: "Cannot find module" or blank screen
+If you see webpack chunk errors or a blank page, run:
+```bash
+npm run dev:clean
+```
+This clears the `.next` cache and restarts the dev server.
 
 5. Create an account or sign in at `/login` or `/signup`
 
@@ -138,20 +158,20 @@ This is a functional implementation with:
 
 ## Features
 
-### 🔐 Authentication
+### Authentication
 - Email/password authentication via Firebase
 - Google Sign-In integration
 - Protected routes for student and teacher portals
 - Persistent sessions
 
-### 🤖 AI Chat (Nova)
+### AI Chat (Nova)
 - Real-time chat with Claude 3.5 Sonnet
 - Context-aware responses
 - Subject-specific assistance
 - Available in right sidebar on all pages
 - Dedicated chat page for focused learning
 
-### 🎨 UI/UX
+### UI/UX
 - Clean, professional glassmorphism design
 - iOS-style system blue (#007AFF) accent color
 - Subtle animated background orbs

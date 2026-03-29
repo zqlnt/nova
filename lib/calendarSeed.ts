@@ -1,0 +1,86 @@
+import type { TermDate, OrgCalendarEvent } from '@/lib/calendarTypes';
+
+// Rough UK/England-style 2026 term dates - editable defaults (varies by local authority)
+export const uk2026TermDates: TermDate[] = [
+  { id: 't1', name: 'Autumn Term 1', startDate: '2026-09-01', endDate: '2026-10-23', type: 'term' },
+  { id: 'ht1', name: 'Half Term', startDate: '2026-10-24', endDate: '2026-11-01', type: 'half_term' },
+  { id: 't2', name: 'Autumn Term 2', startDate: '2026-11-02', endDate: '2026-12-18', type: 'term' },
+  { id: 'xmas', name: 'Christmas Holiday', startDate: '2026-12-19', endDate: '2027-01-04', type: 'holiday' },
+  { id: 't3', name: 'Spring Term 1', startDate: '2027-01-05', endDate: '2027-02-13', type: 'term' },
+  { id: 'ht2', name: 'Half Term', startDate: '2027-02-14', endDate: '2027-02-22', type: 'half_term' },
+  { id: 't4', name: 'Spring Term 2', startDate: '2027-02-23', endDate: '2027-04-02', type: 'term' },
+  { id: 'easter', name: 'Easter Holiday', startDate: '2027-04-03', endDate: '2027-04-18', type: 'holiday' },
+  { id: 't5', name: 'Summer Term 1', startDate: '2027-04-19', endDate: '2027-05-29', type: 'term' },
+  { id: 'ht3', name: 'Half Term', startDate: '2027-05-30', endDate: '2027-06-06', type: 'half_term' },
+  { id: 't6', name: 'Summer Term 2', startDate: '2027-06-07', endDate: '2027-07-23', type: 'term' },
+  { id: 'summer', name: 'Summer Holiday', startDate: '2027-07-24', endDate: '2027-08-31', type: 'holiday' },
+];
+
+// Org-level events, trips, tasks
+export const seedOrgCalendarEvents: OrgCalendarEvent[] = [
+  {
+    id: 'ev_trip1',
+    orgId: 'org_ttutors',
+    title: 'Science Museum Trip',
+    startDate: '2026-04-15',
+    endDate: '2026-04-15',
+    type: 'trip',
+    description: 'Year 10 science trip',
+    costPence: 2500,
+    costBreakdown: [{ item: 'Transport', amountPence: 1500 }, { item: 'Entry', amountPence: 1000 }],
+  },
+  {
+    id: 'ev_trip2',
+    orgId: 'org_ttutors',
+    title: 'Maths Challenge Day',
+    startDate: '2026-05-20',
+    endDate: '2026-05-20',
+    type: 'event',
+    description: 'Inter-school maths competition',
+    costPence: 500,
+  },
+  {
+    id: 'ev_mock',
+    orgId: 'org_ttutors',
+    title: 'Mock Exams Week',
+    startDate: '2026-03-17',
+    endDate: '2026-03-21',
+    type: 'exam',
+    description: 'GCSE mock examinations',
+  },
+  {
+    id: 'ev_staff',
+    orgId: 'org_ttutors',
+    title: 'Staff Training Day',
+    startDate: '2026-03-28',
+    endDate: '2026-03-28',
+    type: 'event',
+    description: 'Safeguarding and curriculum update',
+  },
+  {
+    id: 'ev_pay_due_1',
+    orgId: 'org_ttutors',
+    title: 'Payment due - Aahil Ali',
+    startDate: '2026-04-07',
+    type: 'payment_due',
+    invoiceId: 'inv_3',
+    studentId: 's_tt_012',
+  },
+  {
+    id: 'ev_pay_recv_1',
+    orgId: 'org_ttutors',
+    title: 'Payment received - Aahil Ali',
+    startDate: '2026-03-05',
+    type: 'payment_received',
+    paymentId: 'pay_1',
+    studentId: 's_tt_001',
+  },
+  {
+    id: 'ev_admin_1',
+    orgId: 'org_ttutors',
+    title: 'Review overdue invoices',
+    startDate: '2026-03-20',
+    type: 'admin_reminder',
+    description: 'Follow up on 2 overdue payments',
+  },
+];

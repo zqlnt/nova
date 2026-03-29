@@ -28,7 +28,7 @@ export default function ChatInput({ onSend, placeholder = 'Type your message...'
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+          className="flex-1 bg-white/80 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-300 transition-all placeholder:text-gray-400"
         />
         <button
           type="submit"

@@ -33,6 +33,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
     try {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         setUser(user);
@@ -46,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return unsubscribe;
     } catch (error: any) {
       console.error('Auth initialization error:', error);
-      setError(error.message);
+      setError(error?.message);
       setLoading(false);
     }
   }, []);
@@ -57,19 +61,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const signIn = async (email: string, password: string) => {
+    if (!auth) throw new Error('Authentication is not available. Please refresh the page.');
     await signInWithEmailAndPassword(auth, email, password);
   };
 
   const signUp = async (email: string, password: string) => {
+    if (!auth) throw new Error('Authentication is not available. Please refresh the page.');
     await createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signInWithGoogle = async () => {
+    if (!auth) throw new Error('Authentication is not available. Please refresh the page.');
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
   };
 
   const signOut = async () => {
+    if (!auth) return;
     await firebaseSignOut(auth);
   };
 

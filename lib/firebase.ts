@@ -1,6 +1,7 @@
-import { initializeApp, getApps } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getAnalytics, isSupported } from 'firebase/analytics';
+import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
+import { getAuth, Auth } from 'firebase/auth';
+import { getFirestore, Firestore } from 'firebase/firestore';
+import { getAnalytics, isSupported, Analytics } from 'firebase/analytics';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "AIzaSyAJSr7LsZEIU0wZ1KfsLXH-F5xSgvfebjg",
@@ -12,20 +13,32 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || "G-MDPB7BGQH7"
 };
 
-// Initialize Firebase (only once)
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
 
-// Initialize Firebase services
-export const auth = getAuth(app);
+try {
+  app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0] as FirebaseApp;
+  auth = getAuth(app);
+  db = getFirestore(app);
+} catch (e) {
+  console.warn('Firebase init failed, auth disabled:', e);
+}
+
+export { auth, db };
 
 // Initialize Analytics (only in browser)
-let analytics = null;
-if (typeof window !== 'undefined') {
+let analytics: Analytics | null = null;
+if (typeof window !== 'undefined' && app) {
   isSupported().then(yes => {
-    if (yes) {
-      analytics = getAnalytics(app);
+    if (yes && app) {
+      try {
+        analytics = getAnalytics(app);
+      } catch {
+        // Ignore analytics errors
+      }
     }
-  });
+  }).catch(() => {});
 }
 
 export { analytics };
