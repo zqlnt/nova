@@ -155,7 +155,7 @@ export default function StudentDashboard() {
             <p className="text-xs text-gray-600 mt-1">days to GCSE exams</p>
             <Link href="/student/calendar" className="text-xs text-indigo-600 hover:underline mt-2 block">View calendar →</Link>
           </Card>
-          <Card className="p-4 bg-white/95">
+          <Card className="p-4">
             <h3 className="text-sm font-semibold text-gray-800 mb-3">Weekly activity</h3>
             <SoftBarChart
               data={[

@@ -48,7 +48,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </button>
               <Link
                 href="/"
-                className="px-4 py-2 rounded-xl border border-gray-200 bg-white font-medium hover:bg-gray-50"
+                className="px-4 py-2 rounded-xl nova-frost-btn font-medium hover:bg-white/90"
               >
                 Go home
               </Link>

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import type { CalendarEvent, TermDate } from '@/lib/calendarTypes';
-import { uk2026TermDates } from '@/lib/calendarSeed';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -35,7 +34,7 @@ interface CalendarProps {
   mode?: 'student' | 'teacher' | 'org';
 }
 
-export default function Calendar({ events = [], termDates = uk2026TermDates, onDateClick, mode = 'org' }: CalendarProps) {
+export default function Calendar({ events = [], termDates = [], onDateClick, mode = 'org' }: CalendarProps) {
   const today = new Date();
   const [viewDate, setViewDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
 
@@ -62,7 +61,7 @@ export default function Calendar({ events = [], termDates = uk2026TermDates, onD
   for (let d = 1; d <= daysInMonth; d++) grid.push(d);
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+    <div className="nova-frost-panel rounded-xl p-4">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900">
           {MONTHS[month]} {year}

@@ -26,9 +26,9 @@ export default function ObjectiveCard({
   return (
     <div 
       onClick={onClick}
-      className={`bg-white border rounded-xl p-4 transition-all ${
-        onClick ? 'cursor-pointer hover:border-blue-300 hover:shadow-md' : ''
-      } ${isNext ? 'border-blue-300 ring-2 ring-blue-100' : 'border-gray-200'}`}
+      className={`nova-frost-panel rounded-xl p-4 transition-all ${
+        onClick ? 'cursor-pointer nova-frost-panel--hover hover:!border-blue-300/90' : ''
+      } ${isNext ? '!border-blue-300/80 ring-2 ring-blue-200/70' : ''}`}
     >
       <div className="flex items-start justify-between gap-3 mb-2">
         <div className="flex-1 min-w-0">

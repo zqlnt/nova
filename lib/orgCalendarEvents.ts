@@ -5,8 +5,8 @@
 
 import type { OrgCalendarEvent } from '@/lib/calendarTypes';
 import type { AttendanceRecord, Invoice, Payment, Family, StaffTask } from '@/lib/orgTypes';
-import { seedOrgCalendarEvents } from '@/lib/calendarSeed';
 
+/** Calendar events built only from saved org records (no demo/seed events). */
 export function buildOrgCalendarEvents(
   orgId: string,
   attendance: AttendanceRecord[],
@@ -16,7 +16,7 @@ export function buildOrgCalendarEvents(
   families: Family[] = [],
   staffTasks: StaffTask[] = []
 ): OrgCalendarEvent[] {
-  const events: OrgCalendarEvent[] = [...seedOrgCalendarEvents.filter((e) => e.orgId === orgId)];
+  const events: OrgCalendarEvent[] = [];
 
   const studentMap = new Map(students.map((s) => [s.id, s.name]));
 

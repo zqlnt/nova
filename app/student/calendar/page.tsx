@@ -39,7 +39,7 @@ export default function StudentCalendarPage() {
           </div>
 
           <div className="space-y-4">
-            <Card className="p-5 bg-white/95">
+            <Card className="p-5">
               <h3 className="text-sm font-medium text-gray-600 mb-2">Exam countdown</h3>
               <div className="text-3xl font-bold text-gray-900 tabular-nums">{daysToExam}</div>
               <p className="text-sm text-gray-500 mt-0.5">days until GCSE exams</p>

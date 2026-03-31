@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Nova">
+  <defs>
+    <linearGradient id="novaAppleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#007AFF"/>
+      <stop offset="55%" stop-color="#5AC8FA"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <rect width="180" height="180" rx="40" fill="url(#novaAppleGrad)"/>
+  <path fill="#fff" fill-opacity="0.95" d="M50 130V50h18l27 51.8L122 50h18v80h-15.8V68L101 130H79L50 68.2V130H50z"/>
+</svg>

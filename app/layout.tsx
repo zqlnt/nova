@@ -5,6 +5,10 @@ import { Providers } from "@/components/Providers";
 export const metadata: Metadata = {
   title: "Nova - E-Learning Platform",
   description: "AI-powered personalized education platform",
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export const viewport: Viewport = {

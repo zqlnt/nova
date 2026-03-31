@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Nova">
+  <defs>
+    <linearGradient id="novaIconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#007AFF"/>
+      <stop offset="55%" stop-color="#5AC8FA"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#novaIconGrad)"/>
+  <path fill="#fff" fill-opacity="0.95" d="M9 23V9h3.2l4.8 9.2L22 9h3.2v14h-2.8v-9.4L18 23h-2.8l-4.4-8.4V23H9z"/>
+</svg>

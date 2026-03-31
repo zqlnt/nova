@@ -121,20 +121,20 @@ export default function OrgStudentsPage() {
                 placeholder="Search by name..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200 bg-white text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-4 py-2 rounded-xl text-sm nova-frost-field border-white/50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
             <div className="flex flex-wrap gap-2">
               <select
                 value={filterFunding}
                 onChange={(e) => setFilterFunding(e.target.value as typeof filterFunding)}
-                className="px-4 py-2 rounded-xl border border-gray-200 bg-white text-sm"
+                className="px-4 py-2 rounded-xl text-sm nova-frost-field border-white/50"
               >
                 <option value="all">All funding</option>
                 <option value="private">Private</option>
                 <option value="universal_credit">Universal Credit</option>
               </select>
-              <label className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 bg-white text-sm cursor-pointer">
+              <label className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm nova-frost-field border-white/50 cursor-pointer">
                 <input type="checkbox" checked={filterFlagged} onChange={(e) => setFilterFlagged(e.target.checked)} />
                 Flagged only
               </label>

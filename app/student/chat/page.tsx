@@ -164,7 +164,7 @@ export default function StudentChat() {
     <Layout role="student">
       <div className="flex flex-col h-[calc(100vh-120px)] max-h-[800px]">
         {/* Compact Scope Bar with Objective Selector */}
-        <div className="mb-4 bg-white border border-gray-200 rounded-xl p-3">
+        <div className="mb-4 rounded-xl p-3 nova-frost-panel">
           <div className="flex flex-wrap items-center gap-2">
             {/* Subject */}
             <select
@@ -238,7 +238,7 @@ export default function StudentChat() {
                 className={`max-w-[85%] rounded-2xl px-4 py-3 ${
                   message.role === 'user'
                     ? 'bg-blue-600 text-white'
-                    : 'bg-white border border-gray-200 text-gray-800'
+                    : 'nova-frost-bubble text-gray-800'
                 }`}
               >
                 {message.role === 'assistant' ? (
@@ -259,7 +259,7 @@ export default function StudentChat() {
           
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3">
+              <div className="nova-frost-bubble rounded-2xl px-4 py-3">
                 <div className="flex gap-1">
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
@@ -286,7 +286,7 @@ export default function StudentChat() {
             onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
             placeholder={`Ask about ${chatScope.objectiveTitle || chatScope.subject}...`}
             disabled={isLoading}
-            className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
+            className="flex-1 px-4 py-3 rounded-xl nova-frost-field focus:outline-none focus:ring-2 focus:ring-blue-500/35 focus:border-transparent disabled:opacity-50"
           />
           <Button onClick={handleSendMessage} disabled={isLoading || !input.trim()}>
             Send

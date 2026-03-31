@@ -21,7 +21,7 @@ export default function ChatMessageList({ messages }: ChatMessageListProps) {
             className={`max-w-[80%] rounded-2xl px-5 py-3 shadow-sm ${
               message.sender === 'user'
                 ? 'bg-blue-600 text-white'
-                : 'bg-white/90 border border-gray-100 text-gray-800'
+                : 'nova-frost-bubble text-gray-800'
             }`}
           >
             {message.sender === 'nova' && (

@@ -61,11 +61,10 @@ export const ORG_SUBCOLLECTIONS = {
 
 export type OrgSubKey = keyof typeof ORG_SUBCOLLECTIONS;
 
+/** Opt-in only: set NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY=true for local/dev seeding. Never defaults on in production. */
 export function shouldSeedEmptyOrg(): boolean {
   if (typeof process === 'undefined') return false;
-  if (process.env.NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY === 'true') return true;
-  if (process.env.NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY === 'false') return false;
-  return process.env.NODE_ENV === 'development';
+  return process.env.NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY === 'true';
 }
 
 export function stripUndefined<T extends Record<string, unknown>>(obj: T): Record<string, unknown> {

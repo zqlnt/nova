@@ -4,12 +4,12 @@ import { useState } from 'react';
 import Layout from '@/components/Layout';
 import Card from '@/components/Card';
 import Calendar from '@/components/Calendar';
-import { uk2026TermDates } from '@/lib/calendarSeed';
 import { buildOrgCalendarEvents } from '@/lib/orgCalendarEvents';
-import { orgService } from '@/lib/orgService';
+import { orgService, useOrgSync } from '@/lib/orgService';
 import MathSymbolAnimation from '@/components/MathSymbolAnimation';
 
 export default function OrgCalendarPage() {
+  useOrgSync();
   const org = orgService.getOrganisation();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
@@ -23,10 +23,7 @@ export default function OrgCalendarPage() {
   const orgEvents = buildOrgCalendarEvents(org.id, attendance, invoices, payments, students, families, staffTasks);
 
   const selectedEvents = selectedDate
-    ? [
-        ...uk2026TermDates.filter((t) => t.startDate <= selectedDate && t.endDate >= selectedDate),
-        ...orgEvents.filter((e) => e.startDate <= selectedDate && (e.endDate ?? e.startDate) >= selectedDate),
-      ]
+    ? orgEvents.filter((e) => e.startDate <= selectedDate && (e.endDate ?? e.startDate) >= selectedDate)
     : [];
 
   return (
@@ -34,20 +31,20 @@ export default function OrgCalendarPage() {
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">Calendar <MathSymbolAnimation size="sm" colorIndex={3} /></h1>
-          <p className="text-gray-600 mt-1">Term dates, events, trips, and organisation schedule</p>
+          <p className="text-gray-600 mt-1">Attendance, payments, UC dates, and staff tasks from your saved records</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 min-w-0 overflow-x-auto">
             <Calendar
               events={orgEvents}
-              termDates={uk2026TermDates}
+              termDates={[]}
               onDateClick={setSelectedDate}
               mode="org"
             />
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 min-w-0">
             <Card className="p-5">
               <h3 className="text-sm font-medium text-gray-600 mb-2">Legend</h3>
               <div className="flex flex-wrap gap-2 text-[10px] mb-4">
@@ -58,23 +55,10 @@ export default function OrgCalendarPage() {
             </Card>
 
             <Card className="p-5">
-              <h3 className="text-sm font-medium text-gray-600 mb-3">UK 2026 term dates</h3>
-              <p className="text-xs text-gray-500 mb-3">Editable defaults — varies by local authority</p>
-              <div className="space-y-2 max-h-64 overflow-y-auto">
-                {uk2026TermDates.map((t) => (
-                  <div key={t.id} className="flex items-center gap-2 text-sm">
-                    <span
-                      className={`w-2 h-2 rounded flex-shrink-0 ${
-                        t.type === 'term' ? 'bg-blue-400' : t.type === 'holiday' ? 'bg-amber-400' : 'bg-emerald-400'
-                      }`}
-                    />
-                    <span className="text-gray-700">{t.name}</span>
-                    <span className="text-gray-400 text-xs">
-                      {t.startDate} – {t.endDate}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <h3 className="text-sm font-medium text-gray-600 mb-2">Term dates</h3>
+              <p className="text-sm text-gray-500">
+                Add term dates to your organisation settings when you configure the academic year. The calendar above shows live data from attendance, billing, families, and tasks.
+              </p>
             </Card>
 
             {selectedDate && (
@@ -82,16 +66,14 @@ export default function OrgCalendarPage() {
                 <h3 className="text-sm font-medium text-gray-600 mb-3">{selectedDate}</h3>
                 <div className="space-y-2">
                   {selectedEvents.length === 0 ? (
-                    <p className="text-sm text-gray-500">No events</p>
+                    <p className="text-sm text-gray-500">No events on this date</p>
                   ) : (
                     selectedEvents.map((e) => (
                       <div key={e.id} className="p-3 rounded-lg bg-gray-50 border border-gray-100">
-                        {'type' in e && e.type && (
-                          <span className="text-[10px] uppercase tracking-wide text-gray-500">{String(e.type).replace(/_/g, ' ')}</span>
-                        )}
-                        <div className="font-medium text-gray-900">{'title' in e ? e.title : e.name}</div>
+                        <span className="text-[10px] uppercase tracking-wide text-gray-500">{String(e.type).replace(/_/g, ' ')}</span>
+                        <div className="font-medium text-gray-900">{e.title}</div>
                         {'description' in e && e.description && <div className="text-sm text-gray-500 mt-0.5">{e.description}</div>}
-                        {'costPence' in e && e.costPence && (
+                        {'costPence' in e && e.costPence != null && (
                           <div className="text-sm text-gray-600 mt-1">£{(e.costPence / 100).toFixed(2)}</div>
                         )}
                       </div>
@@ -102,15 +84,19 @@ export default function OrgCalendarPage() {
             )}
 
             <Card className="p-5">
-              <h3 className="text-sm font-medium text-gray-600 mb-3">Upcoming trips & events</h3>
-              <div className="space-y-2">
-                {orgEvents.slice(0, 5).map((e) => (
-                  <div key={e.id} className="flex items-center justify-between text-sm">
-                    <span className="text-gray-700">{e.title}</span>
-                    <span className="text-gray-400 text-xs">{e.startDate}</span>
-                  </div>
-                ))}
-              </div>
+              <h3 className="text-sm font-medium text-gray-600 mb-3">Upcoming</h3>
+              {orgEvents.length === 0 ? (
+                <p className="text-sm text-gray-500">No upcoming items yet. Record attendance, invoices, payments, or staff tasks to populate the calendar.</p>
+              ) : (
+                <div className="space-y-2">
+                  {orgEvents.slice(0, 8).map((e) => (
+                    <div key={e.id} className="flex items-center justify-between text-sm gap-2">
+                      <span className="text-gray-700 truncate">{e.title}</span>
+                      <span className="text-gray-400 text-xs flex-shrink-0">{e.startDate}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </Card>
           </div>
         </div>

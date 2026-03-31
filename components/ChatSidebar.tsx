@@ -103,7 +103,7 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
     return (
       <button
         onClick={onToggle}
-        className="absolute -left-10 top-4 p-2 rounded-lg bg-white border border-gray-200 hover:bg-gray-50 transition-colors text-gray-600 shadow-sm"
+        className="absolute -left-10 top-4 p-2 rounded-lg nova-frost-btn hover:bg-white/85 transition-colors text-gray-600"
         aria-label="Open chat"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,9 +116,9 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-gray-200/80 bg-gradient-to-b from-white to-gray-50/30 flex items-center justify-between flex-shrink-0">
+      <div className="p-4 border-b border-white/45 nova-frost-strip bg-gradient-to-b from-white/30 to-transparent flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center p-1">
+          <div className="w-8 h-8 rounded-full nova-frost-field flex items-center justify-center p-1">
             <Image 
               src="https://i.imghippo.com/files/tyq3865Jxs.png" 
               alt="Nova" 
@@ -168,7 +168,7 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
                 <button
                   key={a.label}
                   onClick={() => handleSuggestionClick(a.label + ' a topic')}
-                  className="px-3 py-1.5 rounded-full bg-white border border-gray-200 hover:border-blue-300 hover:bg-blue-50 text-xs text-gray-600 hover:text-blue-600 transition-all"
+                  className="px-3 py-1.5 rounded-full nova-frost-field hover:border-blue-300/60 hover:bg-blue-50/80 text-xs text-gray-600 hover:text-blue-600 transition-all"
                 >
                   {a.icon} {a.label}
                 </button>
@@ -181,7 +181,7 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
       </div>
 
       {/* Input */}
-      <div className="p-3 border-t border-gray-200/80 bg-gradient-to-t from-gray-50/50 to-transparent flex-shrink-0">
+      <div className="p-3 border-t border-white/45 nova-frost-strip bg-gradient-to-t from-transparent to-white/20 flex-shrink-0">
         <ChatInput 
           onSend={handleSendMessage}
           placeholder="Ask Nova anything..."

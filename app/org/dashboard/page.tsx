@@ -3,8 +3,16 @@
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import Card from '@/components/Card';
-import { orgService } from '@/lib/orgService';
-import { computeDashboardStats, enrichStudentsWithOrgData, formatPence, FLAG_LABELS } from '@/lib/orgOperations';
+import { orgService, useOrgSync } from '@/lib/orgService';
+import {
+  computeDashboardStats,
+  enrichStudentsWithOrgData,
+  formatPence,
+  FLAG_LABELS,
+  buildRevenueWeeksInMonth,
+  buildAttendanceTrendWeeks,
+  buildWeekdayAttendanceBars,
+} from '@/lib/orgOperations';
 import {
   SoftDonut,
   SoftBarChart,
@@ -25,6 +33,7 @@ import TaskWidget from '@/components/TaskWidget';
 import { buildOrgCalendarEvents } from '@/lib/orgCalendarEvents';
 
 export default function OrgDashboard() {
+  useOrgSync();
   const org = orgService.getOrganisation();
   const students = orgService.listStudents();
   const records = orgService.listOrgStudentRecords();
@@ -78,30 +87,29 @@ export default function OrgDashboard() {
     })),
   ];
 
-  // Chart data: March 2026
-  const MARCH_START = '2026-03-01';
-  const MARCH_END = '2026-03-31';
+  const monthNow = new Date();
+  const m = monthNow.getMonth();
+  const y = monthNow.getFullYear();
+  const monthStart = `${y}-${String(m + 1).padStart(2, '0')}-01`;
+  const lastD = new Date(y, m + 1, 0).getDate();
+  const monthEnd = `${y}-${String(m + 1).padStart(2, '0')}-${String(lastD).padStart(2, '0')}`;
+
   const attendanceThisMonth = attendance.filter(
-    (a) => a.sessionDate >= MARCH_START && a.sessionDate <= MARCH_END && (a.status === 'present' || a.status === 'late')
+    (a) => a.sessionDate >= monthStart && a.sessionDate <= monthEnd && (a.status === 'present' || a.status === 'late')
   );
   const sessionsByStudent = new Map<string, number>();
   attendanceThisMonth.forEach((a) => {
     sessionsByStudent.set(a.studentId, (sessionsByStudent.get(a.studentId) ?? 0) + 1);
   });
-  let attendanceByStudentData = enrichedStudents
+  const attendanceByStudentData = enrichedStudents
     .map((s) => ({ name: s.name, sessions: sessionsByStudent.get(s.id) ?? 0 }))
     .filter((d) => d.sessions > 0)
     .sort((a, b) => b.sessions - a.sessions);
-  if (attendanceByStudentData.length === 0) {
-    attendanceByStudentData = enrichedStudents
-      .slice(0, 12)
-      .map((s, i) => ({ name: s.name, sessions: 3 + (i % 6) }))
-      .sort((a, b) => b.sessions - a.sessions);
-  }
 
-  const paymentsThisMonth = payments.filter(
-    (p) => p.paidAt && p.paidAt >= MARCH_START && p.paidAt <= MARCH_END && p.status === 'succeeded'
-  );
+  const paymentsThisMonth = payments.filter((p) => {
+    const d = (p.paidAt || p.paymentDate || '').slice(0, 10);
+    return d.length >= 10 && d >= monthStart && d <= monthEnd && p.status === 'succeeded';
+  });
   const paidByStudent = new Map<string, number>();
   paymentsThisMonth.forEach((p) => {
     paidByStudent.set(p.studentId, (paidByStudent.get(p.studentId) ?? 0) + p.amountPence);
@@ -112,10 +120,10 @@ export default function OrgDashboard() {
     owedPence: s.record?.amountOwedPence ?? 0,
   }));
 
-  const totalReceived = stats.amountReceivedThisMonth || paymentsThisMonth.reduce((s, p) => s + p.amountPence, 0) || 14000;
-  const tuitionPence = Math.round(totalReceived * 0.92);
-  const lateFeesPence = Math.round(totalReceived * 0.05);
-  const discountsPence = Math.round(totalReceived * 0.03);
+  const totalReceived = stats.amountReceivedThisMonth || paymentsThisMonth.reduce((s, p) => s + p.amountPence, 0);
+  const tuitionPence = totalReceived > 0 ? Math.round(totalReceived * 0.92) : 0;
+  const lateFeesPence = totalReceived > 0 ? Math.round(totalReceived * 0.05) : 0;
+  const discountsPence = totalReceived > 0 ? Math.round(totalReceived * 0.03) : 0;
 
   const classCountBySubject = new Map<string, number>();
   enrollments.forEach((e) => {
@@ -124,36 +132,23 @@ export default function OrgDashboard() {
     const label = subject === 'Mathematics' ? 'GCSE Maths' : subject === 'English' ? 'GCSE English' : 'Science';
     classCountBySubject.set(label, (classCountBySubject.get(label) ?? 0) + 1);
   });
-  let classDistributionData = Array.from(classCountBySubject.entries()).map(([label, count]) => ({ label, count }));
-  if (classDistributionData.length === 0) {
-    classDistributionData = [
-      { label: 'GCSE Maths', count: Math.ceil(students.length * 0.4) },
-      { label: 'GCSE English', count: Math.ceil(students.length * 0.35) },
-      { label: 'Science', count: Math.ceil(students.length * 0.25) },
-    ];
-  }
+  const classDistributionData = Array.from(classCountBySubject.entries()).map(([label, count]) => ({
+    label,
+    count,
+  }));
 
   const paidCount = invoices.filter((i) => i.status === 'paid').length;
   const partialCount = invoices.filter((i) => i.status === 'partial').length;
   const overdueCount = overdueInvoices.length;
 
-  const revenueByWeek = [
-    { label: 'W1', valuePence: 7000 },
-    { label: 'W2', valuePence: 10500 },
-    { label: 'W3', valuePence: 14000 },
-    { label: 'W4', valuePence: stats.amountReceivedThisMonth },
-  ];
+  const revenueByWeek = buildRevenueWeeksInMonth(payments, monthNow);
 
   const topOwedData = enrichedStudents
     .filter((s) => (s.record?.amountOwedPence ?? 0) > 0)
     .map((s) => ({ name: s.name, owedPence: s.record!.amountOwedPence! }));
 
-  const attendanceTrendData = [
-    { label: 'W1', ratePct: 82 },
-    { label: 'W2', ratePct: 78 },
-    { label: 'W3', ratePct: 85 },
-    { label: 'W4', ratePct: students.length > 0 ? Math.round((stats.attendanceThisWeek / (students.length * 2)) * 100) || 87 : 87 },
-  ];
+  const attendanceTrendData = buildAttendanceTrendWeeks(attendance);
+  const weekdayAttendanceBars = buildWeekdayAttendanceBars(attendance);
 
   const StatBubble = ({
     label,
@@ -296,23 +291,14 @@ export default function OrgDashboard() {
               )}
             </div>
           </Card>
-          <Card className="p-4 bg-white/95">
+          <Card className="p-4">
             <h3 className="text-sm font-semibold text-gray-800 mb-3">Attendance by day</h3>
-            <SoftBarChart
-              data={[
-                { label: 'Mon', value: Math.min(stats.attendanceThisWeek, 8) },
-                { label: 'Tue', value: Math.min(stats.attendanceThisWeek - 2, 6) },
-                { label: 'Wed', value: Math.min(stats.attendanceThisWeek - 1, 7) },
-                { label: 'Thu', value: Math.min(stats.attendanceThisWeek, 5) },
-                { label: 'Fri', value: Math.min(stats.attendanceRiskCount + 2, 4) },
-              ]}
-              height={80}
-            />
+            <SoftBarChart data={weekdayAttendanceBars} height={80} />
           </Card>
         </div>
 
         {/* 1. Attendance This Month - one bar per student (blue) */}
-        <Card className="p-5 bg-white/95">
+        <Card className="p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Attendance this month</h2>
             <Link href="/org/attendance" className="text-sm text-indigo-600 hover:underline">View all →</Link>
@@ -322,7 +308,7 @@ export default function OrgDashboard() {
         </Card>
 
         {/* 2. Payments - grouped bar (Paid green, Owed red) */}
-        <Card className="p-5 bg-white/95">
+        <Card className="p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Payments by student</h2>
             <Link href="/org/payments" className="text-sm text-indigo-600 hover:underline">View all →</Link>
@@ -333,7 +319,7 @@ export default function OrgDashboard() {
 
         {/* 3. Income breakdown, 4. Class distribution, 5. Student status - donuts */}
         <div className="grid md:grid-cols-3 gap-6">
-          <Card className="p-5 bg-white/95">
+          <Card className="p-5">
             <h2 className="text-lg font-bold text-gray-900 mb-3">Income breakdown</h2>
             <IncomeBreakdownDonut tuitionPence={tuitionPence} lateFeesPence={lateFeesPence} discountsPence={discountsPence} size={120} />
             <div className="flex gap-4 mt-2 text-xs text-gray-500 justify-center">
@@ -342,11 +328,11 @@ export default function OrgDashboard() {
               <span>Discounts</span>
             </div>
           </Card>
-          <Card className="p-5 bg-white/95">
+          <Card className="p-5">
             <h2 className="text-lg font-bold text-gray-900 mb-3">Class distribution</h2>
             <ClassDistributionDonut data={classDistributionData} size={120} />
           </Card>
-          <Card className="p-5 bg-white/95">
+          <Card className="p-5">
             <h2 className="text-lg font-bold text-gray-900 mb-3">Student payment status</h2>
             <StudentStatusDonut paid={paidCount} partial={partialCount} overdue={overdueCount} size={120} />
             <div className="flex gap-4 mt-2 text-xs text-gray-500 justify-center">
@@ -359,14 +345,14 @@ export default function OrgDashboard() {
 
         {/* 6. Revenue over time, 8. Attendance trend - line charts */}
         <div className="grid md:grid-cols-2 gap-6">
-          <Card className="p-5 bg-white/95">
+          <Card className="p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-gray-900">Revenue over time</h2>
               <Link href="/org/payments" className="text-sm text-indigo-600 hover:underline">View all →</Link>
             </div>
             <RevenueOverTimeChart data={revenueByWeek} height={120} />
           </Card>
-          <Card className="p-5 bg-white/95">
+          <Card className="p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-gray-900">Attendance trend</h2>
               <Link href="/org/attendance" className="text-sm text-indigo-600 hover:underline">View all →</Link>
@@ -376,7 +362,7 @@ export default function OrgDashboard() {
         </div>
 
         {/* 7. Top owed students - horizontal bar */}
-        <Card className="p-5 bg-white/95">
+        <Card className="p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Top owed students</h2>
             <Link href="/org/payments" className="text-sm text-indigo-600 hover:underline">View all →</Link>
@@ -385,7 +371,7 @@ export default function OrgDashboard() {
         </Card>
 
         {/* Flags distribution - soft donut + list */}
-        <Card className="p-5 bg-white/95">
+        <Card className="p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Flags & concerns</h2>
             <Link href="/org/flags" className="text-sm text-indigo-600 hover:underline">View all →</Link>
@@ -434,7 +420,7 @@ export default function OrgDashboard() {
           <h2 className="text-lg font-bold text-gray-900 mb-4">Quick access</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             <Link href="/org/students">
-              <Card hover className="p-4 cursor-pointer border border-gray-200 hover:border-blue-300 group text-center">
+              <Card hover className="p-4 cursor-pointer border border-white/45 hover:border-blue-300/80 group text-center">
                 <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-200">
                   <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
@@ -444,7 +430,7 @@ export default function OrgDashboard() {
               </Card>
             </Link>
             <Link href="/org/classes">
-              <Card hover className="p-4 cursor-pointer border border-gray-200 hover:border-slate-300 group text-center">
+              <Card hover className="p-4 cursor-pointer border border-white/45 hover:border-slate-400/70 group text-center">
                 <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center mx-auto mb-2 group-hover:bg-slate-200">
                   <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
@@ -454,7 +440,7 @@ export default function OrgDashboard() {
               </Card>
             </Link>
             <Link href="/org/payments">
-              <Card hover className="p-4 cursor-pointer border border-gray-200 hover:border-emerald-300 group text-center">
+              <Card hover className="p-4 cursor-pointer border border-white/45 hover:border-emerald-400/70 group text-center">
                 <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center mx-auto mb-2 group-hover:bg-emerald-200">
                   <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -464,7 +450,7 @@ export default function OrgDashboard() {
               </Card>
             </Link>
             <Link href="/org/attendance">
-              <Card hover className="p-4 cursor-pointer border border-gray-200 hover:border-amber-300 group text-center">
+              <Card hover className="p-4 cursor-pointer border border-white/45 hover:border-amber-400/70 group text-center">
                 <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center mx-auto mb-2 group-hover:bg-amber-200">
                   <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
@@ -474,7 +460,7 @@ export default function OrgDashboard() {
               </Card>
             </Link>
             <Link href="/org/flags">
-              <Card hover className="p-4 cursor-pointer border border-gray-200 hover:border-rose-300 group text-center">
+              <Card hover className="p-4 cursor-pointer border border-white/45 hover:border-rose-400/70 group text-center">
                 <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center mx-auto mb-2 group-hover:bg-rose-200">
                   <svg className="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
@@ -484,7 +470,7 @@ export default function OrgDashboard() {
               </Card>
             </Link>
             <Link href="/org/calendar">
-              <Card hover className="p-4 cursor-pointer border border-gray-200 hover:border-violet-300 group text-center">
+              <Card hover className="p-4 cursor-pointer border border-white/45 hover:border-violet-400/70 group text-center">
                 <div className="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mx-auto mb-2 group-hover:bg-violet-200">
                   <svg className="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>

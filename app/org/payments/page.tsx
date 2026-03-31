@@ -33,8 +33,12 @@ export default function OrgPaymentsPage() {
   const [invAmount, setInvAmount] = useState('');
   const [invDueDate, setInvDueDate] = useState('');
 
+  const monthPrefix = (() => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  })();
   const thisMonthPayments = payments.filter(
-    (p) => p.paidAt && p.paidAt.startsWith('2026-03') && p.status === 'succeeded'
+    (p) => p.paidAt && p.paidAt.startsWith(monthPrefix) && p.status === 'succeeded'
   );
   const overdueInvoices = invoices.filter((i) => i.status === 'overdue');
   const studentsWithBalance = records.filter((r) => (r.amountOwedPence ?? 0) > 0);
@@ -266,7 +270,7 @@ export default function OrgPaymentsPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-              className="px-4 py-2 rounded-xl border border-gray-200 bg-white text-sm"
+              className="px-4 py-2 rounded-xl text-sm nova-frost-field border-white/50"
             >
               <option value="all">All status</option>
               <option value="paid">Paid</option>
@@ -277,7 +281,7 @@ export default function OrgPaymentsPage() {
             <select
               value={fundingFilter}
               onChange={(e) => setFundingFilter(e.target.value as FundingFilter)}
-              className="px-4 py-2 rounded-xl border border-gray-200 bg-white text-sm"
+              className="px-4 py-2 rounded-xl text-sm nova-frost-field border-white/50"
             >
               <option value="all">All funding</option>
               <option value="private">Private</option>

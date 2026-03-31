@@ -20,7 +20,7 @@ export default function ScopeBar({ scope, onScopeChange, compact = false }: Scop
   const tierLabel = scope.tier || 'Any tier';
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl">
+    <div className="nova-frost-panel rounded-xl overflow-hidden">
       {/* Compact Header - Always visible */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
@@ -118,7 +118,7 @@ export default function ScopeBar({ scope, onScopeChange, compact = false }: Scop
               <label className="block text-xs text-gray-500 mb-1">Objective</label>
               <button
                 onClick={() => onScopeChange({ objectiveId: null, objectiveTitle: null })}
-                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-left text-gray-600 hover:bg-gray-100 flex items-center justify-between"
+                className="w-full px-3 py-2 rounded-lg text-sm text-left text-gray-600 nova-frost-field hover:bg-white/85 flex items-center justify-between"
               >
                 <span className="truncate">{scope.objectiveTitle}</span>
                 <svg className="w-4 h-4 flex-shrink-0 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

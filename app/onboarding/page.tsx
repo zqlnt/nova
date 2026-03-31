@@ -28,7 +28,7 @@ export default function WorkspaceOnboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#eef2f9] flex items-center justify-center p-4">
       <div className="w-full max-w-lg space-y-4">
         <Card className="text-center">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Choose workspace</div>
@@ -43,7 +43,7 @@ export default function WorkspaceOnboarding() {
               className={`w-full px-4 py-4 rounded-2xl border text-left transition-colors ${
                 workspace === 'student'
                   ? 'border-gray-900 bg-gray-900 text-white'
-                  : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'
+                  : 'border-white/55 nova-frost-field hover:bg-white/85 text-gray-900'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -62,7 +62,7 @@ export default function WorkspaceOnboarding() {
               className={`w-full px-4 py-4 rounded-2xl border text-left transition-colors ${
                 workspace === 'teacher'
                   ? 'border-gray-900 bg-gray-900 text-white'
-                  : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'
+                  : 'border-white/55 nova-frost-field hover:bg-white/85 text-gray-900'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -81,7 +81,7 @@ export default function WorkspaceOnboarding() {
               className={`w-full px-4 py-4 rounded-2xl border text-left transition-colors ${
                 workspace === 'org'
                   ? 'border-gray-900 bg-gray-900 text-white'
-                  : 'border-gray-200 bg-white hover:bg-gray-50 text-gray-900'
+                  : 'border-white/55 nova-frost-field hover:bg-white/85 text-gray-900'
               }`}
             >
               <div className="flex items-center gap-3">

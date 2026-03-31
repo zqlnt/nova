@@ -178,7 +178,7 @@ export default function OrgStaffTasksPage() {
                   <div
                     key={t.id}
                     className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 rounded-xl border ${
-                      t.status === 'done' ? 'bg-gray-50 border-gray-100 opacity-80' : 'bg-white border-gray-200'
+                      t.status === 'done' ? 'bg-gray-50/80 border-gray-100/90 opacity-80' : 'nova-frost-field border-white/55'
                     }`}
                   >
                     <div className="min-w-0">
@@ -196,7 +196,7 @@ export default function OrgStaffTasksPage() {
                           Mark done
                         </button>
                       )}
-                      <button type="button" onClick={() => loadTask(t)} className="px-3 py-1.5 text-sm border border-gray-200 rounded-lg hover:bg-gray-50">
+                      <button type="button" onClick={() => loadTask(t)} className="px-3 py-1.5 text-sm rounded-lg nova-frost-btn hover:bg-white/88">
                         Edit
                       </button>
                       <button type="button" onClick={() => remove(t.id)} className="px-3 py-1.5 text-sm text-rose-600 border border-rose-200 rounded-lg hover:bg-rose-50">

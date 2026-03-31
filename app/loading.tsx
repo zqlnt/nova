@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-white flex flex-col safe-area-pb">
+    <div className="min-h-screen bg-[#eef2f9] relative flex flex-col safe-area-pb">
       {/* Google-style: subtle line grid only */}
       <div className="absolute inset-0 opacity-[0.25]" style={{
         backgroundImage: 'linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px)',

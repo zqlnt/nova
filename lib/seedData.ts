@@ -270,18 +270,18 @@ export const createInitialMastery = (objectives: Objective[]): Mastery[] => {
 // ============================================
 
 export const defaultStudentProfile: StudentProfile = {
-  id: 'student-001',
-  name: 'Alex Johnson',
+  id: 'local',
+  name: '',
   yearGroup: 10,
   subjects: ['Mathematics', 'English'],
   mathsTier: 'Higher',
   onboardingCompleted: false,
   baselineCompletedAt: null,
-  currentStreak: 7,
-  longestStreak: 14,
-  totalMinutesLearned: 420,
-  totalPoints: 2450,
-  level: 5,
-  createdAt: new Date('2024-09-01'),
+  currentStreak: 0,
+  longestStreak: 0,
+  totalMinutesLearned: 0,
+  totalPoints: 0,
+  level: 1,
+  createdAt: new Date(),
 };
 

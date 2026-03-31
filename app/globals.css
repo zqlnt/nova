@@ -28,19 +28,121 @@ body {
 }
 
 :root {
-  --background: #ffffff;
+  --background: #eef2f9;
   --foreground: #171717;
   --ios-blue: #007AFF;
   --ios-blue-dark: #0051D5;
   --ios-blue-light: #5AC8FA;
+  --nova-frost: rgba(255, 255, 255, 0.78);
+  --nova-frost-border: rgba(255, 255, 255, 0.92);
+  --nova-frost-edge: rgba(255, 255, 255, 0.45);
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background:
+    radial-gradient(ellipse 90% 70% at 50% -25%, rgba(147, 197, 253, 0.22), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(244, 114, 182, 0.14), transparent 50%),
+    radial-gradient(ellipse 65% 55% at 0% 100%, rgba(56, 189, 248, 0.12), transparent 52%),
+    radial-gradient(ellipse 50% 40% at 80% 85%, rgba(167, 139, 250, 0.1), transparent 50%),
+    linear-gradient(180deg, #eef2f9 0%, #f4f7fc 45%, #f0f2fa 100%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+}
+
+/* Frosted liquid-glass panels: bright, not fully transparent */
+.nova-frost-panel {
+  background: var(--nova-frost);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+  backdrop-filter: blur(22px) saturate(1.35);
+  border: 1px solid var(--nova-frost-border);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.28),
+    0 10px 40px -12px rgba(15, 23, 42, 0.1),
+    0 4px 16px -6px rgba(15, 23, 42, 0.06);
+}
+
+.nova-frost-panel--hover:hover {
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.4),
+    0 16px 48px -12px rgba(15, 23, 42, 0.12),
+    0 6px 20px -8px rgba(59, 130, 246, 0.08);
+}
+
+/* Sticky chrome (nav / footer / chat rail): frosted bar without rounding */
+.nova-frost-chrome {
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.88),
+    0 0 0 1px rgba(255, 255, 255, 0.32),
+    0 8px 28px -10px rgba(15, 23, 42, 0.08);
+}
+
+/* Chat strips, footers inside panels — lighter frost */
+.nova-frost-strip {
+  background: rgba(255, 255, 255, 0.58);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  backdrop-filter: blur(18px) saturate(1.25);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.72);
+}
+
+/* Assistant / Nova message bubbles */
+.nova-frost-bubble {
+  background: rgba(255, 255, 255, 0.76);
+  -webkit-backdrop-filter: blur(14px) saturate(1.22);
+  backdrop-filter: blur(14px) saturate(1.22);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.85),
+    0 4px 18px -6px rgba(15, 23, 42, 0.07);
+}
+
+/* Inputs, small chips — frosted fields */
+.nova-frost-field {
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  backdrop-filter: blur(12px) saturate(1.15);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.55);
+}
+
+/* Secondary buttons / floating controls */
+.nova-frost-btn {
+  background: rgba(255, 255, 255, 0.68);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.75),
+    0 2px 12px -4px rgba(15, 23, 42, 0.06);
+}
+
+/* Full-height hero / landing columns (no extra radius) */
+.nova-frost-sheet {
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(26px) saturate(1.32);
+  backdrop-filter: blur(26px) saturate(1.32);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.65);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-nova-orb-1,
+  .animate-nova-orb-2,
+  .animate-nova-orb-3,
+  .animate-nova-orb-4,
+  .animate-nova-orb-5,
+  .animate-nova-glow {
+    animation: none !important;
+  }
 }
 
 @layer utilities {
@@ -49,23 +151,36 @@ body {
   }
   
   .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.88);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      0 8px 32px -8px rgba(15, 23, 42, 0.09),
+      0 0 0 1px rgba(255, 255, 255, 0.25);
   }
   
   .glass-card {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    background: rgba(255, 255, 255, 0.75);
+    -webkit-backdrop-filter: blur(22px) saturate(1.35);
+    backdrop-filter: blur(22px) saturate(1.35);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.92),
+      0 10px 36px -10px rgba(15, 23, 42, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.3);
   }
 
   .bento-card {
-    @apply rounded-2xl border border-gray-200/80 bg-white;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    @apply rounded-2xl;
+    background: rgba(255, 255, 255, 0.76);
+    -webkit-backdrop-filter: blur(22px) saturate(1.3);
+    backdrop-filter: blur(22px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.88);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      0 8px 32px -8px rgba(15, 23, 42, 0.09);
   }
 
   .bento-bubble {

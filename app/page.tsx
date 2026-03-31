@@ -78,7 +78,7 @@ export default function Home() {
 
       <div className="relative z-10 flex flex-1 min-h-0 flex-col lg:flex-row">
         {/* Left - Branding (50%) - centered content */}
-        <div className="hidden lg:flex lg:w-1/2 bg-white/70 backdrop-blur-md border-r border-gray-200/60 flex-col p-6 xl:p-10 relative overflow-hidden shrink-0">
+        <div className="hidden lg:flex lg:w-1/2 nova-frost-sheet border-r border-white/50 flex-col p-6 xl:p-10 relative overflow-hidden shrink-0">
           {/* Subtle grid on left panel */}
           <div className="absolute inset-0 opacity-[0.3]" style={{ backgroundImage: 'linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
           <div className="flex-1 flex flex-col justify-center items-center relative z-10">
@@ -196,7 +196,7 @@ export default function Home() {
             <div className="flex flex-col gap-2 sm:gap-3 shrink-0 w-full max-w-2xl">
               {portals.map((p) => (
                 <a key={p.href} href={p.href} className="block">
-                  <div className={`rounded-xl border-2 ${p.border} bg-white/90 backdrop-blur-sm px-4 py-3 shadow-sm hover:shadow-lg hover:shadow-blue-100/50 hover:border-blue-300/60 transition-all duration-300 group flex flex-wrap items-center gap-3 sm:gap-4 text-left`}>
+                  <div className={`rounded-xl border-2 ${p.border} bg-white/58 backdrop-blur-xl backdrop-saturate-150 px-4 py-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.82),0_4px_24px_-8px_rgba(15,23,42,0.08)] hover:shadow-lg hover:shadow-blue-100/40 hover:border-blue-300/60 transition-all duration-300 group flex flex-wrap items-center gap-3 sm:gap-4 text-left`}>
                     <span className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-600/5 flex items-center justify-center text-gray-700 font-semibold text-lg group-hover:from-blue-500/20 group-hover:to-blue-600/10 group-hover:text-blue-600 transition-colors flex-shrink-0">
                       {p.icon}
                     </span>
@@ -228,7 +228,7 @@ export default function Home() {
               <button
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="w-full py-2.5 sm:py-3 px-4 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 font-medium text-sm text-gray-700 flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm transition-colors"
+                className="w-full py-2.5 sm:py-3 px-4 rounded-xl nova-frost-btn hover:bg-white/90 font-medium text-sm text-gray-700 flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -240,7 +240,7 @@ export default function Home() {
               </button>
               <div className="grid grid-cols-2 gap-2">
                 <Link href="/login">
-                  <button className="w-full py-2.5 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 font-medium text-sm text-gray-700 transition-colors">Sign In</button>
+                  <button className="w-full py-2.5 rounded-xl nova-frost-btn hover:bg-white/90 font-medium text-sm text-gray-700 transition-colors">Sign In</button>
                 </Link>
                 <Link href="/signup">
                   <button className="w-full py-2.5 rounded-xl text-white font-medium text-sm bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg shadow-blue-500/25 transition-all">Get Started</button>

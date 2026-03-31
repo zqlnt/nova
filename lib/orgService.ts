@@ -21,25 +21,7 @@ import type {
   Expense,
   UserAccount,
 } from '@/lib/orgTypes';
-import {
-  seedOrg,
-  seedAdmins,
-  seedTeachers,
-  seedClasses,
-  seedStudents,
-  seedOrgStudentRecords,
-  seedEnrollments,
-  seedAttendance,
-  seedNotes,
-  seedBillingAccounts,
-  seedInvoices,
-  seedPayments,
-  seedTuitionPlans,
-  seedFamilies,
-  seedStaffTasks,
-} from '@/lib/orgSeed';
-import { seedIncomeRecords, seedExpenses } from '@/lib/incomeExpenseSeed';
-import { seedUserAccounts } from '@/lib/userAccountSeed';
+import { seedOrg } from '@/lib/orgSeed';
 import {
   DEFAULT_ORG_ID,
   getFirestoreDb,
@@ -78,30 +60,31 @@ type OrgCache = {
   staffTasks: StaffTask[];
 };
 
-function memorySeedCache(): OrgCache {
+/** Empty collections until Firestore (or explicit dev seed) loads — no demo rows in production. */
+function emptyOrgCache(): OrgCache {
   return {
     organisation: seedOrg,
-    admins: seedAdmins,
-    teachers: seedTeachers,
-    classes: seedClasses,
-    students: seedStudents,
-    orgStudentRecords: seedOrgStudentRecords,
-    enrollments: seedEnrollments,
-    attendance: seedAttendance,
-    notes: seedNotes,
-    billingAccounts: seedBillingAccounts,
-    invoices: seedInvoices,
-    payments: seedPayments,
-    tuitionPlans: seedTuitionPlans,
-    income: seedIncomeRecords,
-    expenses: seedExpenses,
-    userAccounts: seedUserAccounts,
-    families: seedFamilies,
-    staffTasks: seedStaffTasks,
+    admins: [],
+    teachers: [],
+    classes: [],
+    students: [],
+    orgStudentRecords: [],
+    enrollments: [],
+    attendance: [],
+    notes: [],
+    billingAccounts: [],
+    invoices: [],
+    payments: [],
+    tuitionPlans: [],
+    income: [],
+    expenses: [],
+    userAccounts: [],
+    families: [],
+    staffTasks: [],
   };
 }
 
-let cache: OrgCache = memorySeedCache();
+let cache: OrgCache = emptyOrgCache();
 let persistenceEnabled = false;
 const syncListeners = new Set<() => void>();
 
@@ -257,7 +240,7 @@ function attachListeners(firestore: NonNullable<ReturnType<typeof getFirestoreDb
 async function initFirestore() {
   const firestore = getFirestoreDb();
   if (!firestore) {
-    cache = memorySeedCache();
+    cache = emptyOrgCache();
     persistenceEnabled = false;
     setSyncState({
       loading: false,
@@ -281,7 +264,7 @@ async function initFirestore() {
     attachListeners(firestore);
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
-    cache = memorySeedCache();
+    cache = emptyOrgCache();
     persistenceEnabled = false;
     setSyncState({
       loading: false,
@@ -323,7 +306,7 @@ export const orgService = {
 
     const firestore = getFirestoreDb();
     if (!firestore) {
-      cache = memorySeedCache();
+      cache = emptyOrgCache();
       persistenceEnabled = false;
       setSyncState({ loading: false, error: null, ready: true, persistenceEnabled: false });
       return;

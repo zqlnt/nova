@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
+import { firebaseAuthMessage } from '@/lib/authErrors';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
 
@@ -34,8 +35,8 @@ export default function SignUpPage() {
     try {
       await signUp(email, password);
       router.push('/student/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Failed to create account');
+    } catch (err: unknown) {
+      setError(firebaseAuthMessage(err));
     } finally {
       setLoading(false);
     }
@@ -48,8 +49,8 @@ export default function SignUpPage() {
     try {
       await signInWithGoogle();
       router.push('/student/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign in with Google');
+    } catch (err: unknown) {
+      setError(firebaseAuthMessage(err));
     } finally {
       setLoading(false);
     }
@@ -141,7 +142,7 @@ export default function SignUpPage() {
               <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 py-0.5 rounded-md bg-white/72 backdrop-blur-md text-gray-500">Or continue with</span>
             </div>
           </div>
 

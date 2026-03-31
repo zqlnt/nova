@@ -30,7 +30,7 @@ export default function Error({
           </button>
           <Link
             href="/"
-            className="px-4 py-2 rounded-xl border border-gray-200 bg-white font-medium hover:bg-gray-50 text-center"
+            className="px-4 py-2 rounded-xl nova-frost-btn font-medium hover:bg-white/90 text-center"
           >
             Go home
           </Link>

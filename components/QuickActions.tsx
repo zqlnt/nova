@@ -54,9 +54,9 @@ export default function QuickActions({ onAction, disabled = false }: QuickAction
           key={action.id}
           onClick={() => onAction(action.id)}
           disabled={disabled}
-          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 
+          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg nova-frost-btn hover:bg-white/88
                      text-sm text-gray-700 font-medium transition-colors disabled:opacity-50 
-                     disabled:cursor-not-allowed border border-gray-200 hover:border-gray-300"
+                     disabled:cursor-not-allowed hover:border-white/70"
         >
           {action.icon}
           {action.label}

@@ -229,40 +229,6 @@ export const mockChatMessages = [
   },
 ];
 
-import { seedClasses, seedStudents } from '@/lib/orgSeed';
-
-export const mockClasses = [
-  {
-    id: seedClasses[0].id,
-    name: seedClasses[0].name,
-    subject: 'Mathematics',
-    studentCount: seedStudents.length,
-    activeStudents: Math.floor(seedStudents.length * 0.7),
-    averageProgress: 72,
-    weakTopics: ['Algebra', 'Number', 'Ratio & Proportion'],
-    recentActivity: `${Math.min(5, seedStudents.length)} students active today`,
-  },
-];
-
-const getInitials = (name: string) =>
-  name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase();
-
-export const mockClassStudents = seedStudents.map((s, i) => ({
-  id: s.id,
-  name: s.name,
-  initials: getInitials(s.name),
-  overallProgress: 65 + (i % 5) * 8,
-  lessonsCompleted: 20 + i * 2,
-  lastActive: i < 5 ? '2 hours ago' : i < 12 ? '1 day ago' : '3 days ago',
-  weakAreas: ['Algebra', 'Number'].slice(0, 1 + (i % 2)),
-  subjects: s.subjects,
-}));
-
 // Helper function to get topics for a subject
 export const getTopicsForSubject = (subjectName: string) => {
   if (subjectName === 'Mathematics') {

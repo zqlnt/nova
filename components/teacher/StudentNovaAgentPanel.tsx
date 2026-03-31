@@ -65,8 +65,8 @@ export default function StudentNovaAgentPanel({ scope }: StudentNovaAgentPanelPr
   };
 
   return (
-    <Card className="p-0 overflow-hidden border border-gray-200">
-      <div className="px-4 py-3 border-b border-gray-200 bg-white">
+    <Card className="p-0 overflow-hidden border-white/45">
+      <div className="px-4 py-3 border-b border-white/45 nova-frost-strip">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Student Nova Agent</div>
@@ -79,7 +79,7 @@ export default function StudentNovaAgentPanel({ scope }: StudentNovaAgentPanelPr
         </div>
       </div>
 
-      <div className="h-[420px] overflow-y-auto px-4 py-3 space-y-3 bg-gray-50 custom-scrollbar">
+      <div className="h-[420px] overflow-y-auto px-4 py-3 space-y-3 bg-gray-50/55 backdrop-blur-[2px] custom-scrollbar">
         {messages.length === 0 && (
           <div className="text-sm text-gray-600">
             Ask about progress, weakest areas, what changed, or what to assign next.
@@ -92,7 +92,7 @@ export default function StudentNovaAgentPanel({ scope }: StudentNovaAgentPanelPr
               className={`max-w-[90%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                 m.role === 'teacher'
                   ? 'bg-gray-900 text-white'
-                  : 'bg-white border border-gray-200 text-gray-900'
+                  : 'nova-frost-bubble text-gray-900'
               }`}
             >
               <div className="whitespace-pre-wrap">{m.content}</div>
@@ -105,7 +105,7 @@ export default function StudentNovaAgentPanel({ scope }: StudentNovaAgentPanelPr
 
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3">
+            <div className="nova-frost-bubble rounded-2xl px-4 py-3">
               <div className="flex gap-1">
                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
@@ -117,7 +117,7 @@ export default function StudentNovaAgentPanel({ scope }: StudentNovaAgentPanelPr
         <div ref={bottomRef} />
       </div>
 
-      <div className="px-4 py-3 border-t border-gray-200 bg-white">
+      <div className="px-4 py-3 border-t border-white/45 nova-frost-strip">
         <div className="flex gap-2">
           <input
             value={input}
@@ -126,7 +126,7 @@ export default function StudentNovaAgentPanel({ scope }: StudentNovaAgentPanelPr
               if (e.key === 'Enter') send();
             }}
             placeholder="Ask Nova about this student…"
-            className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900"
+            className="flex-1 px-4 py-2.5 rounded-xl nova-frost-field focus:outline-none focus:ring-2 focus:ring-gray-900/30"
             disabled={loading}
           />
           <Button onClick={send} disabled={loading || !input.trim()} className="bg-gray-900 hover:bg-black">

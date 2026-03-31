@@ -1,7 +1,7 @@
 'use client';
 
 import { masteryService, curriculumService, pointsService } from '@/lib/services';
-import { mockClassStudents } from '@/lib/mockData';
+import { orgService } from '@/lib/orgService';
 import type {
   StudentAgentMessage,
   StudentAgentThread,
@@ -78,9 +78,9 @@ export const teacherAgentService = {
   },
 
   buildStudentContextPacket(scope: TeacherAgentScope): StudentContextPacket {
-    const student = mockClassStudents.find((s) => s.id === scope.studentId) || mockClassStudents[0];
-    const yearGroup = ((student as { yearGroup?: number }).yearGroup ?? 10) as 7 | 8 | 9 | 10 | 11;
-    const mathsTier = ((student as { mathsTier?: string }).mathsTier ?? 'Higher') as 'Foundation' | 'Higher';
+    const orgStudent = orgService.listStudents().find((s) => s.id === scope.studentId);
+    const yearGroup = (orgStudent?.yearGroup ?? 10) as 7 | 8 | 9 | 10 | 11;
+    const mathsTier = (orgStudent?.mathsTier ?? 'Higher') as 'Foundation' | 'Higher';
 
     // Curriculum-linked: Maths strands (AQA/Edexcel)
     const byStrandMaths = masteryService.getStrandMastery('Mathematics').map((s) => ({
@@ -131,7 +131,7 @@ export const teacherAgentService = {
     const weekly = pointsService.getWeeklyActivity();
     const minutesThisWeek = weekly.reduce((sum, d) => sum + d.minutes, 0);
     const streakDays = 7;
-    const lastActiveLabel = student.lastActive;
+    const lastActiveLabel = orgStudent ? 'See Nova org attendance' : '—';
 
     const recommendations: StudentContextPacket['recommendations'] = [
       nextMaths && {
@@ -158,10 +158,10 @@ export const teacherAgentService = {
 
     return {
       student: {
-        id: student.id,
-        name: student.name,
+        id: scope.studentId,
+        name: orgStudent?.name ?? 'Student',
         yearGroup,
-        subjects: student.subjects ?? ['Mathematics', 'English Language', 'English Literature'],
+        subjects: orgStudent?.subjects ?? ['Mathematics', 'English', 'Science'],
         mathsTier,
       },
       mastery: {

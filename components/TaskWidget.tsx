@@ -22,7 +22,7 @@ export default function TaskWidget({ tasks, title = 'Tasks', href, emptyMessage 
   const pending = tasks.filter((t) => !t.done).slice(0, 5);
 
   return (
-    <div className="rounded-xl border border-gray-200/80 bg-white/95 p-4 shadow-sm">
+    <div className="nova-frost-panel rounded-xl p-4">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
         {href && (

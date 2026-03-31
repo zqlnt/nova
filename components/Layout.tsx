@@ -7,6 +7,13 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import ChatSidebar from './ChatSidebar';
 
+function initialsFromDisplay(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '?';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 interface LayoutProps {
   children: ReactNode;
   role: 'student' | 'teacher' | 'org';
@@ -15,7 +22,7 @@ interface LayoutProps {
 export default function Layout({ children, role }: LayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const [chatCollapsed, setChatCollapsed] = useState(true);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   
@@ -118,16 +125,39 @@ export default function Layout({ children, role }: LayoutProps) {
   ];
   
   const links = role === 'student' ? studentLinks : role === 'teacher' ? teacherLinks : orgLinks;
-  const userName = role === 'student' ? 'Alex Johnson' : role === 'teacher' ? 'Zain Gul' : 'Org Admin';
-  const userInitials = role === 'student' ? 'AJ' : role === 'teacher' ? 'ZG' : 'OA';
+  const fallbackName =
+    role === 'student' ? 'Student' : role === 'teacher' ? 'Teacher' : 'Organisation';
+  const userName =
+    user?.displayName?.trim() ||
+    user?.email?.split('@')[0] ||
+    fallbackName;
+  const userInitials = initialsFromDisplay(userName);
 
   const modeLabel = role === 'student' ? 'Nova Student' : role === 'teacher' ? 'Nova Teacher' : 'Nova Org';
   const modeSymbol = role === 'student' ? '●' : role === 'teacher' ? '■' : '▲';
   
   return (
-    <div className="flex h-screen bg-[#f8f9fb] min-w-[320px] overflow-hidden">
+    <div className="flex h-screen bg-transparent min-w-[320px] overflow-hidden relative">
+      {/* Pulsating, drifting colored orbs (behind UI) */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0" aria-hidden>
+        <div className="absolute -top-32 -left-40 w-[30rem] h-[30rem] animate-nova-orb-1">
+          <div className="w-full h-full rounded-full bg-sky-400/35 blur-[100px] animate-nova-glow" />
+        </div>
+        <div className="absolute top-[12%] -right-24 w-[26rem] h-[26rem] animate-nova-orb-2 [animation-delay:-4s]">
+          <div className="w-full h-full rounded-full bg-fuchsia-400/28 blur-[95px] animate-nova-glow [animation-delay:-2s]" />
+        </div>
+        <div className="absolute top-[40%] left-[5%] w-[22rem] h-[22rem] animate-nova-orb-3 [animation-delay:-8s]">
+          <div className="w-full h-full rounded-full bg-cyan-400/25 blur-[88px] animate-nova-glow [animation-delay:-5s]" />
+        </div>
+        <div className="absolute bottom-[-8%] left-[20%] w-[28rem] h-[24rem] animate-nova-orb-4 [animation-delay:-6s]">
+          <div className="w-full h-full rounded-full bg-blue-500/22 blur-[100px] animate-nova-glow [animation-delay:-3s]" />
+        </div>
+        <div className="absolute bottom-[15%] right-[8%] w-[20rem] h-[20rem] animate-nova-orb-5 [animation-delay:-10s]">
+          <div className="w-full h-full rounded-full bg-violet-400/22 blur-[90px] animate-nova-glow [animation-delay:-7s]" />
+        </div>
+      </div>
       {/* Subtle dot grid background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #d1d5db 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-[0.35]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #d1d5db 1px, transparent 0)', backgroundSize: '24px 24px' }} />
 
       {/* Mobile Overlay */}
       {!sidebarCollapsed && (
@@ -265,7 +295,7 @@ export default function Layout({ children, role }: LayoutProps) {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col overflow-hidden relative z-10 w-full min-w-0">
         {/* Top Navigation Bar - Shows on mobile always, on desktop when sidebar collapsed */}
-        <div className={`bg-white/95 backdrop-blur-sm border-b border-gray-200/80 px-4 py-3 flex items-center justify-between flex-shrink-0 sticky top-0 z-30 shadow-sm ${sidebarCollapsed ? 'flex' : 'flex lg:hidden'}`}>
+        <div className={`nova-frost-chrome border-b border-white/55 px-4 py-3 flex items-center justify-between flex-shrink-0 sticky top-0 z-30 ${sidebarCollapsed ? 'flex' : 'flex lg:hidden'}`}>
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -321,7 +351,7 @@ export default function Layout({ children, role }: LayoutProps) {
           </div>
           
           {/* Footer */}
-          <footer className="border-t border-gray-200 bg-white/80 backdrop-blur-sm">
+          <footer className="nova-frost-chrome border-t border-white/55">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
               <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-xs sm:text-sm text-gray-600">
                 <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center">
@@ -331,7 +361,7 @@ export default function Layout({ children, role }: LayoutProps) {
                   <Link href="/terms" className="hover:text-ios-blue transition-colors">Terms</Link>
                 </div>
                 <div className="text-gray-500 text-xs">
-                  © 2025 Nova. All rights reserved.
+                  © 2026 Nova. All rights reserved.
                 </div>
               </div>
             </div>
@@ -341,7 +371,7 @@ export default function Layout({ children, role }: LayoutProps) {
       
       {/* Right Chat Sidebar - Always a side panel (slides in from right) */}
       <aside className={`
-        bg-white border-l border-gray-200 flex-col transition-all duration-300 shadow-2xl
+        nova-frost-chrome border-l border-white/55 flex-col transition-all duration-300 shadow-[-8px_0_32px_-8px_rgba(15,23,42,0.1)]
         ${chatCollapsed ? 'hidden' : 'flex'}
         fixed top-0 right-0 bottom-0 w-80 max-w-[90vw] z-50 lg:relative lg:z-10 lg:flex-shrink-0 lg:shadow-none
       `}>
