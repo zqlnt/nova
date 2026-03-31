@@ -103,16 +103,16 @@ export default function OrgStaffTasksPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
-              <input value={title} onChange={(e) => setTitle(e.target.value)} required className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+              <input value={title} onChange={(e) => setTitle(e.target.value)} required className="w-full px-4 py-2 rounded-xl border border-white/45" />
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Due date</label>
-                <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select value={status} onChange={(e) => setStatus(e.target.value as StaffTaskStatus)} className="w-full px-4 py-2 rounded-xl border border-gray-200">
+                <select value={status} onChange={(e) => setStatus(e.target.value as StaffTaskStatus)} className="w-full px-4 py-2 rounded-xl border border-white/45">
                   <option value="open">Open</option>
                   <option value="done">Done</option>
                   <option value="cancelled">Cancelled</option>
@@ -122,7 +122,7 @@ export default function OrgStaffTasksPage() {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Related student</label>
-                <select value={relatedStudentId} onChange={(e) => setRelatedStudentId(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200">
+                <select value={relatedStudentId} onChange={(e) => setRelatedStudentId(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45">
                   <option value="">None</option>
                   {students.map((s) => (
                     <option key={s.id} value={s.id}>{s.name}</option>
@@ -131,7 +131,7 @@ export default function OrgStaffTasksPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Related household</label>
-                <select value={relatedFamilyId} onChange={(e) => setRelatedFamilyId(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200">
+                <select value={relatedFamilyId} onChange={(e) => setRelatedFamilyId(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45">
                   <option value="">None</option>
                   {families.map((f) => (
                     <option key={f.id} value={f.id}>{f.name}</option>
@@ -141,7 +141,7 @@ export default function OrgStaffTasksPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Assign to teacher</label>
-              <select value={assigneeTeacherId} onChange={(e) => setAssigneeTeacherId(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200">
+              <select value={assigneeTeacherId} onChange={(e) => setAssigneeTeacherId(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45">
                 <option value="">Unassigned</option>
                 {teachers.map((t) => (
                   <option key={t.id} value={t.id}>{t.name}</option>
@@ -150,7 +150,7 @@ export default function OrgStaffTasksPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-              <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+              <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} className="w-full px-4 py-2 rounded-xl border border-white/45" />
             </div>
             <div className="flex gap-3">
               <button type="submit" className="px-6 py-2.5 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700">

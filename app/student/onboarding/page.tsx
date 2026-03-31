@@ -311,7 +311,7 @@ export default function Onboarding() {
                     onChange={(e) => setAnswer(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && answer.trim() && submitBaselineAnswer()}
                     placeholder="Type your answer..."
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 border border-white/45 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                     autoFocus
                   />
                   <div className="flex gap-3 mt-4">

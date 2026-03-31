@@ -179,7 +179,7 @@ export default function OrgPaymentsPage() {
             }} className="space-y-4 max-w-md">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Student</label>
-                <select value={invStudentId} onChange={(e) => setInvStudentId(e.target.value)} required className="w-full px-4 py-2 rounded-xl border border-gray-200">
+                <select value={invStudentId} onChange={(e) => setInvStudentId(e.target.value)} required className="w-full px-4 py-2 rounded-xl border border-white/45">
                   <option value="">Select student</option>
                   {students.map((s) => (
                     <option key={s.id} value={s.id}>{s.name}</option>
@@ -188,11 +188,11 @@ export default function OrgPaymentsPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Amount (£)</label>
-                <input type="number" step="0.01" min="0" value={invAmount} onChange={(e) => setInvAmount(e.target.value)} required className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <input type="number" step="0.01" min="0" value={invAmount} onChange={(e) => setInvAmount(e.target.value)} required className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Due date</label>
-                <input type="date" value={invDueDate} onChange={(e) => setInvDueDate(e.target.value)} required className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <input type="date" value={invDueDate} onChange={(e) => setInvDueDate(e.target.value)} required className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
               <div className="flex gap-3">
                 <button type="submit" className="px-6 py-2.5 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700">Save</button>
@@ -212,7 +212,7 @@ export default function OrgPaymentsPage() {
                   value={addPaymentStudentId}
                   onChange={(e) => setAddPaymentStudentId(e.target.value)}
                   required
-                  className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                  className="w-full px-4 py-2 rounded-xl border border-white/45"
                 >
                   <option value="">Select student</option>
                   {students.map((s) => (
@@ -229,7 +229,7 @@ export default function OrgPaymentsPage() {
                   value={addAmount}
                   onChange={(e) => setAddAmount(e.target.value)}
                   required
-                  className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                  className="w-full px-4 py-2 rounded-xl border border-white/45"
                 />
               </div>
               <div>
@@ -238,7 +238,7 @@ export default function OrgPaymentsPage() {
                   type="date"
                   value={addDate}
                   onChange={(e) => setAddDate(e.target.value)}
-                  className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                  className="w-full px-4 py-2 rounded-xl border border-white/45"
                 />
               </div>
               <div>
@@ -246,7 +246,7 @@ export default function OrgPaymentsPage() {
                 <select
                   value={addType}
                   onChange={(e) => setAddType(e.target.value as 'private' | 'universal_credit')}
-                  className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                  className="w-full px-4 py-2 rounded-xl border border-white/45"
                 >
                   <option value="private">Private</option>
                   <option value="universal_credit">Universal Credit</option>
@@ -316,7 +316,7 @@ export default function OrgPaymentsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 text-left text-gray-500">
+                <tr className="border-b border-gray-200/45 text-left text-gray-500">
                   <th className="py-2 pr-4">Student</th>
                   <th className="py-2 pr-4">Status</th>
                   <th className="py-2 pr-4">Funding</th>
@@ -363,7 +363,7 @@ export default function OrgPaymentsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-200 text-left text-gray-500">
+                  <tr className="border-b border-gray-200/45 text-left text-gray-500">
                     <th className="py-2 pr-4">Student</th>
                     <th className="py-2 pr-4">Date</th>
                     <th className="py-2 pr-4">Amount</th>

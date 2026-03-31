@@ -144,7 +144,7 @@ export default function StudentNovaAgentPanel({ scope }: StudentNovaAgentPanelPr
             <button
               key={q}
               onClick={() => setInput(q)}
-              className="text-xs px-2.5 py-1.5 rounded-lg bg-gray-50 border border-gray-200 hover:bg-gray-100 text-gray-700"
+              className="text-xs px-2.5 py-1.5 rounded-lg bg-gray-50 border border-white/45 hover:bg-gray-100 text-gray-700"
             >
               {q}
             </button>

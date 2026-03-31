@@ -116,7 +116,7 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-white/45 nova-frost-strip bg-gradient-to-b from-white/30 to-transparent flex items-center justify-between flex-shrink-0">
+      <div className="p-4 border-b border-white/30 bg-white/25 backdrop-blur-md flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full nova-frost-field flex items-center justify-center p-1">
             <Image 
@@ -133,8 +133,9 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
           </div>
         </div>
         <button
+          type="button"
           onClick={onToggle}
-          className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-600"
+          className="p-2 rounded-xl hover:bg-white/45 transition-colors text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
           aria-label="Collapse chat"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,7 +158,7 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
                 <button
                   key={s}
                   onClick={() => handleSuggestionClick(s)}
-                  className="w-full text-left px-3 py-2.5 rounded-xl bg-gray-50 hover:bg-blue-50 hover:border-blue-200 border border-transparent text-sm text-gray-700 hover:text-blue-700 transition-all"
+                  className="w-full text-left px-3 py-2.5 rounded-xl border border-white/40 bg-white/35 backdrop-blur-sm hover:bg-white/55 hover:border-white/55 text-sm text-gray-700 transition-all"
                 >
                   {s}
                 </button>
@@ -181,7 +182,7 @@ export default function ChatSidebar({ collapsed, onToggle }: ChatSidebarProps) {
       </div>
 
       {/* Input */}
-      <div className="p-3 border-t border-white/45 nova-frost-strip bg-gradient-to-t from-transparent to-white/20 flex-shrink-0">
+      <div className="p-3 border-t border-white/30 bg-white/20 backdrop-blur-md flex-shrink-0">
         <ChatInput 
           onSend={handleSendMessage}
           placeholder="Ask Nova anything..."

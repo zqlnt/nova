@@ -147,35 +147,35 @@ export default function OrgFamilyDetailPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Primary contact name</label>
-                <input value={primaryContactName} onChange={(e) => setPrimaryContactName(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <input value={primaryContactName} onChange={(e) => setPrimaryContactName(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                <input value={primaryContactPhone} onChange={(e) => setPrimaryContactPhone(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <input value={primaryContactPhone} onChange={(e) => setPrimaryContactPhone(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input type="email" value={primaryContactEmail} onChange={(e) => setPrimaryContactEmail(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <input type="email" value={primaryContactEmail} onChange={(e) => setPrimaryContactEmail(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Address line 1</label>
-                <input value={addressLine1} onChange={(e) => setAddressLine1(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <input value={addressLine1} onChange={(e) => setAddressLine1(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Postcode</label>
-                <input value={postcode} onChange={(e) => setPostcode(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <input value={postcode} onChange={(e) => setPostcode(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
               <div className="md:col-span-3">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Address line 2</label>
-                <input value={addressLine2} onChange={(e) => setAddressLine2(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <input value={addressLine2} onChange={(e) => setAddressLine2(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
             </div>
 
@@ -188,16 +188,16 @@ export default function OrgFamilyDetailPage() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Next UC payment date</label>
-                  <input type="date" value={nextUcPaymentDate} onChange={(e) => setNextUcPaymentDate(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                  <input type="date" value={nextUcPaymentDate} onChange={(e) => setNextUcPaymentDate(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Next journal check date</label>
-                  <input type="date" value={nextJournalCheckDate} onChange={(e) => setNextJournalCheckDate(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                  <input type="date" value={nextJournalCheckDate} onChange={(e) => setNextJournalCheckDate(e.target.value)} className="w-full px-4 py-2 rounded-xl border border-white/45" />
                 </div>
               </div>
               <div className="mt-3">
                 <label className="block text-sm font-medium text-gray-700 mb-1">UC notes</label>
-                <textarea value={ucNotes} onChange={(e) => setUcNotes(e.target.value)} rows={2} className="w-full px-4 py-2 rounded-xl border border-gray-200" />
+                <textarea value={ucNotes} onChange={(e) => setUcNotes(e.target.value)} rows={2} className="w-full px-4 py-2 rounded-xl border border-white/45" />
               </div>
             </div>
 
@@ -236,7 +236,7 @@ export default function OrgFamilyDetailPage() {
             <div className="grid md:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Type</label>
-                <select value={noteType} onChange={(e) => setNoteType(e.target.value as NoteType)} className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm">
+                <select value={noteType} onChange={(e) => setNoteType(e.target.value as NoteType)} className="w-full px-3 py-2 rounded-lg border border-white/45 text-sm">
                   <option value="note">Note</option>
                   <option value="parent_call">Parent call</option>
                   <option value="intervention">Intervention</option>
@@ -245,7 +245,7 @@ export default function OrgFamilyDetailPage() {
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Risk</label>
-                <select value={noteRisk} onChange={(e) => setNoteRisk(e.target.value as RiskLevel)} className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm">
+                <select value={noteRisk} onChange={(e) => setNoteRisk(e.target.value as RiskLevel)} className="w-full px-3 py-2 rounded-lg border border-white/45 text-sm">
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
@@ -257,7 +257,7 @@ export default function OrgFamilyDetailPage() {
               onChange={(e) => setNoteText(e.target.value)}
               placeholder="Follow-up detail…"
               rows={3}
-              className="w-full px-4 py-2 rounded-xl border border-gray-200 text-sm"
+              className="w-full px-4 py-2 rounded-xl border border-white/45 text-sm"
             />
             <button type="submit" className="px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800">
               Add note

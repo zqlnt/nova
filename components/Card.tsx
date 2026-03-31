@@ -11,7 +11,7 @@ export default function Card({ children, className = '', hover = false, decorati
   return (
     <div 
       className={`
-        nova-frost-panel rounded-2xl p-4 sm:p-6 relative overflow-hidden
+        nova-frost-panel rounded-3xl p-6 sm:p-8 relative overflow-hidden
         ${hover ? 'nova-frost-panel--hover transition-all duration-300' : ''}
         ${className}
       `}

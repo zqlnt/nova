@@ -80,7 +80,7 @@ export default function SignUpPage() {
           <p className="text-gray-600 mt-2">E-Learning Platform</p>
         </div>
 
-        <Card className="border border-gray-200">
+        <Card className="border border-white/45">
           <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">Create Account</h1>
 
           {error && (
@@ -99,7 +99,7 @@ export default function SignUpPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+                className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
                 placeholder="your@email.com"
               />
             </div>
@@ -113,7 +113,7 @@ export default function SignUpPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+                className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
                 placeholder="••••••••"
               />
             </div>
@@ -127,7 +127,7 @@ export default function SignUpPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+                className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
                 placeholder="••••••••"
               />
             </div>
@@ -139,7 +139,7 @@ export default function SignUpPage() {
 
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
+              <div className="w-full border-t border-white/35"></div>
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-2 py-0.5 rounded-md bg-white/72 backdrop-blur-md text-gray-500">Or continue with</span>

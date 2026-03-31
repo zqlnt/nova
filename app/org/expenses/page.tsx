@@ -88,7 +88,7 @@ export default function OrgExpensesPage() {
                     onChange={(e) => setName(e.target.value)}
                     required
                     placeholder="e.g. Rent - Muath Trust Centre"
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                    className="w-full px-4 py-2 rounded-xl border border-white/45"
                   />
                 </div>
                 <div>
@@ -96,7 +96,7 @@ export default function OrgExpensesPage() {
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                    className="w-full px-4 py-2 rounded-xl border border-white/45"
                   >
                     {DEFAULT_CATEGORIES.map((c) => (
                       <option key={c} value={c}>{c}</option>
@@ -114,7 +114,7 @@ export default function OrgExpensesPage() {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     required
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                    className="w-full px-4 py-2 rounded-xl border border-white/45"
                   />
                 </div>
                 <div>
@@ -123,7 +123,7 @@ export default function OrgExpensesPage() {
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                    className="w-full px-4 py-2 rounded-xl border border-white/45"
                   />
                 </div>
               </div>
@@ -134,7 +134,7 @@ export default function OrgExpensesPage() {
                   value={recipient}
                   onChange={(e) => setRecipient(e.target.value)}
                   placeholder="e.g. Muath Trust, School Supplies Ltd"
-                  className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                  className="w-full px-4 py-2 rounded-xl border border-white/45"
                 />
               </div>
               <div>
@@ -144,7 +144,7 @@ export default function OrgExpensesPage() {
                   onChange={(e) => setNotes(e.target.value)}
                   rows={2}
                   placeholder="Optional notes"
-                  className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                  className="w-full px-4 py-2 rounded-xl border border-white/45"
                 />
               </div>
               <div className="flex gap-3">
@@ -192,7 +192,7 @@ export default function OrgExpensesPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 text-left text-gray-500">
+                <tr className="border-b border-gray-200/45 text-left text-gray-500">
                   <th className="py-2 pr-4">Month</th>
                   <th className="py-2">Total</th>
                 </tr>
@@ -217,7 +217,7 @@ export default function OrgExpensesPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 text-left text-gray-500">
+                <tr className="border-b border-gray-200/45 text-left text-gray-500">
                   <th className="py-2 pr-4">Date</th>
                   <th className="py-2 pr-4">Name</th>
                   <th className="py-2 pr-4">Category</th>

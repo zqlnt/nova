@@ -437,7 +437,7 @@ export default function StudentDashboard() {
           <h2 className="text-lg font-bold text-gray-900 mb-4">Quick access</h2>
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
             <Link href="/student/chat">
-              <Card hover className="p-5 cursor-pointer border border-gray-200 hover:border-blue-300 group">
+              <Card hover className="p-5 cursor-pointer border border-white/45 hover:border-blue-300 group">
                 <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors">
                   <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -448,7 +448,7 @@ export default function StudentDashboard() {
               </Card>
             </Link>
             <Link href="/student/practice">
-              <Card hover className="p-5 cursor-pointer border border-gray-200 hover:border-amber-300 group">
+              <Card hover className="p-5 cursor-pointer border border-white/45 hover:border-amber-300 group">
                 <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center mb-3 group-hover:bg-amber-200 transition-colors">
                   <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -459,7 +459,7 @@ export default function StudentDashboard() {
               </Card>
             </Link>
             <Link href="/student/learning-map">
-              <Card hover className="p-5 cursor-pointer border border-gray-200 hover:border-emerald-300 group">
+              <Card hover className="p-5 cursor-pointer border border-white/45 hover:border-emerald-300 group">
                 <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-3 group-hover:bg-emerald-200 transition-colors">
                   <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
@@ -470,7 +470,7 @@ export default function StudentDashboard() {
               </Card>
             </Link>
             <Link href="/student/calendar">
-              <Card hover className="p-5 cursor-pointer border border-gray-200 hover:border-violet-300 group">
+              <Card hover className="p-5 cursor-pointer border border-white/45 hover:border-violet-300 group">
                 <div className="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center mb-3 group-hover:bg-violet-200 transition-colors">
                   <svg className="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -481,7 +481,7 @@ export default function StudentDashboard() {
               </Card>
             </Link>
             <Link href="/student/settings">
-              <Card hover className="p-5 cursor-pointer border border-gray-200 hover:border-slate-300 group">
+              <Card hover className="p-5 cursor-pointer border border-white/45 hover:border-slate-300 group">
                 <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center mb-3 group-hover:bg-slate-200 transition-colors">
                   <svg className="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />

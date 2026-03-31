@@ -184,7 +184,7 @@ export default function StudentChat() {
             <select
               value={chatScope.yearGroup}
               onChange={(e) => handleScopeChange({ yearGroup: parseInt(e.target.value) as 7|8|9|10|11 })}
-              className="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-3 py-1.5 bg-gray-50 border border-white/45 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {[7, 8, 9, 10, 11].map(y => (
                 <option key={y} value={y}>Year {y}</option>
@@ -215,7 +215,7 @@ export default function StudentChat() {
                   handleScopeChange({ objectiveId: null, objectiveTitle: null });
                 }
               }}
-              className="flex-1 min-w-[180px] px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 min-w-[180px] px-3 py-1.5 bg-gray-50 border border-white/45 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select objective...</option>
               {availableObjectives.map(obj => (

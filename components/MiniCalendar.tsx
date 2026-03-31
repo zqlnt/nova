@@ -29,7 +29,7 @@ export default function MiniCalendar({ events = [], href = '/student/calendar', 
   const upcomingEvents = events.filter((e) => e.startDate >= todayStr).slice(0, 3);
 
   return (
-    <div className="nova-frost-panel rounded-xl p-4">
+    <div className="nova-frost-panel rounded-3xl p-5">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
         <Link href={href} className="text-xs text-indigo-600 hover:underline">View</Link>
@@ -47,7 +47,9 @@ export default function MiniCalendar({ events = [], href = '/student/calendar', 
             <div
               key={i}
               className={`aspect-square flex items-center justify-center rounded text-xs font-medium ${
-                isToday ? 'bg-indigo-500 text-white' : 'text-gray-700 hover:bg-gray-100'
+                isToday
+                  ? 'bg-gradient-to-br from-indigo-500 to-blue-600 text-white shadow-[0_4px_14px_-4px_rgba(79,70,229,0.45)]'
+                  : 'text-gray-700 hover:bg-white/50'
               }`}
             >
               {d}
@@ -56,7 +58,7 @@ export default function MiniCalendar({ events = [], href = '/student/calendar', 
         })}
       </div>
       {upcomingEvents.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-gray-100 space-y-1">
+        <div className="mt-4 pt-4 border-t border-gray-200/40 space-y-2">
           {upcomingEvents.map((e) => (
             <div key={e.startDate + e.title} className="text-xs text-gray-600 truncate">
               <span className="text-gray-400">{e.startDate.slice(5)}</span> {e.title}

@@ -44,7 +44,7 @@ export function SoftDonut({ data, size = 140, strokeWidth = 14, centerLabel, cen
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="#F3F4F6"
+          stroke="rgba(148, 163, 184, 0.28)"
           strokeWidth={strokeWidth}
         />
         {segments.map((seg, i) => (
@@ -94,9 +94,9 @@ export function SoftBarChart({ data, maxValue, height = 180, showValues = true }
         return (
           <div key={i} className="flex items-center gap-3">
             <span className="text-sm text-gray-600 w-24 truncate">{item.label}</span>
-            <div className="flex-1 h-7 bg-gray-100/80 rounded-lg overflow-hidden">
+            <div className="flex-1 h-7 rounded-xl overflow-hidden border border-white/50 bg-white/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.65)]">
               <div
-                className="h-full rounded-lg transition-all duration-500 ease-out"
+                className="h-full rounded-lg transition-all duration-500 ease-out shadow-[0_1px_0_0_rgba(255,255,255,0.35)]"
                 style={{
                   width: `${Math.max(pct, 2)}%`,
                   backgroundColor: item.color || getPastelColor(i),
@@ -135,7 +135,7 @@ export function PaidVsOwedDonut({ paid, owed, size = 120 }: PaidVsOwedProps) {
   return (
     <div className="relative inline-flex">
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="#F3F4F6" strokeWidth={12} />
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(148, 163, 184, 0.28)" strokeWidth={12} />
         {paidPct > 0 && (
           <circle
             cx={size / 2}
@@ -222,7 +222,7 @@ export function AttendanceTrendChart({ data, height = 120 }: AttendanceTrendProp
           <div key={i} className="flex-1 flex flex-col items-center gap-1">
             <div className="w-full max-w-10 flex flex-col justify-end" style={{ height: height - 28 }}>
               <div
-                className="w-full rounded-t-md bg-gray-100/80"
+                className="w-full rounded-t-md border border-white/40 bg-white/30"
                 style={{ height: `${Math.max(totalPct, 4)}%` }}
               >
                 <div
@@ -258,7 +258,7 @@ export function InlineSummaryChart({ value, max, label, color = NOVA_PASTEL_PALE
   const pct = max > 0 ? (value / max) * 100 : 0;
   return (
     <div className="flex items-center gap-2">
-      <div className="h-2 rounded-full bg-gray-100/80 overflow-hidden" style={{ width }}>
+      <div className="h-2 rounded-full border border-white/45 bg-white/35 overflow-hidden" style={{ width }}>
         <div
           className="h-full rounded-full transition-all duration-500"
           style={{ width: `${Math.min(pct, 100)}%`, backgroundColor: color }}
@@ -290,12 +290,13 @@ export function AttendanceByStudentChart({ data, maxBars = 12, height = 220 }: A
         const pct = (d.sessions / max) * 100;
         return (
           <div key={i} className="flex-1 flex flex-col items-center gap-1 min-w-0">
-            <div className="w-full flex-1 flex flex-col justify-end min-h-[100px]">
+            <div className="w-full flex-1 flex flex-col justify-end min-h-[100px] rounded-t-lg bg-gradient-to-t from-white/25 to-transparent">
               <div
-                className="w-full rounded-t-sm transition-all duration-500"
+                className="w-full rounded-t-md transition-all duration-500 shadow-[0_-1px_8px_-2px_rgba(37,99,235,0.25)]"
                 style={{
                   height: `${Math.max(pct, 4)}%`,
                   backgroundColor: ATTENDANCE_COLOR,
+                  opacity: 0.92,
                 }}
               />
             </div>
@@ -328,24 +329,26 @@ export function PaymentsGroupedBarChart({ data, maxBars = 10, height = 220 }: Pa
         return (
           <div key={i} className="flex items-center gap-2">
             <span className="text-xs text-gray-600 w-20 truncate">{d.name.split(' ')[0]}</span>
-            <div className="flex-1 flex gap-0.5 h-6">
+            <div className="flex-1 flex min-w-0 gap-0.5 h-6 rounded-lg overflow-hidden border border-white/35 bg-white/30">
               {d.paidPence > 0 && (
                 <div
-                  className="rounded-sm transition-all"
+                  className="rounded-md transition-all"
                   style={{
                     width: `${Math.max(paidPct, 2)}%`,
                     backgroundColor: PAID_COLOR,
                     minWidth: d.paidPence > 0 ? 4 : 0,
+                    opacity: 0.92,
                   }}
                 />
               )}
               {d.owedPence > 0 && (
                 <div
-                  className="rounded-sm transition-all"
+                  className="rounded-md transition-all"
                   style={{
                     width: `${Math.max(owedPct, 2)}%`,
                     backgroundColor: OWED_COLOR,
                     minWidth: d.owedPence > 0 ? 4 : 0,
+                    opacity: 0.92,
                   }}
                 />
               )}
@@ -458,7 +461,8 @@ export function RevenueOverTimeChart({ data, height = 120 }: RevenueOverTimeProp
         <polyline
           fill="none"
           stroke={PAID_COLOR}
-          strokeWidth="2"
+          strokeWidth="1.5"
+          strokeOpacity={0.92}
           strokeLinecap="round"
           strokeLinejoin="round"
           points={data
@@ -497,7 +501,7 @@ export function TopOwedBarChart({ data, maxItems = 8, height = 180 }: TopOwedBar
         return (
           <div key={i} className="flex items-center gap-2">
             <span className="text-xs text-gray-600 w-24 truncate">{d.name}</span>
-            <div className="flex-1 h-5 bg-gray-100/80 rounded overflow-hidden">
+            <div className="flex-1 h-5 rounded-lg overflow-hidden border border-white/45 bg-white/35">
               <div
                 className="h-full rounded transition-all"
                 style={{ width: `${Math.max(pct, 4)}%`, backgroundColor: OWED_COLOR }}
@@ -528,7 +532,8 @@ export function AttendanceTrendLineChart({ data, height = 100 }: AttendanceTrend
         <polyline
           fill="none"
           stroke={ATTENDANCE_COLOR}
-          strokeWidth="2"
+          strokeWidth="1.5"
+          strokeOpacity={0.92}
           strokeLinecap="round"
           strokeLinejoin="round"
           points={data

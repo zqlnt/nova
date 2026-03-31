@@ -157,7 +157,7 @@ export default function Layout({ children, role }: LayoutProps) {
         </div>
       </div>
       {/* Subtle dot grid background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-[0.35]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #d1d5db 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-[0.16]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c7cbd4 1px, transparent 0)', backgroundSize: '32px 32px' }} />
 
       {/* Mobile Overlay */}
       {!sidebarCollapsed && (
@@ -167,30 +167,29 @@ export default function Layout({ children, role }: LayoutProps) {
         />
       )}
 
-      {/* Left Sidebar - Light white with blue accents */}
+      {/* Left Sidebar — floating frosted rail on large screens */}
       <aside
         className={`
         fixed lg:relative
         flex flex-col flex-shrink-0 z-40 lg:z-10 overflow-hidden
         transition-all duration-300 ease-in-out
-        h-screen
-        border-r border-gray-200/60
+        h-screen lg:h-auto lg:min-h-[calc(100vh-1.5rem)] lg:my-3 lg:ml-3 lg:rounded-[1.75rem]
+        border-r border-white/25 lg:border lg:border-white/45
+        bg-white/55 lg:bg-white/38
+        backdrop-blur-2xl lg:backdrop-blur-[28px]
+        shadow-[4px_0_32px_-8px_rgba(15,23,42,0.06)]
+        lg:shadow-[0_24px_60px_-14px_rgba(15,23,42,0.12),inset_0_1px_0_0_rgba(255,255,255,0.65)]
         ${sidebarCollapsed ? 'w-0 -translate-x-full lg:-translate-x-0 lg:w-0' : 'w-64 translate-x-0'}
       `}
-        style={{
-          background: 'linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%)',
-          boxShadow: '4px 0 24px -4px rgba(0, 0, 0, 0.06)',
-        }}
       >
-        {/* Light blue blurred orbs background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -top-20 -left-20 w-40 h-40 rounded-full bg-blue-200/25 blur-3xl" />
-          <div className="absolute top-1/2 -right-16 w-32 h-32 rounded-full bg-sky-200/20 blur-3xl" />
-          <div className="absolute bottom-20 -left-10 w-36 h-36 rounded-full bg-blue-100/30 blur-3xl" />
+        <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[inherit]">
+          <div className="absolute -top-20 -left-20 w-44 h-44 rounded-full bg-sky-300/18 blur-3xl" />
+          <div className="absolute top-1/2 -right-12 w-36 h-36 rounded-full bg-fuchsia-200/14 blur-3xl" />
+          <div className="absolute bottom-16 -left-8 w-40 h-40 rounded-full bg-violet-200/16 blur-3xl" />
         </div>
 
         {/* Logo Section */}
-        <div className={`p-5 border-b border-gray-200/60 relative flex items-center justify-between ${sidebarCollapsed ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
+        <div className={`p-5 border-b border-white/30 relative flex items-center justify-between ${sidebarCollapsed ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
           <div className="flex items-center gap-3 min-w-0">
             <Link href="/" className="flex items-center group whitespace-nowrap">
               <Image 
@@ -201,16 +200,16 @@ export default function Layout({ children, role }: LayoutProps) {
                 className="h-9 w-auto transition-transform group-hover:scale-105"
               />
             </Link>
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-blue-50 border border-blue-100">
+            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/45 backdrop-blur-md border border-white/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.85)]">
               <span className="text-blue-600 text-sm font-semibold" aria-hidden="true">{modeSymbol}</span>
-              <span className="text-blue-700 text-sm font-semibold truncate">{modeLabel}</span>
+              <span className="text-gray-800 text-sm font-semibold truncate">{modeLabel}</span>
             </div>
           </div>
           
           {/* Desktop Collapse Button */}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="hidden lg:block p-1.5 rounded-lg hover:bg-blue-50 transition-colors text-gray-500 hover:text-blue-600 flex-shrink-0"
+            className="hidden lg:block p-2 rounded-xl hover:bg-white/40 transition-colors text-gray-500 hover:text-blue-600 flex-shrink-0"
             aria-label="Toggle sidebar"
           >
             <svg 
@@ -225,9 +224,9 @@ export default function Layout({ children, role }: LayoutProps) {
         </div>
 
         {/* User Profile */}
-        <div className={`p-4 border-b border-gray-200/60 relative ${sidebarCollapsed ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
-          <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50/70 transition-colors group whitespace-nowrap">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0 text-white font-bold text-sm shadow-sm">
+        <div className={`p-4 border-b border-white/30 relative ${sidebarCollapsed ? 'opacity-0' : 'opacity-100'} transition-opacity`}>
+          <div className="flex items-center gap-3 p-3 rounded-2xl hover:bg-white/35 transition-colors group whitespace-nowrap border border-transparent hover:border-white/40">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center flex-shrink-0 text-white font-bold text-sm shadow-[0_8px_20px_-6px_rgba(37,99,235,0.45)]">
               {userInitials}
             </div>
             <div className="flex-1 min-w-0">
@@ -236,7 +235,7 @@ export default function Layout({ children, role }: LayoutProps) {
             </div>
             <button
               onClick={handleSignOut}
-              className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg hover:bg-blue-100 transition-all text-gray-500 hover:text-blue-600"
+              className="opacity-0 group-hover:opacity-100 p-2 rounded-xl hover:bg-white/50 transition-all text-gray-500 hover:text-blue-600"
               title="Sign out"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -247,33 +246,33 @@ export default function Layout({ children, role }: LayoutProps) {
         </div>
         
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto p-4 relative custom-scrollbar">
-          <div className="mb-3">
-            <h2 className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+        <nav className="flex-1 overflow-y-auto p-3 sm:p-4 relative custom-scrollbar">
+          <div className="mb-2">
+            <h2 className="px-3 text-[11px] font-semibold text-gray-400/90 uppercase tracking-wider">
               Menu
             </h2>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {links.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`group flex items-start gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                  className={`group flex items-center gap-3 px-3 py-2.5 rounded-2xl transition-all duration-200 ${
                     isActive
-                      ? 'bg-blue-50 border border-blue-100 shadow-sm'
-                      : 'hover:bg-blue-50/60 border border-transparent'
+                      ? 'bg-white/50 backdrop-blur-md border border-white/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.9),0_6px_20px_-8px_rgba(15,23,42,0.08)]'
+                      : 'hover:bg-white/32 border border-transparent hover:border-white/35'
                   }`}
                 >
-                  <span className={`mt-0.5 ${isActive ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-500'}`}>
+                  <span className={`flex-shrink-0 ${isActive ? 'text-blue-600' : 'text-gray-400 group-hover:text-blue-500'}`}>
                     {link.icon}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <span className={`font-medium text-sm block ${isActive ? 'text-blue-700' : 'text-gray-700 group-hover:text-blue-600'}`}>
+                    <span className={`font-medium text-sm block leading-tight ${isActive ? 'text-gray-900' : 'text-gray-700 group-hover:text-gray-900'}`}>
                       {link.label}
                     </span>
-                    <span className={`text-xs mt-0.5 block ${isActive ? 'text-blue-600/80' : 'text-gray-500 group-hover:text-gray-600'}`}>
+                    <span className={`text-[11px] mt-0.5 block leading-snug ${isActive ? 'text-gray-600' : 'text-gray-500 group-hover:text-gray-600'}`}>
                       {link.description}
                     </span>
                   </div>
@@ -284,97 +283,114 @@ export default function Layout({ children, role }: LayoutProps) {
         </nav>
         
         {/* Sidebar Footer */}
-        <div className="p-4 border-t border-gray-200/60 relative">
-          <div className="rounded-xl bg-blue-50/80 border border-blue-100/60 p-3">
-            <p className="text-xs font-medium text-blue-800">Nova GCSE</p>
-            <p className="text-xs text-blue-600/80 mt-0.5">AQA & Edexcel</p>
+        <div className="p-4 border-t border-white/30 relative">
+          <div className="rounded-2xl bg-white/40 backdrop-blur-md border border-white/50 p-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.75)]">
+            <p className="text-xs font-medium text-gray-800">Nova GCSE</p>
+            <p className="text-xs text-gray-600 mt-0.5">AQA & Edexcel</p>
           </div>
         </div>
       </aside>
       
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col overflow-hidden relative z-10 w-full min-w-0">
-        {/* Top Navigation Bar - Shows on mobile always, on desktop when sidebar collapsed */}
-        <div className={`nova-frost-chrome border-b border-white/55 px-4 py-3 flex items-center justify-between flex-shrink-0 sticky top-0 z-30 ${sidebarCollapsed ? 'flex' : 'flex lg:hidden'}`}>
+      {/* Main column — floating header/footer match sidebar; chrome always available */}
+      <main className="flex-1 flex flex-col overflow-hidden relative z-10 w-full min-w-0 min-h-0 lg:p-3 lg:gap-3">
+        <header className="nova-frost-shell flex items-center justify-between flex-shrink-0 gap-2 px-4 py-3 mx-3 mt-3 lg:mx-0 lg:mt-0 sticky top-3 z-30 safe-area-pt">
           <button
+            type="button"
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            aria-label="Toggle menu"
+            className="p-2.5 rounded-xl hover:bg-white/40 transition-colors text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
+            aria-label={sidebarCollapsed ? 'Open navigation menu' : 'Close navigation menu'}
+            aria-expanded={!sidebarCollapsed}
           >
-            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          
-          <div className="flex items-center gap-2 min-w-0">
-            <Link href="/" className="flex items-center">
-              <Image 
-                src="https://i.imghippo.com/files/tyq3865Jxs.png" 
-                alt="Nova" 
-                width={100} 
+
+          <div className="flex items-center gap-2 min-w-0 flex-1 justify-center sm:justify-start sm:flex-initial">
+            <Link href="/" className="flex items-center flex-shrink-0">
+              <Image
+                src="https://i.imghippo.com/files/tyq3865Jxs.png"
+                alt="Nova"
+                width={100}
                 height={30}
                 className="h-8 w-auto"
               />
             </Link>
-            <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-gray-50 border border-gray-200">
-              <span className="text-gray-900 text-sm font-semibold" aria-hidden="true">{modeSymbol}</span>
-              <span className="text-gray-900 text-sm font-semibold truncate max-w-[140px]">{modeLabel}</span>
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/45 backdrop-blur-md border border-white/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.85)] min-w-0">
+              <span className="text-blue-600 text-sm font-semibold flex-shrink-0" aria-hidden="true">
+                {modeSymbol}
+              </span>
+              <span className="text-gray-900 text-sm font-semibold truncate max-w-[100px] sm:max-w-[160px]">
+                {modeLabel}
+              </span>
             </div>
           </div>
 
           <button
+            type="button"
             onClick={() => setChatCollapsed(!chatCollapsed)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            aria-label="Toggle chat"
+            className="p-2.5 rounded-xl hover:bg-white/40 transition-colors text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40"
+            aria-label={chatCollapsed ? 'Open chat' : 'Close chat'}
+            aria-expanded={!chatCollapsed}
           >
-            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
             </svg>
           </button>
-        </div>
+        </header>
 
-        {/* Subtle Grid Pattern Overlay */}
-        <div className="absolute inset-0 opacity-[0.015] pointer-events-none" 
-             style={{
-               backgroundImage: `radial-gradient(circle at 1px 1px, rgb(0, 122, 255) 1px, transparent 0)`,
-               backgroundSize: '40px 40px'
-             }}>
-        </div>
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden relative">
+          <div
+            className="absolute inset-0 opacity-[0.006] pointer-events-none"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, rgb(59, 130, 246) 1px, transparent 0)`,
+              backgroundSize: '48px 48px',
+            }}
+          />
 
-        
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto relative custom-scrollbar">
-          <div className="px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8 pt-6 lg:pt-8 min-w-0">
-            <div className="max-w-7xl mx-auto min-w-0">
-              {children}
+          <div className="flex-1 overflow-y-auto relative custom-scrollbar">
+            <div className="px-5 sm:px-8 lg:px-10 xl:px-12 pt-4 sm:pt-6 pb-8 sm:pb-10 min-w-0">
+              <div className="max-w-7xl mx-auto min-w-0">{children}</div>
             </div>
-          </div>
-          
-          {/* Footer */}
-          <footer className="nova-frost-chrome border-t border-white/55">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-xs sm:text-sm text-gray-600">
-                <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center">
-                  <Link href="/about" className="hover:text-ios-blue transition-colors">About</Link>
-                  <Link href="/help" className="hover:text-ios-blue transition-colors">Help</Link>
-                  <Link href="/privacy" className="hover:text-ios-blue transition-colors">Privacy</Link>
-                  <Link href="/terms" className="hover:text-ios-blue transition-colors">Terms</Link>
-                </div>
-                <div className="text-gray-500 text-xs">
-                  © 2026 Nova. All rights reserved.
+
+            <footer className="nova-frost-shell mx-3 mb-3 mt-2 lg:mx-0 lg:mb-0 safe-area-pb">
+              <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 xl:px-12 py-5 sm:py-6">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-xs sm:text-sm text-gray-600">
+                  <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center">
+                    <Link href="/about" className="hover:text-ios-blue transition-colors">
+                      About
+                    </Link>
+                    <Link href="/help" className="hover:text-ios-blue transition-colors">
+                      Help
+                    </Link>
+                    <Link href="/privacy" className="hover:text-ios-blue transition-colors">
+                      Privacy
+                    </Link>
+                    <Link href="/terms" className="hover:text-ios-blue transition-colors">
+                      Terms
+                    </Link>
+                  </div>
+                  <div className="text-gray-500 text-xs">© 2026 Nova. All rights reserved.</div>
                 </div>
               </div>
-            </div>
-          </footer>
+            </footer>
+          </div>
         </div>
       </main>
       
       {/* Right Chat Sidebar - Always a side panel (slides in from right) */}
-      <aside className={`
-        nova-frost-chrome border-l border-white/55 flex-col transition-all duration-300 shadow-[-8px_0_32px_-8px_rgba(15,23,42,0.1)]
+      <aside
+        className={`
+        flex-col transition-all duration-300 overflow-hidden
+        border-l border-white/25 bg-white/55 backdrop-blur-2xl
+        shadow-[-8px_0_32px_-8px_rgba(15,23,42,0.1)]
+        lg:border lg:border-white/45 lg:bg-white/38 lg:backdrop-blur-[28px]
+        lg:rounded-[1.75rem] lg:my-3 lg:mr-3 lg:min-h-[calc(100vh-1.5rem)] lg:self-stretch
+        lg:shadow-[0_24px_60px_-14px_rgba(15,23,42,0.12),inset_0_1px_0_0_rgba(255,255,255,0.65)]
         ${chatCollapsed ? 'hidden' : 'flex'}
-        fixed top-0 right-0 bottom-0 w-80 max-w-[90vw] z-50 lg:relative lg:z-10 lg:flex-shrink-0 lg:shadow-none
-      `}>
+        fixed top-0 right-0 bottom-0 w-80 max-w-[90vw] z-50 lg:relative lg:z-10 lg:flex-shrink-0
+      `}
+      >
         <ChatSidebar collapsed={chatCollapsed} onToggle={() => setChatCollapsed(!chatCollapsed)} />
       </aside>
       
@@ -390,13 +406,14 @@ export default function Layout({ children, role }: LayoutProps) {
       {chatCollapsed && !sidebarCollapsed && (
         <button
           onClick={() => setChatCollapsed(false)}
-          className="hidden lg:flex fixed bottom-6 right-6 z-50 p-4 rounded-full shadow-lg hover:shadow-xl transition-all"
-          style={{ backgroundColor: '#007AFF' }}
+          className="hidden lg:flex fixed bottom-8 right-8 z-50 p-3 rounded-full nova-frost-btn border border-white/60 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.18),inset_0_1px_0_0_rgba(255,255,255,0.95)] hover:shadow-[0_24px_56px_-10px_rgba(37,99,235,0.22)] transition-all"
           aria-label="Open chat"
         >
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-[0_8px_24px_-6px_rgba(37,99,235,0.55)]">
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
           </svg>
+          </span>
         </button>
       )}
     </div>

@@ -238,7 +238,7 @@ export default function OrgStudentProfilePage() {
             <div className="grid md:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Type</label>
-                <select value={noteType} onChange={(e) => setNoteType(e.target.value as NoteType)} className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm">
+                <select value={noteType} onChange={(e) => setNoteType(e.target.value as NoteType)} className="w-full px-3 py-2 rounded-lg border border-white/45 text-sm">
                   <option value="note">Note</option>
                   <option value="parent_call">Parent call</option>
                   <option value="intervention">Intervention</option>
@@ -247,7 +247,7 @@ export default function OrgStudentProfilePage() {
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Risk</label>
-                <select value={noteRisk} onChange={(e) => setNoteRisk(e.target.value as RiskLevel)} className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm">
+                <select value={noteRisk} onChange={(e) => setNoteRisk(e.target.value as RiskLevel)} className="w-full px-3 py-2 rounded-lg border border-white/45 text-sm">
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
@@ -259,7 +259,7 @@ export default function OrgStudentProfilePage() {
               onChange={(e) => setNoteText(e.target.value)}
               placeholder="Add a follow-up note for this student…"
               rows={3}
-              className="w-full px-4 py-2 rounded-xl border border-gray-200 text-sm"
+              className="w-full px-4 py-2 rounded-xl border border-white/45 text-sm"
             />
             <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700">
               Save note

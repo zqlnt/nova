@@ -178,7 +178,7 @@ export default function TeacherDashboard() {
           <h2 className="text-lg font-bold text-gray-900 mb-4">Quick access</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <Link href="/teacher/classes">
-              <Card hover className="p-5 cursor-pointer border border-gray-200 hover:border-blue-300 group">
+              <Card hover className="p-5 cursor-pointer border border-white/45 hover:border-blue-300 group">
                 <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-3 group-hover:bg-blue-200">
                   <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -189,7 +189,7 @@ export default function TeacherDashboard() {
               </Card>
             </Link>
             <Link href="/teacher/students">
-              <Card hover className="p-5 cursor-pointer border border-gray-200 hover:border-emerald-300 group">
+              <Card hover className="p-5 cursor-pointer border border-white/45 hover:border-emerald-300 group">
                 <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-3 group-hover:bg-emerald-200">
                   <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -200,7 +200,7 @@ export default function TeacherDashboard() {
               </Card>
             </Link>
             <Link href="/teacher/calendar">
-              <Card hover className="p-5 cursor-pointer border border-gray-200 hover:border-violet-300 group">
+              <Card hover className="p-5 cursor-pointer border border-white/45 hover:border-violet-300 group">
                 <div className="w-12 h-12 rounded-xl bg-violet-100 flex items-center justify-center mb-3 group-hover:bg-violet-200">
                   <svg className="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -211,7 +211,7 @@ export default function TeacherDashboard() {
               </Card>
             </Link>
             <Link href="/teacher/insights">
-              <Card hover className="p-5 cursor-pointer border border-gray-200 hover:border-amber-300 group">
+              <Card hover className="p-5 cursor-pointer border border-white/45 hover:border-amber-300 group">
                 <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center mb-3 group-hover:bg-amber-200">
                   <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -235,7 +235,7 @@ export default function TeacherDashboard() {
             ) : (
               classSummaries.map((classItem, index) => (
                 <Link key={classItem.id} href={`/teacher/classes/${classItem.id}`}>
-                  <Card hover className="cursor-pointer border border-gray-200 hover:border-blue-500 hover:shadow-lg relative overflow-hidden">
+                  <Card hover className="cursor-pointer border border-white/45 hover:border-blue-500 hover:shadow-lg relative overflow-hidden">
                     <div className="absolute -right-6 -top-6 text-8xl font-bold opacity-[0.03] text-gray-900">{index + 1}</div>
                     <div className="flex flex-col md:flex-row md:items-center gap-4">
                       <div className="flex-1 min-w-0">

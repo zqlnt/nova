@@ -27,7 +27,7 @@ export default function TeacherSettings() {
         </div>
 
         {/* Profile Section */}
-        <Card className="border border-gray-200 mb-6">
+        <Card className="border border-white/45 mb-6">
           <h2 className="text-xl font-semibold mb-6 text-gray-900">Profile Information</h2>
           
           <div className="space-y-6">
@@ -62,7 +62,7 @@ export default function TeacherSettings() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+                className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
               />
             </div>
 
@@ -75,7 +75,7 @@ export default function TeacherSettings() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+                className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
               />
             </div>
 
@@ -88,7 +88,7 @@ export default function TeacherSettings() {
                 type="text"
                 value={school}
                 onChange={(e) => setSchool(e.target.value)}
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+                className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
               />
             </div>
 
@@ -98,7 +98,7 @@ export default function TeacherSettings() {
                 Department
               </label>
               <select
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+                className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
               >
                 <option value="mathematics">Mathematics</option>
                 <option value="science">Science</option>
@@ -113,7 +113,7 @@ export default function TeacherSettings() {
         </Card>
 
         {/* Notification Preferences */}
-        <Card className="border border-gray-200 mb-6">
+        <Card className="border border-white/45 mb-6">
           <h2 className="text-xl font-semibold mb-6 text-gray-900">Notification Preferences</h2>
           
           <div className="space-y-4">
@@ -152,7 +152,7 @@ export default function TeacherSettings() {
         </Card>
 
         {/* Teaching Preferences */}
-        <Card className="border border-gray-200 mb-6">
+        <Card className="border border-white/45 mb-6">
           <h2 className="text-xl font-semibold mb-6 text-gray-900">Teaching Preferences</h2>
           
           <div className="space-y-6">
@@ -161,7 +161,7 @@ export default function TeacherSettings() {
                 Default Class View
               </label>
               <select
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+                className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
               >
                 <option value="table">Table View</option>
                 <option value="grid">Grid View</option>
@@ -174,7 +174,7 @@ export default function TeacherSettings() {
                 Progress Tracking Focus
               </label>
               <select
-                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
+                className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
               >
                 <option value="overall">Overall Progress</option>
                 <option value="weak-areas">Weak Areas</option>

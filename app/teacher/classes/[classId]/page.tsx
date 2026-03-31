@@ -49,23 +49,23 @@ export default function ClassDetail({ params }: { params: { classId: string } })
         </div>
 
         <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-4">
-          <Card className="text-center border border-gray-200">
+          <Card className="text-center border border-white/45">
             <div className="text-sm font-medium text-gray-600 mb-2">Enrolled</div>
             <div className="text-3xl font-bold text-gray-900">{roster.length}</div>
           </Card>
-          <Card className="text-center border border-gray-200">
+          <Card className="text-center border border-white/45">
             <div className="text-sm font-medium text-gray-600 mb-2">Year groups</div>
             <div className="text-lg font-semibold text-gray-900">
               {Array.from(new Set(roster.map((s) => s.yearGroup))).sort((a, b) => a - b).join(', ') || '—'}
             </div>
           </Card>
-          <Card className="text-center border border-gray-200">
+          <Card className="text-center border border-white/45">
             <div className="text-sm font-medium text-gray-600 mb-2">Org record</div>
             <div className="text-sm text-gray-700">Live roster from Nova Org</div>
           </Card>
         </div>
 
-        <Card className="border border-gray-200">
+        <Card className="border border-white/45">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
             <div>
               <h2 className="text-xl font-semibold text-gray-900">Students</h2>

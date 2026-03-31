@@ -71,7 +71,7 @@ export default function ScopeBar({ scope, onScopeChange, compact = false }: Scop
                 objectiveTitle: null,
                 tier: e.target.value === 'English' ? undefined : scope.tier
               })}
-              className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 bg-gray-50 border border-white/45 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               {subjects.map(subject => (
                 <option key={subject} value={subject}>
@@ -87,7 +87,7 @@ export default function ScopeBar({ scope, onScopeChange, compact = false }: Scop
             <select
               value={scope.yearGroup}
               onChange={(e) => onScopeChange({ yearGroup: parseInt(e.target.value) as YearGroup })}
-              className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 bg-gray-50 border border-white/45 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               {years.map(year => (
                 <option key={year} value={year}>Year {year}</option>
@@ -102,7 +102,7 @@ export default function ScopeBar({ scope, onScopeChange, compact = false }: Scop
               <select
                 value={scope.tier || ''}
                 onChange={(e) => onScopeChange({ tier: e.target.value as MathsTier || undefined })}
-                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-gray-50 border border-white/45 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Any</option>
                 {tiers.map(tier => (

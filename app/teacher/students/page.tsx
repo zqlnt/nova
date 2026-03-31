@@ -23,7 +23,7 @@ export default function TeacherStudents() {
           ) : (
             students.map((s) => (
               <Link key={s.id} href={`/teacher/students/${s.id}`}>
-                <Card hover className="cursor-pointer border border-gray-200 hover:border-ios-blue hover:shadow-lg">
+                <Card hover className="cursor-pointer border border-white/45 hover:border-ios-blue hover:shadow-lg">
                   <div className="flex items-center justify-between gap-4 flex-wrap">
                     <div className="min-w-0">
                       <div className="font-semibold text-gray-900 truncate">{s.name}</div>

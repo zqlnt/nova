@@ -164,20 +164,30 @@ export default function OrgDashboard() {
     href?: string;
   }) => {
     const content = (
-      <div className={`rounded-xl ${gradient} p-4 text-white shadow-sm`}>
-        <div className="flex items-center justify-between">
-          {icon}
-          <span className="text-2xl font-bold tabular-nums">{value}</span>
+      <div
+        className="relative min-h-[112px] overflow-hidden rounded-2xl border border-white/50 bg-white/45 p-4 shadow-[0_16px_40px_-14px_rgba(15,23,42,0.1),inset_0_1px_0_0_rgba(255,255,255,0.9)] backdrop-blur-xl transition-transform hover:scale-[1.01] hover:shadow-[0_20px_44px_-12px_rgba(15,23,42,0.12)]"
+      >
+        <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${gradient} opacity-[0.22]`} />
+        <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/35" />
+        <div className="relative flex items-start justify-between gap-3">
+          <span className="text-gray-700 [&>svg]:h-6 [&>svg]:w-6">{icon}</span>
+          <span className="text-2xl font-bold tabular-nums tracking-tight text-gray-900">{value}</span>
         </div>
-        <div className="text-xs text-white/90 mt-1">{label}</div>
+        <div className="relative mt-3 text-xs font-medium leading-snug text-gray-600">{label}</div>
       </div>
     );
-    return href ? <Link href={href}>{content}</Link> : content;
+    return href ? (
+      <Link href={href} className="block outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 focus-visible:ring-offset-2 rounded-2xl">
+        {content}
+      </Link>
+    ) : (
+      content
+    );
   };
 
   return (
     <Layout role="org">
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Header - same layout as Student/Teacher */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -185,75 +195,77 @@ export default function OrgDashboard() {
               {org.name}
               <MathSymbolAnimation size="sm" colorIndex={1} />
             </h1>
-            <p className="text-gray-600 mt-1">{org.location} • Operations overview</p>
+            <p className="text-gray-600 mt-2">{org.location} • Operations overview</p>
           </div>
         </div>
 
-        {/* Overview - same grid as Student/Teacher (4 stats per row) */}
-        <Card className="p-5">
-          <div className="text-sm font-medium text-gray-600 mb-3">Overview</div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {/* Overview — detached KPI tiles (bento), not one monolithic sheet */}
+        <section aria-labelledby="overview-heading">
+          <h2 id="overview-heading" className="text-sm font-semibold text-gray-500 mb-4 tracking-tight">
+            Overview
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <StatBubble
               label="Students"
               value={stats.totalStudents}
               gradient="bg-gradient-to-br from-blue-500 to-indigo-600"
-              icon={<svg className="w-6 h-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>}
+              icon={<svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>}
               href="/org/students"
             />
             <StatBubble
               label="Active classes"
               value={stats.activeClasses}
               gradient="bg-gradient-to-br from-slate-500 to-slate-600"
-              icon={<svg className="w-6 h-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>}
+              icon={<svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>}
               href="/org/classes"
             />
             <StatBubble
               label="Attendance this week"
               value={stats.attendanceThisWeek}
               gradient="bg-gradient-to-br from-emerald-500 to-teal-600"
-              icon={<svg className="w-6 h-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>}
+              icon={<svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>}
               href="/org/attendance"
             />
             <StatBubble
               label="Attendance risk"
               value={stats.attendanceRiskCount}
               gradient="bg-gradient-to-br from-amber-400 to-orange-500"
-              icon={<svg className="w-6 h-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>}
+              icon={<svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>}
               href="/org/flags"
             />
             <StatBubble
               label="Received this month"
               value={formatPence(stats.amountReceivedThisMonth)}
               gradient="bg-gradient-to-br from-emerald-600 to-teal-700"
-              icon={<svg className="w-6 h-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>}
+              icon={<svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>}
               href="/org/payments"
             />
             <StatBubble
               label="Outstanding"
               value={formatPence(stats.totalOutstandingPence)}
               gradient={stats.totalOutstandingPence > 0 ? "bg-gradient-to-br from-rose-500 to-red-600" : "bg-gradient-to-br from-gray-400 to-gray-500"}
-              icon={<svg className="w-6 h-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>}
+              icon={<svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>}
               href="/org/payments"
             />
             <StatBubble
               label="Flagged"
               value={stats.flaggedCount}
               gradient="bg-gradient-to-br from-amber-500 to-orange-600"
-              icon={<svg className="w-6 h-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>}
+              icon={<svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>}
               href="/org/flags"
             />
             <StatBubble
               label="Contacts needed"
               value={stats.contactsNeededCount}
               gradient="bg-gradient-to-br from-cyan-500 to-teal-600"
-              icon={<svg className="w-6 h-6 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>}
+              icon={<svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>}
               href="/org/contacts"
             />
           </div>
-        </Card>
+        </section>
 
         {/* Bento: Mini calendar, Tasks, Follow-ups, Operational summary */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <MiniCalendar
             events={miniCalendarDots}
             href="/org/calendar"
@@ -265,23 +277,23 @@ export default function OrgDashboard() {
             tasks={taskWidgetItems}
             emptyMessage="No urgent tasks"
           />
-          <Card className="p-4 bg-rose-50/80 border-rose-200/60">
-            <h3 className="text-sm font-semibold text-gray-800 mb-2">Action needed</h3>
+          <Card className="p-5 border-rose-200/35 bg-gradient-to-br from-rose-50/50 to-white/40">
+            <h3 className="text-sm font-semibold text-gray-800 mb-3">Action needed</h3>
             <div className="space-y-2 text-sm">
               {overdueInvoices.length > 0 && (
-                <Link href="/org/payments" className="flex justify-between py-1 hover:bg-rose-100/50 rounded px-2">
+                <Link href="/org/payments" className="flex justify-between py-2 rounded-xl px-2 hover:bg-white/50 transition-colors">
                   <span className="text-gray-700">{overdueInvoices.length} overdue invoices</span>
                   <span className="text-rose-600 font-medium">View</span>
                 </Link>
               )}
               {stats.contactsNeededCount > 0 && (
-                <Link href="/org/contacts" className="flex justify-between py-1 hover:bg-rose-100/50 rounded px-2">
+                <Link href="/org/contacts" className="flex justify-between py-2 rounded-xl px-2 hover:bg-white/50 transition-colors">
                   <span className="text-gray-700">{stats.contactsNeededCount} contacts needed</span>
                   <span className="text-rose-600 font-medium">View</span>
                 </Link>
               )}
               {stats.attendanceRiskCount > 0 && (
-                <Link href="/org/attendance" className="flex justify-between py-1 hover:bg-rose-100/50 rounded px-2">
+                <Link href="/org/attendance" className="flex justify-between py-2 rounded-xl px-2 hover:bg-white/50 transition-colors">
                   <span className="text-gray-700">{stats.attendanceRiskCount} attendance risk</span>
                   <span className="text-rose-600 font-medium">View</span>
                 </Link>
@@ -318,7 +330,7 @@ export default function OrgDashboard() {
         </Card>
 
         {/* 3. Income breakdown, 4. Class distribution, 5. Student status - donuts */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           <Card className="p-5">
             <h2 className="text-lg font-bold text-gray-900 mb-3">Income breakdown</h2>
             <IncomeBreakdownDonut tuitionPence={tuitionPence} lateFeesPence={lateFeesPence} discountsPence={discountsPence} size={120} />
@@ -344,7 +356,7 @@ export default function OrgDashboard() {
         </div>
 
         {/* 6. Revenue over time, 8. Attendance trend - line charts */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
           <Card className="p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-gray-900">Revenue over time</h2>
@@ -524,44 +536,44 @@ export default function OrgDashboard() {
             <h2 className="text-lg font-bold text-gray-900">Student records</h2>
             <Link href="/org/students" className="text-sm text-indigo-600 hover:underline">View all →</Link>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto rounded-2xl border border-white/40 bg-white/25">
+            <table className="w-full text-sm border-separate border-spacing-0">
               <thead>
-                <tr className="border-b border-gray-200 text-left text-gray-500 font-medium">
-                  <th className="py-3 pr-4">Student</th>
-                  <th className="py-3 pr-4">Class</th>
-                  <th className="py-3 pr-4">Attendance</th>
-                  <th className="py-3 pr-4">Hours</th>
-                  <th className="py-3 pr-4">Funding</th>
-                  <th className="py-3 pr-4">Owed</th>
-                  <th className="py-3">Flags</th>
+                <tr className="border-b border-gray-200/50 text-left text-gray-500 font-medium">
+                  <th className="py-4 px-4">Student</th>
+                  <th className="py-4 px-4">Class</th>
+                  <th className="py-4 px-4">Attendance</th>
+                  <th className="py-4 px-4">Hours</th>
+                  <th className="py-4 px-4">Funding</th>
+                  <th className="py-4 px-4">Owed</th>
+                  <th className="py-4 px-4">Flags</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-gray-200/45">
                 {enrichedStudents.slice(0, 10).map((s) => (
-                  <tr key={s.id} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="py-3 pr-4">
+                  <tr key={s.id} className="hover:bg-white/40 transition-colors">
+                    <td className="py-4 px-4">
                       <Link href={`/org/students/${s.id}`} className="font-medium text-gray-900 hover:text-indigo-600">
                         {s.name}
                       </Link>
                       <span className="text-gray-400 ml-1">Y{s.yearGroup}</span>
                     </td>
-                    <td className="py-3 pr-4 text-gray-600">{s.className ?? '—'}</td>
-                    <td className="py-3 pr-4">{s.attendanceRate != null ? `${s.attendanceRate}%` : '—'}</td>
-                    <td className="py-3 pr-4">{s.record?.hoursCompleted ?? '—'}</td>
-                    <td className="py-3 pr-4">
+                    <td className="py-4 px-4 text-gray-600">{s.className ?? '—'}</td>
+                    <td className="py-4 px-4">{s.attendanceRate != null ? `${s.attendanceRate}%` : '—'}</td>
+                    <td className="py-4 px-4">{s.record?.hoursCompleted ?? '—'}</td>
+                    <td className="py-4 px-4">
                       <span className={s.record?.paymentFundingType === 'private' ? 'text-violet-600' : 'text-indigo-600'}>
                         {s.record?.paymentFundingType === 'universal_credit' ? 'UC' : s.record?.paymentFundingType ?? '—'}
                       </span>
                     </td>
-                    <td className="py-3 pr-4">
+                    <td className="py-4 px-4">
                       {(s.record?.amountOwedPence ?? 0) > 0 ? (
                         <span className="text-rose-600 font-medium">{formatPence(s.record!.amountOwedPence!)}</span>
                       ) : (
                         '—'
                       )}
                     </td>
-                    <td className="py-3">
+                    <td className="py-4 px-4">
                       {s.record?.flaggedIssues?.map((f) => (
                         <span key={f} className="mr-1 px-1.5 py-0.5 rounded text-xs bg-amber-100 text-amber-800">
                           {FLAG_LABELS[f] ?? f}
@@ -580,7 +592,7 @@ export default function OrgDashboard() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Recent activity</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
             <div>
               <h3 className="text-sm font-medium text-gray-600 mb-2">Recent payments</h3>
               {recentPayments.length === 0 ? (
@@ -590,7 +602,7 @@ export default function OrgDashboard() {
                   {recentPayments.map((p) => {
                     const student = students.find((s) => s.id === p.studentId);
                     return (
-                      <div key={p.id} className="flex justify-between py-2 text-sm border-b border-gray-100 last:border-0">
+                      <div key={p.id} className="flex justify-between py-3 text-sm border-b border-gray-200/40 last:border-0">
                         <span>{student?.name}</span>
                         <span className="font-medium text-emerald-600">{formatPence(p.amountPence)}</span>
                       </div>
@@ -609,7 +621,7 @@ export default function OrgDashboard() {
                     const student = students.find((s) => s.id === n.studentId);
                     return (
                       <Link key={n.id} href={`/org/students/${n.studentId}`}>
-                        <div className="py-2 border-b border-gray-100 last:border-0 hover:bg-gray-50 -mx-2 px-2 rounded">
+                        <div className="py-3 border-b border-gray-200/40 last:border-0 hover:bg-white/40 -mx-2 px-2 rounded-xl transition-colors">
                           <div className="text-sm font-medium text-gray-900">{student?.name}</div>
                           <div className="text-xs text-gray-500 truncate">{n.text}</div>
                           <span className={`text-xs ${n.risk === 'high' ? 'text-rose-600' : n.risk === 'medium' ? 'text-amber-600' : 'text-gray-400'}`}>

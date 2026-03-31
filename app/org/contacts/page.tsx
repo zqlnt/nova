@@ -101,7 +101,7 @@ export default function OrgContactsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 text-left text-gray-500">
+                <tr className="border-b border-gray-200/45 text-left text-gray-500">
                   <th className="py-2 pr-4">Student</th>
                   <th className="py-2 pr-4">Parent / Guardian</th>
                   <th className="py-2 pr-4">Phone</th>

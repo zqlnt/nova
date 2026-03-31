@@ -118,7 +118,7 @@ export default function StudentForm({
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 rounded-xl border border-white/45 focus:ring-2 focus:ring-indigo-500"
             />
           </div>
           <div>
@@ -129,7 +129,7 @@ export default function StudentForm({
               max="20"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 rounded-xl border border-white/45 focus:ring-2 focus:ring-indigo-500"
             />
           </div>
         </div>
@@ -140,7 +140,7 @@ export default function StudentForm({
             <select
               value={yearGroup}
               onChange={(e) => setYearGroup(parseInt(e.target.value, 10))}
-              className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 rounded-xl border border-white/45 focus:ring-2 focus:ring-indigo-500"
             >
               {YEAR_GROUPS.map((y) => (
                 <option key={y} value={y}>Year {y}</option>
@@ -152,7 +152,7 @@ export default function StudentForm({
             <select
               value={familyId}
               onChange={(e) => setFamilyId(e.target.value)}
-              className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 rounded-xl border border-white/45 focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">Not linked</option>
               {families.map((f) => (
@@ -167,7 +167,7 @@ export default function StudentForm({
           <label className="block text-sm font-medium text-gray-700 mb-2">Classes</label>
           <div className="flex flex-wrap gap-2">
             {classes.map((c) => (
-              <label key={c.id} className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50">
+              <label key={c.id} className="flex items-center gap-2 px-3 py-2 rounded-lg border border-white/45 cursor-pointer hover:bg-gray-50">
                 <input
                   type="checkbox"
                   checked={classIds.includes(c.id)}
@@ -187,7 +187,7 @@ export default function StudentForm({
               <select
                 value={paymentType}
                 onChange={(e) => setPaymentType(e.target.value as PaymentFundingType)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               >
                 {PAYMENT_TYPES.map((t) => (
                   <option key={t.value} value={t.value}>{t.label}</option>
@@ -202,7 +202,7 @@ export default function StudentForm({
                 min="0"
                 value={expectedAmount}
                 onChange={(e) => setExpectedAmount(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               />
             </div>
             <div>
@@ -213,7 +213,7 @@ export default function StudentForm({
                 min="0"
                 value={amountOwed}
                 onChange={(e) => setAmountOwed(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               />
             </div>
             <div>
@@ -221,7 +221,7 @@ export default function StudentForm({
               <select
                 value={paymentStatus}
                 onChange={(e) => setPaymentStatus(e.target.value as PaymentStatusType)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               >
                 {PAYMENT_STATUSES.map((s) => (
                   <option key={s.value} value={s.value}>{s.label}</option>
@@ -234,7 +234,7 @@ export default function StudentForm({
                 type="date"
                 value={paymentDueDate}
                 onChange={(e) => setPaymentDueDate(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               />
             </div>
             <div>
@@ -243,7 +243,7 @@ export default function StudentForm({
                 type="date"
                 value={paymentPaidDate}
                 onChange={(e) => setPaymentPaidDate(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               />
             </div>
           </div>
@@ -258,7 +258,7 @@ export default function StudentForm({
                 type="text"
                 value={parentName}
                 onChange={(e) => setParentName(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               />
             </div>
             <div>
@@ -267,7 +267,7 @@ export default function StudentForm({
                 type="tel"
                 value={parentPhone}
                 onChange={(e) => setParentPhone(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               />
             </div>
             <div>
@@ -276,7 +276,7 @@ export default function StudentForm({
                 type="email"
                 value={parentEmail}
                 onChange={(e) => setParentEmail(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                className="w-full px-4 py-2 rounded-xl border border-white/45"
               />
             </div>
           </div>

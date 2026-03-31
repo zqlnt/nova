@@ -114,7 +114,7 @@ export default function OrgAttendancePage() {
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="px-4 py-2 rounded-xl border border-gray-200"
+                className="px-4 py-2 rounded-xl border border-white/45"
               />
             </div>
             <div>
@@ -122,7 +122,7 @@ export default function OrgAttendancePage() {
               <select
                 value={selectedClassId}
                 onChange={(e) => setSelectedClassId(e.target.value)}
-                className="px-4 py-2 rounded-xl border border-gray-200"
+                className="px-4 py-2 rounded-xl border border-white/45"
               >
                 <option value="">All students</option>
                 {classes.map((c) => (
@@ -134,7 +134,7 @@ export default function OrgAttendancePage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 text-left text-gray-500">
+                <tr className="border-b border-gray-200/45 text-left text-gray-500">
                   <th className="py-2 pr-4">Student</th>
                   <th className="py-2 pr-4">Present</th>
                   <th className="py-2 pr-4">Absent</th>
@@ -207,7 +207,7 @@ export default function OrgAttendancePage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200 text-left text-gray-500">
+                <tr className="border-b border-gray-200/45 text-left text-gray-500">
                   <th className="py-2 pr-4">Date</th>
                   <th className="py-2 pr-4">Present</th>
                   <th className="py-2 pr-4">Absent</th>

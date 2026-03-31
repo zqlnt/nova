@@ -146,7 +146,7 @@ export default function OrgStudentsPage() {
         <Card className="p-5 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200 text-left text-gray-500 font-medium">
+              <tr className="border-b border-gray-200/45 text-left text-gray-500 font-medium">
                 <th className="py-3 pr-4">Student</th>
                 <th className="py-3 pr-4">Teacher</th>
                 <th className="py-3 pr-4">Class</th>

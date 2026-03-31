@@ -62,7 +62,7 @@ export default function OrgFamiliesPage() {
                   onChange={(e) => setNewName(e.target.value)}
                   placeholder="e.g. Smith household"
                   required
-                  className="w-full px-4 py-2 rounded-xl border border-gray-200"
+                  className="w-full px-4 py-2 rounded-xl border border-white/45"
                 />
               </div>
               <button type="submit" className="px-6 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700">

@@ -61,7 +61,7 @@ export default function Calendar({ events = [], termDates = [], onDateClick, mod
   for (let d = 1; d <= daysInMonth; d++) grid.push(d);
 
   return (
-    <div className="nova-frost-panel rounded-xl p-4">
+    <div className="nova-frost-panel rounded-3xl p-5 sm:p-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900">
           {MONTHS[month]} {year}

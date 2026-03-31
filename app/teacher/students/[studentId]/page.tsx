@@ -233,7 +233,7 @@ export default function StudentDetail({ params }: { params: { studentId: string 
         </div>
 
         {/* Ask Nova */}
-        <Card className="border border-gray-200">
+        <Card className="border border-white/45">
           <div className="mb-4">
             <h2 className="text-lg font-bold text-gray-900">Ask Nova About This Student</h2>
             <p className="text-gray-600 text-sm mt-1">
@@ -247,7 +247,7 @@ export default function StudentDetail({ params }: { params: { studentId: string 
               onChange={(e) => setNovaQuery(e.target.value)}
               placeholder="e.g., 'What teaching approach would work best for this student?'"
               rows={3}
-              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
+              className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
             />
             
             <div className="flex gap-3">
@@ -269,7 +269,7 @@ export default function StudentDetail({ params }: { params: { studentId: string 
                 <button
                   key={index}
                   onClick={() => setNovaQuery(suggestion)}
-                  className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm hover:bg-gray-100 hover:border-blue-500 transition-all"
+                  className="bg-gray-50 border border-white/45 rounded-lg px-3 py-2 text-sm hover:bg-gray-100 hover:border-blue-500 transition-all"
                 >
                   {suggestion}
                 </button>
