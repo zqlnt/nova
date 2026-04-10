@@ -1,7 +1,7 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { 
+import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
+import {
   User,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -10,68 +10,77 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth, getFirebaseInitError, isFirebaseAuthAvailable } from '@/lib/firebase';
+
+const isDev = process.env.NODE_ENV === 'development';
 
 interface AuthContextType {
   user: User | null;
+  /** True until first Firebase auth snapshot (signed in or not). False immediately if Firebase failed to initialize. */
   loading: boolean;
+  /** Non-null when the Firebase web app could not be initialized (bad/missing config). */
+  firebaseInitError: string | null;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function useAuth() {
-  return useContext(AuthContext);
+  const ctx = useContext(AuthContext);
+  if (ctx === undefined) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return ctx;
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const firebaseInitError = useMemo(() => getFirebaseInitError(), []);
+
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(() => {
+    if (firebaseInitError || !isFirebaseAuthAvailable()) return false;
+    return true;
+  });
 
   useEffect(() => {
-    if (!auth) {
+    // No auth instance: nothing to listen to; UI shows firebaseInitError or "auth unavailable".
+    if (firebaseInitError || !auth) {
+      setUser(null);
       setLoading(false);
       return;
     }
-    try {
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
-        setUser(user);
-        setLoading(false);
-      }, (error) => {
-        console.error('Auth state error:', error);
-        setError(error.message);
-        setLoading(false);
-      });
 
-      return unsubscribe;
-    } catch (error: any) {
-      console.error('Auth initialization error:', error);
-      setError(error?.message);
-      setLoading(false);
-    }
-  }, []);
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (next) => {
+        setUser(next);
+        setLoading(false);
+      },
+      (err) => {
+        if (isDev) console.error('[auth] onAuthStateChanged error:', err);
+        setUser(null);
+        setLoading(false);
+      }
+    );
 
-  if (error) {
-    console.error('Auth error:', error);
-    // Don't block the app, just log the error and show content
-  }
+    return () => unsubscribe();
+  }, [firebaseInitError]);
 
   const signIn = async (email: string, password: string) => {
-    if (!auth) throw new Error('Authentication is not available. Please refresh the page.');
+    if (!auth) throw new Error('Sign-in is unavailable. Firebase did not initialize. Check configuration and reload.');
     await signInWithEmailAndPassword(auth, email, password);
   };
 
   const signUp = async (email: string, password: string) => {
-    if (!auth) throw new Error('Authentication is not available. Please refresh the page.');
+    if (!auth) throw new Error('Sign-up is unavailable. Firebase did not initialize. Check configuration and reload.');
     await createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signInWithGoogle = async () => {
-    if (!auth) throw new Error('Authentication is not available. Please refresh the page.');
+    if (!auth) throw new Error('Google sign-in is unavailable. Firebase did not initialize. Check configuration and reload.');
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
   };
@@ -81,9 +90,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await firebaseSignOut(auth);
   };
 
-  const value = {
+  const value: AuthContextType = {
     user,
     loading,
+    firebaseInitError,
     signIn,
     signUp,
     signInWithGoogle,
@@ -92,4 +102,3 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-

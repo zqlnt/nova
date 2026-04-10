@@ -4,24 +4,28 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { firebaseAuthMessage } from '@/lib/authErrors';
 import { useState } from 'react';
 import WelcomeAnimations from '@/components/WelcomeAnimations';
 
 export default function Home() {
   const router = useRouter();
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle, firebaseInitError } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleGoogleSignIn = async () => {
+    if (firebaseInitError || loading) return;
     setLoading(true);
     setError('');
     try {
       await signInWithGoogle();
       router.push('/student/dashboard');
-    } catch (error: any) {
-      console.error('Error signing in with Google:', error);
-      setError(error.message || 'Failed to sign in');
+    } catch (err: unknown) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('[home] Google sign-in:', err);
+      }
+      setError(firebaseAuthMessage(err));
     } finally {
       setLoading(false);
     }
@@ -222,12 +226,17 @@ export default function Home() {
 
             {/* Auth */}
             <div className="space-y-2 pt-0 shrink-0">
+              {firebaseInitError && (
+                <div className="p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs" role="alert">
+                  {firebaseInitError}
+                </div>
+              )}
               {error && (
                 <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs">{error}</div>
               )}
               <button
                 onClick={handleGoogleSignIn}
-                disabled={loading}
+                disabled={loading || !!firebaseInitError}
                 className="w-full py-2.5 sm:py-3 px-4 rounded-xl nova-frost-btn hover:bg-white/90 font-medium text-sm text-gray-700 flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">

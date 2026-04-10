@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -8,53 +8,62 @@ import { useAuth } from '@/contexts/AuthContext';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
 import { firebaseAuthMessage } from '@/lib/authErrors';
+import { safeNextPath } from '@/lib/authRedirect';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { signIn, signInWithGoogle, user, loading: authLoading } = useAuth();
+  const { signIn, signInWithGoogle, user, loading: authLoading, firebaseInitError } = useAuth();
 
-  const nextPath = searchParams.get('next') || '/student/dashboard';
+  const rawNext = searchParams.get('next');
+  const nextPath = useMemo(() => safeNextPath(rawNext), [rawNext]);
 
+  // After sign-in, Firebase updates `user`; single redirect here avoids racing router.replace in submit handlers.
   useEffect(() => {
     if (authLoading || !user) return;
-    router.replace(nextPath.startsWith('/') ? nextPath : '/student/dashboard');
+    router.replace(nextPath);
   }, [authLoading, user, router, nextPath]);
+
+  const signupHref = useMemo(() => {
+    const q = new URLSearchParams();
+    q.set('next', nextPath);
+    return `/signup?${q.toString()}`;
+  }, [nextPath]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting || authLoading || firebaseInitError) return;
     setError('');
-    setLoading(true);
-
+    setSubmitting(true);
     try {
       await signIn(email, password);
-      router.replace(nextPath.startsWith('/') ? nextPath : '/student/dashboard');
     } catch (err: unknown) {
       setError(firebaseAuthMessage(err));
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
+    if (submitting || authLoading || firebaseInitError) return;
     setError('');
-    setLoading(true);
-
+    setSubmitting(true);
     try {
       await signInWithGoogle();
-      router.replace(nextPath.startsWith('/') ? nextPath : '/student/dashboard');
     } catch (err: unknown) {
       setError(firebaseAuthMessage(err));
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
-  if (authLoading) {
+  const busy = submitting || authLoading;
+
+  if (authLoading && !firebaseInitError) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="h-9 w-9 border-2 border-ios-blue border-t-transparent rounded-full animate-spin" />
@@ -87,6 +96,12 @@ function LoginForm() {
         <Card className="border border-white/45">
           <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">Welcome Back</h1>
 
+          {firebaseInitError && (
+            <div className="mb-4 p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-sm" role="alert">
+              {firebaseInitError}
+            </div>
+          )}
+
           {error && (
             <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm" role="alert">
               {error}
@@ -107,6 +122,7 @@ function LoginForm() {
                 autoComplete="email"
                 className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
                 placeholder="your@email.com"
+                disabled={!!firebaseInitError}
               />
             </div>
 
@@ -123,11 +139,12 @@ function LoginForm() {
                 autoComplete="current-password"
                 className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
                 placeholder="••••••••"
+                disabled={!!firebaseInitError}
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Signing in…' : 'Sign In'}
+            <Button type="submit" className="w-full" disabled={busy || !!firebaseInitError}>
+              {busy ? 'Signing in…' : 'Sign In'}
             </Button>
           </form>
 
@@ -140,7 +157,12 @@ function LoginForm() {
             </div>
           </div>
 
-          <Button variant="secondary" onClick={handleGoogleSignIn} disabled={loading} className="w-full">
+          <Button
+            variant="secondary"
+            onClick={handleGoogleSignIn}
+            disabled={busy || !!firebaseInitError}
+            className="w-full"
+          >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" aria-hidden>
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -152,7 +174,7 @@ function LoginForm() {
 
           <p className="text-center text-sm text-gray-600 mt-6">
             Don&apos;t have an account?{' '}
-            <Link href="/signup" className="text-ios-blue font-medium hover:underline">
+            <Link href={signupHref} className="text-ios-blue font-medium hover:underline">
               Sign up
             </Link>
           </p>

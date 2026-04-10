@@ -1,5 +1,9 @@
 # Run Nova Locally
 
+**Always `cd` into this repo (`nova-1`) before `npm run dev`.** If you run dev from another project folder, you will start that other app instead.
+
+This project uses a **fixed dev port (3010)** so it does not clash with other apps on 3000.
+
 ## Quick start
 
 ```bash
@@ -7,18 +11,15 @@ cd /Users/user/nova-1
 npm run dev:fresh
 ```
 
-When you see `✓ Ready`, open the URL shown in the terminal (usually **http://localhost:3000** or **http://localhost:3001** if 3000 is in use).
+When you see `✓ Ready`, open **http://127.0.0.1:3010** (a banner prints this when the server starts).
 
-## If port is in use
+## If port 3010 is in use
 
-If you see `Port 3000 is in use, trying 3001 instead`, use the URL the terminal shows (e.g. http://localhost:3001).
-
-To free port 3000:
 ```bash
-lsof -ti :3000 | xargs kill -9
+lsof -ti :3010 | xargs kill -9
 ```
 
-Then run `npm run dev` again.
+Then run `npm run dev` again from **this** folder.
 
 ## If build fails with _document error
 
@@ -36,4 +37,4 @@ npm run build
 npm start
 ```
 
-Then open http://localhost:3000
+Then open http://localhost:3000 (production `next start` defaults to port 3000 unless you set `PORT`).

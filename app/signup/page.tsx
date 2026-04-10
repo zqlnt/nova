@@ -1,26 +1,42 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, useMemo, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { firebaseAuthMessage } from '@/lib/authErrors';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
+import { safeNextPath } from '@/lib/authRedirect';
 
-export default function SignUpPage() {
+function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
-  const { signUp, signInWithGoogle } = useAuth();
+  const searchParams = useSearchParams();
+  const { signUp, signInWithGoogle, user, loading: authLoading, firebaseInitError } = useAuth();
+
+  const rawNext = searchParams.get('next');
+  const nextPath = useMemo(() => safeNextPath(rawNext), [rawNext]);
+
+  useEffect(() => {
+    if (authLoading || !user) return;
+    router.replace(nextPath);
+  }, [authLoading, user, router, nextPath]);
+
+  const loginHref = useMemo(() => {
+    const q = new URLSearchParams();
+    q.set('next', nextPath);
+    return `/login?${q.toString()}`;
+  }, [nextPath]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       return setError('Passwords do not match');
     }
@@ -29,32 +45,43 @@ export default function SignUpPage() {
       return setError('Password must be at least 6 characters');
     }
 
+    if (submitting || authLoading || firebaseInitError) return;
+
     setError('');
-    setLoading(true);
+    setSubmitting(true);
 
     try {
       await signUp(email, password);
-      router.push('/student/dashboard');
     } catch (err: unknown) {
       setError(firebaseAuthMessage(err));
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
+    if (submitting || authLoading || firebaseInitError) return;
     setError('');
-    setLoading(true);
+    setSubmitting(true);
 
     try {
       await signInWithGoogle();
-      router.push('/student/dashboard');
     } catch (err: unknown) {
       setError(firebaseAuthMessage(err));
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
+
+  const busy = submitting || authLoading;
+
+  if (authLoading && !firebaseInitError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="h-9 w-9 border-2 border-ios-blue border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-gray-50 flex items-center justify-center p-4">
@@ -83,6 +110,12 @@ export default function SignUpPage() {
         <Card className="border border-white/45">
           <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">Create Account</h1>
 
+          {firebaseInitError && (
+            <div className="mb-4 p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-sm" role="alert">
+              {firebaseInitError}
+            </div>
+          )}
+
           {error && (
             <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
               {error}
@@ -101,6 +134,7 @@ export default function SignUpPage() {
                 required
                 className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
                 placeholder="your@email.com"
+                disabled={!!firebaseInitError}
               />
             </div>
 
@@ -115,6 +149,7 @@ export default function SignUpPage() {
                 required
                 className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
                 placeholder="••••••••"
+                disabled={!!firebaseInitError}
               />
             </div>
 
@@ -129,11 +164,12 @@ export default function SignUpPage() {
                 required
                 className="w-full bg-gray-50 border border-white/45 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-ios-blue transition-all"
                 placeholder="••••••••"
+                disabled={!!firebaseInitError}
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Creating account...' : 'Sign Up'}
+            <Button type="submit" className="w-full" disabled={busy || !!firebaseInitError}>
+              {busy ? 'Creating account...' : 'Sign Up'}
             </Button>
           </form>
 
@@ -149,7 +185,7 @@ export default function SignUpPage() {
           <Button 
             variant="secondary" 
             onClick={handleGoogleSignIn}
-            disabled={loading}
+            disabled={busy || !!firebaseInitError}
             className="w-full"
           >
             <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
@@ -163,7 +199,7 @@ export default function SignUpPage() {
 
           <p className="text-center text-sm text-gray-600 mt-6">
             Already have an account?{' '}
-            <Link href="/login" className="text-ios-blue font-medium hover:underline">
+            <Link href={loginHref} className="text-ios-blue font-medium hover:underline">
               Sign in
             </Link>
           </p>
@@ -173,3 +209,16 @@ export default function SignUpPage() {
   );
 }
 
+export default function SignUpPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="h-9 w-9 border-2 border-ios-blue border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <SignUpForm />
+    </Suspense>
+  );
+}

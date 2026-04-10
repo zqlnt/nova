@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -H 127.0.0.1 -p 3000",
-    "dev:fresh": "rm -rf .next && next dev -H 127.0.0.1 -p 3000",
-    "dev:clean": "rm -rf .next && next dev -H 127.0.0.1 -p 3000",
+    "dev": "node scripts/print-dev-banner.mjs && WATCHPACK_POLLING=true next dev -H 127.0.0.1 -p 3010",
+    "dev:fresh": "rm -rf .next && node scripts/print-dev-banner.mjs && WATCHPACK_POLLING=true next dev -H 127.0.0.1 -p 3010",
+    "dev:clean": "rm -rf .next && node scripts/print-dev-banner.mjs && WATCHPACK_POLLING=true next dev -H 127.0.0.1 -p 3010",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
