@@ -1,0 +1,14 @@
+billingGroupId,fundingType,billingType,monthlyAmount,usualPaymentTiming,invoiceSubmissionLeadDays,flagCheckLeadDays,invoiceRuleNotes,membersDescription
+STU001,private,individual,120,first week of month,,,,Aisha Hassan
+STU002,private,individual,120,first week of month,,,,Tahreem Abbass
+FAM001,private,family,250,first week of month,,,,Zaynab Wasim + Muhammad Ismaeel
+STU005,private,individual,140,unknown,,,,Hzar
+STU006,private,individual,140,end of month,,,,Rudainah Ahmed
+STU007,private,individual,140,mid month,,,,Suraya Robinson
+STU008,private,individual,140,early month,,,,Ahmed Hassan
+STU009,private,individual,98,unknown,,,,Latifa
+FAM002,universal_credit,family,,9th of month,21,5,around 19th of previous month,Ibrahim Abdille + Suraya Abdille Abdi
+STU012,universal_credit,individual,,unknown,21,5,,Christobel Manu
+STU013,universal_credit,individual,,11th of month,21,5,around 21st of previous month,Faiza Al-Ashai
+FAM003,universal_credit,family,,15th to 20th,21,5,around 22nd to 27th of previous month,Elijah Martina + Alyaa Martina
+STU016,universal_credit,individual,,mid month,21,5,around 3 weeks before expected pay date,Zain Patel

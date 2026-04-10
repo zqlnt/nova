@@ -33,7 +33,7 @@ import {
   seedStaffTasks,
 } from '@/lib/orgSeed';
 import { seedIncomeRecords, seedExpenses } from '@/lib/incomeExpenseSeed';
-import { seedUserAccounts } from '@/lib/userAccountSeed';
+import { seedUserAccounts, PRIMARY_OWNER_EMAIL } from '@/lib/userAccountSeed';
 
 export const DEFAULT_ORG_ID =
   (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_NOVA_ORG_ID) || seedOrg.id;
@@ -141,6 +141,37 @@ export async function seedOrgCollections(firestore: Firestore, orgId: string): P
 export async function isOrgStudentsEmpty(firestore: Firestore, orgId: string): Promise<boolean> {
   const snap = await getDocs(collection(firestore, 'orgs', orgId, ORG_SUBCOLLECTIONS.students));
   return snap.empty;
+}
+
+/**
+ * Keep Firestore admin / teacher / userAccount rows for the primary owner in sync with seed
+ * (so `zain01gul@gmail.com` works even if the org was seeded with an older email).
+ */
+export async function mergePrimaryOwnerProfile(firestore: Firestore, orgId: string): Promise<void> {
+  const admin = seedAdmins.find((a) => a.id === 'admin_001');
+  const teacher = seedTeachers.find((t) => t.id === 'teacher_zain');
+  if (admin) {
+    await setDoc(
+      doc(firestore, 'orgs', orgId, ORG_SUBCOLLECTIONS.admins, admin.id),
+      stripUndefined(admin as unknown as Record<string, unknown>),
+      { merge: true }
+    );
+  }
+  if (teacher) {
+    await setDoc(
+      doc(firestore, 'orgs', orgId, ORG_SUBCOLLECTIONS.teachers, teacher.id),
+      stripUndefined(teacher as unknown as Record<string, unknown>),
+      { merge: true }
+    );
+  }
+  for (const row of seedUserAccounts) {
+    if (row.email !== PRIMARY_OWNER_EMAIL) continue;
+    await setDoc(
+      doc(firestore, 'orgs', orgId, ORG_SUBCOLLECTIONS.userAccounts, row.id),
+      stripUndefined(row as unknown as Record<string, unknown>),
+      { merge: true }
+    );
+  }
 }
 
 export type OrgDocListener = (data: DocumentData | undefined, exists: boolean) => void;

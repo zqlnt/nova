@@ -1,0 +1,66 @@
+billingRecordExternalId,billingPeriod,billingGroupId,studentExternalId,fundingType,amountDue,expectedPaymentDateStart,expectedPaymentDateEnd,invoiceTargetSubmissionDate,flagCheckDate,invoiceSubmittedDate,datePaid,amountPaid,paymentStatus,notes
+MBR-STU001-2025-12,2025-12,STU001,STU001,private,120,2025-12-01,2025-12-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU002-2025-12,2025-12,STU002,STU002,private,120,2025-12-01,2025-12-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-FAM001-2025-12,2025-12,FAM001,STU003,private,250,2025-12-01,2025-12-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU005-2025-12,2025-12,STU005,STU005,private,140,,,,,,,,unknown,Expected payment timing: unknown
+MBR-STU006-2025-12,2025-12,STU006,STU006,private,140,2025-12-21,2025-12-28,,,,,,unknown,Expected payment timing: end of month
+MBR-STU007-2025-12,2025-12,STU007,STU007,private,140,2025-12-11,2025-12-20,,,,,,unknown,Expected payment timing: mid month
+MBR-STU008-2025-12,2025-12,STU008,STU008,private,140,2025-12-01,2025-12-10,,,,,,unknown,Expected payment timing: early month
+MBR-STU009-2025-12,2025-12,STU009,STU009,private,98,,,,,,,,unknown,Expected payment timing: unknown
+MBR-FAM002-2025-12,2025-12,FAM002,STU010,universal_credit,,2025-12-09,2025-12-09,2025-11-18,2025-12-04,,,,unsubmitted,Usual pay date 9th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU012-2025-12,2025-12,STU012,STU012,universal_credit,,,,,,,,,unsubmitted,Usual pay date not yet confirmed; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU013-2025-12,2025-12,STU013,STU013,universal_credit,,2025-12-11,2025-12-11,2025-11-20,2025-12-06,,,,unsubmitted,Usual pay date 11th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-FAM003-2025-12,2025-12,FAM003,STU014,universal_credit,,2025-12-15,2025-12-20,2025-11-24,2025-12-10,,,,unsubmitted,Usual pay window 15th to 20th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU016-2025-12,2025-12,STU016,STU016,universal_credit,,2025-12-15,2025-12-15,2025-11-24,2025-12-10,,,,unsubmitted,Usual pay timing mid month; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU001-2026-01,2026-01,STU001,STU001,private,120,2026-01-01,2026-01-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU002-2026-01,2026-01,STU002,STU002,private,120,2026-01-01,2026-01-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-FAM001-2026-01,2026-01,FAM001,STU003,private,250,2026-01-01,2026-01-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU005-2026-01,2026-01,STU005,STU005,private,140,,,,,,,,unknown,Expected payment timing: unknown
+MBR-STU006-2026-01,2026-01,STU006,STU006,private,140,2026-01-21,2026-01-28,,,,,,unknown,Expected payment timing: end of month
+MBR-STU007-2026-01,2026-01,STU007,STU007,private,140,2026-01-11,2026-01-20,,,,,,unknown,Expected payment timing: mid month
+MBR-STU008-2026-01,2026-01,STU008,STU008,private,140,2026-01-01,2026-01-10,,,,,,unknown,Expected payment timing: early month
+MBR-STU009-2026-01,2026-01,STU009,STU009,private,98,,,,,,,,unknown,Expected payment timing: unknown
+MBR-FAM002-2026-01,2026-01,FAM002,STU010,universal_credit,,2026-01-09,2026-01-09,2025-12-19,2026-01-04,,,,unsubmitted,Usual pay date 9th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU012-2026-01,2026-01,STU012,STU012,universal_credit,,,,,,,,,unsubmitted,Usual pay date not yet confirmed; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU013-2026-01,2026-01,STU013,STU013,universal_credit,,2026-01-11,2026-01-11,2025-12-21,2026-01-06,,,,unsubmitted,Usual pay date 11th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-FAM003-2026-01,2026-01,FAM003,STU014,universal_credit,,2026-01-15,2026-01-20,2025-12-25,2026-01-10,,,,unsubmitted,Usual pay window 15th to 20th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU016-2026-01,2026-01,STU016,STU016,universal_credit,,2026-01-15,2026-01-15,2025-12-25,2026-01-10,,,,unsubmitted,Usual pay timing mid month; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU001-2026-02,2026-02,STU001,STU001,private,120,2026-02-01,2026-02-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU002-2026-02,2026-02,STU002,STU002,private,120,2026-02-01,2026-02-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-FAM001-2026-02,2026-02,FAM001,STU003,private,250,2026-02-01,2026-02-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU005-2026-02,2026-02,STU005,STU005,private,140,,,,,,,,unknown,Expected payment timing: unknown
+MBR-STU006-2026-02,2026-02,STU006,STU006,private,140,2026-02-21,2026-02-28,,,,,,unknown,Expected payment timing: end of month
+MBR-STU007-2026-02,2026-02,STU007,STU007,private,140,2026-02-11,2026-02-20,,,,,,unknown,Expected payment timing: mid month
+MBR-STU008-2026-02,2026-02,STU008,STU008,private,140,2026-02-01,2026-02-10,,,,,,unknown,Expected payment timing: early month
+MBR-STU009-2026-02,2026-02,STU009,STU009,private,98,,,,,,,,unknown,Expected payment timing: unknown
+MBR-FAM002-2026-02,2026-02,FAM002,STU010,universal_credit,,2026-02-09,2026-02-09,2026-01-19,2026-02-04,,,,unsubmitted,Usual pay date 9th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU012-2026-02,2026-02,STU012,STU012,universal_credit,,,,,,,,,unsubmitted,Usual pay date not yet confirmed; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU013-2026-02,2026-02,STU013,STU013,universal_credit,,2026-02-11,2026-02-11,2026-01-21,2026-02-06,,,,unsubmitted,Usual pay date 11th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-FAM003-2026-02,2026-02,FAM003,STU014,universal_credit,,2026-02-15,2026-02-20,2026-01-25,2026-02-10,,,,unsubmitted,Usual pay window 15th to 20th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU016-2026-02,2026-02,STU016,STU016,universal_credit,,2026-02-15,2026-02-15,2026-01-25,2026-02-10,,,,unsubmitted,Usual pay timing mid month; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU001-2026-03,2026-03,STU001,STU001,private,120,2026-03-01,2026-03-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU002-2026-03,2026-03,STU002,STU002,private,120,2026-03-01,2026-03-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-FAM001-2026-03,2026-03,FAM001,STU003,private,250,2026-03-01,2026-03-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU005-2026-03,2026-03,STU005,STU005,private,140,,,,,,,,unknown,Expected payment timing: unknown
+MBR-STU006-2026-03,2026-03,STU006,STU006,private,140,2026-03-21,2026-03-28,,,,,,unknown,Expected payment timing: end of month
+MBR-STU007-2026-03,2026-03,STU007,STU007,private,140,2026-03-11,2026-03-20,,,,,,unknown,Expected payment timing: mid month
+MBR-STU008-2026-03,2026-03,STU008,STU008,private,140,2026-03-01,2026-03-10,,,,,,unknown,Expected payment timing: early month
+MBR-STU009-2026-03,2026-03,STU009,STU009,private,98,,,,,,,,unknown,Expected payment timing: unknown
+MBR-FAM002-2026-03,2026-03,FAM002,STU010,universal_credit,,2026-03-09,2026-03-09,2026-02-16,2026-03-04,,,,unsubmitted,Usual pay date 9th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU012-2026-03,2026-03,STU012,STU012,universal_credit,,,,,,,,,unsubmitted,Usual pay date not yet confirmed; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU013-2026-03,2026-03,STU013,STU013,universal_credit,,2026-03-11,2026-03-11,2026-02-18,2026-03-06,,,,unsubmitted,Usual pay date 11th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-FAM003-2026-03,2026-03,FAM003,STU014,universal_credit,,2026-03-15,2026-03-20,2026-02-22,2026-03-10,,,,unsubmitted,Usual pay window 15th to 20th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU016-2026-03,2026-03,STU016,STU016,universal_credit,,2026-03-15,2026-03-15,2026-02-22,2026-03-10,,,,unsubmitted,Usual pay timing mid month; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU001-2026-04,2026-04,STU001,STU001,private,120,2026-04-01,2026-04-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU002-2026-04,2026-04,STU002,STU002,private,120,2026-04-01,2026-04-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-FAM001-2026-04,2026-04,FAM001,STU003,private,250,2026-04-01,2026-04-07,,,,,,unknown,Expected payment timing: first week of month
+MBR-STU005-2026-04,2026-04,STU005,STU005,private,140,,,,,,,,unknown,Expected payment timing: unknown
+MBR-STU006-2026-04,2026-04,STU006,STU006,private,140,2026-04-21,2026-04-28,,,,,,unknown,Expected payment timing: end of month
+MBR-STU007-2026-04,2026-04,STU007,STU007,private,140,2026-04-11,2026-04-20,,,,,,unknown,Expected payment timing: mid month
+MBR-STU008-2026-04,2026-04,STU008,STU008,private,140,2026-04-01,2026-04-10,,,,,,unknown,Expected payment timing: early month
+MBR-STU009-2026-04,2026-04,STU009,STU009,private,98,,,,,,,,unknown,Expected payment timing: unknown
+MBR-FAM002-2026-04,2026-04,FAM002,STU010,universal_credit,,2026-04-09,2026-04-09,2026-03-19,2026-04-04,,,,unsubmitted,Usual pay date 9th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU012-2026-04,2026-04,STU012,STU012,universal_credit,,,,,,,,,unsubmitted,Usual pay date not yet confirmed; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU013-2026-04,2026-04,STU013,STU013,universal_credit,,2026-04-11,2026-04-11,2026-03-21,2026-04-06,,,,unsubmitted,Usual pay date 11th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-FAM003-2026-04,2026-04,FAM003,STU014,universal_credit,,2026-04-15,2026-04-20,2026-03-25,2026-04-10,,,,unsubmitted,Usual pay window 15th to 20th; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date
+MBR-STU016-2026-04,2026-04,STU016,STU016,universal_credit,,2026-04-15,2026-04-15,2026-03-25,2026-04-10,,,,unsubmitted,Usual pay timing mid month; invoice target is 21 days before expected pay date; flag check is 5 days before expected pay date

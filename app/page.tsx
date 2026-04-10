@@ -10,7 +10,13 @@ import WelcomeAnimations from '@/components/WelcomeAnimations';
 
 export default function Home() {
   const router = useRouter();
-  const { signInWithGoogle, firebaseInitError } = useAuth();
+  const { signInWithGoogle, firebaseInitError, user, loading: authLoading } = useAuth();
+
+  const portalHref = (path: string) => {
+    if (authLoading) return path;
+    if (!user) return `/login?next=${encodeURIComponent(path)}`;
+    return path;
+  };
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -199,7 +205,7 @@ export default function Home() {
             {/* Portal cards - wide horizontal bars, shorter height */}
             <div className="flex flex-col gap-2 sm:gap-3 shrink-0 w-full max-w-2xl">
               {portals.map((p) => (
-                <a key={p.href} href={p.href} className="block">
+                <Link key={p.href} href={portalHref(p.href)} className="block">
                   <div className={`rounded-xl border-2 ${p.border} bg-white/58 backdrop-blur-xl backdrop-saturate-150 px-4 py-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.82),0_4px_24px_-8px_rgba(15,23,42,0.08)] hover:shadow-lg hover:shadow-blue-100/40 hover:border-blue-300/60 transition-all duration-300 group flex flex-wrap items-center gap-3 sm:gap-4 text-left`}>
                     <span className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-600/5 flex items-center justify-center text-gray-700 font-semibold text-lg group-hover:from-blue-500/20 group-hover:to-blue-600/10 group-hover:text-blue-600 transition-colors flex-shrink-0">
                       {p.icon}
@@ -220,7 +226,7 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
 

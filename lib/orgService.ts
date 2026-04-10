@@ -34,6 +34,7 @@ import {
   isOrgStudentsEmpty,
   seedOrgCollections,
   shouldSeedEmptyOrg,
+  mergePrimaryOwnerProfile,
   type OrgSubKey,
 } from '@/lib/orgFirestore';
 
@@ -259,6 +260,14 @@ async function initFirestore() {
 
     if (shouldSeedEmptyOrg() && (await isOrgStudentsEmpty(firestore, ORG_ID))) {
       await seedOrgCollections(firestore, ORG_ID);
+    }
+
+    try {
+      await mergePrimaryOwnerProfile(firestore, ORG_ID);
+    } catch (e) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('[orgService] mergePrimaryOwnerProfile skipped:', e);
+      }
     }
 
     attachListeners(firestore);

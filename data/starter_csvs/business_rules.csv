@@ -1,0 +1,7 @@
+ruleKey,ruleValue,notes
+reportingPeriodStart,2025-12-01,Assumed from user request: December to April
+reportingPeriodEnd,2026-04-30,Assumed from user request: December to April
+universalCreditInvoiceLeadDays,21,Invoices should usually be submitted 3 weeks before UC parents pay
+universalCreditFlagCheckLeadDays,5,"5 days before expected UC payment date, check for flagged payment issues"
+className,GCSE class,Current class provided by user
+tutorName,Zain Gul,Current tutor provided by user

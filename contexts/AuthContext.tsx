@@ -4,6 +4,8 @@ import { createContext, useContext, useEffect, useMemo, useState, ReactNode } fr
 import {
   User,
   onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
@@ -44,6 +46,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (firebaseInitError || !isFirebaseAuthAvailable()) return false;
     return true;
   });
+
+  useEffect(() => {
+    if (firebaseInitError || !auth) return;
+    void setPersistence(auth, browserLocalPersistence).catch((e) => {
+      if (isDev) console.warn('[auth] setPersistence:', e);
+    });
+  }, [firebaseInitError]);
 
   useEffect(() => {
     // No auth instance: nothing to listen to; UI shows firebaseInitError or "auth unavailable".

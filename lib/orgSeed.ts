@@ -1,3 +1,4 @@
+/** Demo org data — aligned with `data/starter_csvs/` (students, billing, attendance templates). */
 import type {
   Organisation,
   OrgAdmin,
@@ -34,13 +35,13 @@ export const seedOrg: Organisation = {
 };
 
 export const seedAdmins: OrgAdmin[] = [
-  { id: 'admin_001', orgId: seedOrg.id, name: 'Zain Gul', email: 'zain@ttutors.co.uk', role: 'super_admin', active: true, createdAt: '2026-03-01T10:00:00Z' },
+  { id: 'admin_001', orgId: seedOrg.id, name: 'Zain Gul', email: 'zain01gul@gmail.com', role: 'super_admin', active: true, createdAt: '2026-03-01T10:00:00Z' },
   { id: 'admin_002', orgId: seedOrg.id, name: 'Bilal Pilgrim', email: 'bilal@ttutors.co.uk', role: 'admin', active: true, createdAt: '2026-03-01T10:00:00Z' },
   { id: 'admin_003', orgId: seedOrg.id, name: 'Ibraheem Ridhwaan', email: 'ibraheem@ttutors.co.uk', role: 'admin', active: true, createdAt: '2026-03-01T10:00:00Z' },
 ];
 
 export const seedTeachers: Teacher[] = [
-  { id: 'teacher_zain', orgId: seedOrg.id, name: 'Zain Gul', email: 'zain@ttutors.co.uk', active: true, createdAt: '2026-03-01T10:00:00Z' },
+  { id: 'teacher_zain', orgId: seedOrg.id, name: 'Zain Gul', email: 'zain01gul@gmail.com', active: true, createdAt: '2026-03-01T10:00:00Z' },
   { id: 'teacher_elevate', orgId: seedOrg.id, name: 'Elevate Lead', email: 'elevate@ttutors.co.uk', active: true, createdAt: '2026-03-01T10:00:00Z' },
 ];
 
