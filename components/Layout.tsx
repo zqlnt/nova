@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { auth } from '@/lib/firebase';
 import ChatSidebar from './ChatSidebar';
 
 function initialsFromDisplay(name: string): string {
@@ -23,6 +24,7 @@ export default function Layout({ children, role }: LayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { signOut, user } = useAuth();
+  const sessionUser = user ?? auth?.currentUser ?? null;
   const [chatCollapsed, setChatCollapsed] = useState(true);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   
@@ -128,8 +130,8 @@ export default function Layout({ children, role }: LayoutProps) {
   const fallbackName =
     role === 'student' ? 'Student' : role === 'teacher' ? 'Teacher' : 'Organisation';
   const userName =
-    user?.displayName?.trim() ||
-    user?.email?.split('@')[0] ||
+    sessionUser?.displayName?.trim() ||
+    sessionUser?.email?.split('@')[0] ||
     fallbackName;
   const userInitials = initialsFromDisplay(userName);
 

@@ -26,7 +26,7 @@ export default function Home() {
     setError('');
     try {
       await signInWithGoogle();
-      router.push('/student/dashboard');
+      router.replace('/student/dashboard');
     } catch (err: unknown) {
       if (process.env.NODE_ENV === 'development') {
         console.error('[home] Google sign-in:', err);

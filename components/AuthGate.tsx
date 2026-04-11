@@ -1,24 +1,33 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { auth } from '@/lib/firebase';
 
 /**
  * Wraps role dashboards: waits for auth, then requires a signed-in user.
  * Unauthenticated users go to /login?next=<current path> (internal paths only).
+ *
+ * Uses `auth.currentUser` when React state lags (e.g. right after Google popup) so we
+ * don't redirect to login before `onAuthStateChanged` flushes to context.
  */
 export function AuthGate({ children }: { children: ReactNode }) {
   const { user, loading, firebaseInitError } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
+  const sessionUser = useMemo(() => {
+    if (loading) return user;
+    return user ?? auth?.currentUser ?? null;
+  }, [loading, user]);
+
   useEffect(() => {
     if (loading || firebaseInitError) return;
-    if (user) return;
+    if (sessionUser) return;
     const next = encodeURIComponent(pathname || '/');
     router.replace(`/login?next=${next}`);
-  }, [loading, user, router, pathname, firebaseInitError]);
+  }, [loading, sessionUser, router, pathname, firebaseInitError]);
 
   if (firebaseInitError) {
     return (
@@ -46,7 +55,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
     );
   }
 
-  if (!user) {
+  if (!sessionUser) {
     return (
       <div className="min-h-[40vh] flex items-center justify-center px-4">
         <p className="text-sm text-gray-500">Redirecting to sign in…</p>

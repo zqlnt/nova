@@ -11,6 +11,8 @@ import {
   signOut as firebaseSignOut,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
 } from 'firebase/auth';
 import { auth, getFirebaseInitError, isFirebaseAuthAvailable } from '@/lib/firebase';
 
@@ -55,6 +57,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [firebaseInitError]);
 
   useEffect(() => {
+    if (firebaseInitError || !auth) return;
+    void getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) {
+          setUser(result.user);
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        if (isDev) console.warn('[auth] getRedirectResult:', e);
+      });
+  }, [firebaseInitError]);
+
+  useEffect(() => {
     // No auth instance: nothing to listen to; UI shows firebaseInitError or "auth unavailable".
     if (firebaseInitError || !auth) {
       setUser(null);
@@ -80,18 +96,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     if (!auth) throw new Error('Sign-in is unavailable. Firebase did not initialize. Check configuration and reload.');
-    await signInWithEmailAndPassword(auth, email, password);
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    setUser(cred.user);
   };
 
   const signUp = async (email: string, password: string) => {
     if (!auth) throw new Error('Sign-up is unavailable. Firebase did not initialize. Check configuration and reload.');
-    await createUserWithEmailAndPassword(auth, email, password);
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    setUser(cred.user);
   };
 
   const signInWithGoogle = async () => {
     if (!auth) throw new Error('Google sign-in is unavailable. Firebase did not initialize. Check configuration and reload.');
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    provider.addScope('email');
+    provider.addScope('profile');
+    provider.setCustomParameters({ prompt: 'select_account' });
+    try {
+      const cred = await signInWithPopup(auth, provider);
+      setUser(cred.user);
+    } catch (e: unknown) {
+      const code =
+        e && typeof e === 'object' && 'code' in e ? String((e as { code: string }).code) : '';
+      if (
+        code === 'auth/popup-blocked' ||
+        code === 'auth/operation-not-supported-in-this-environment'
+      ) {
+        await signInWithRedirect(auth, provider);
+        return;
+      }
+      throw e;
+    }
   };
 
   const signOut = async () => {

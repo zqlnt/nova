@@ -31,6 +31,7 @@ import MathSymbolAnimation from '@/components/MathSymbolAnimation';
 import MiniCalendar from '@/components/MiniCalendar';
 import TaskWidget from '@/components/TaskWidget';
 import { buildOrgCalendarEvents } from '@/lib/orgCalendarEvents';
+import { seedOrgCalendarEvents } from '@/lib/calendarSeed';
 
 export default function OrgDashboard() {
   useOrgSync();
@@ -55,7 +56,7 @@ export default function OrgDashboard() {
   const recentPayments = payments.filter((p) => p.paidAt).slice(0, 5).reverse();
   const recentNotes = notes.slice(0, 5).reverse();
 
-  const dashboardCalendarEvents = buildOrgCalendarEvents(
+  const liveCal = buildOrgCalendarEvents(
     org.id,
     attendance,
     invoices,
@@ -63,6 +64,10 @@ export default function OrgDashboard() {
     students.map((s) => ({ id: s.id, name: s.name })),
     families,
     staffTasks
+  );
+  const staticCal = seedOrgCalendarEvents.filter((e) => e.orgId === org.id);
+  const dashboardCalendarEvents = [...liveCal, ...staticCal].sort((a, b) =>
+    a.startDate.localeCompare(b.startDate)
   );
   const miniCalendarDots = dashboardCalendarEvents.map((e) => ({ startDate: e.startDate, title: e.title }));
 

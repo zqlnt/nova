@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import Card from '@/components/Card';
-import { getTeacherClassSummaries } from '@/lib/teacherOrgData';
+import { getTeacherClassSummariesForUser } from '@/lib/teacherOrgData';
 import { useOrgSync } from '@/lib/orgService';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function TeacherClassesPage() {
   useOrgSync();
-  const summaries = getTeacherClassSummaries();
+  const { user } = useAuth();
+  const summaries = getTeacherClassSummariesForUser(user?.email ?? null);
 
   return (
     <Layout role="teacher">

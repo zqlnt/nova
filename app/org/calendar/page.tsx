@@ -5,6 +5,7 @@ import Layout from '@/components/Layout';
 import Card from '@/components/Card';
 import Calendar from '@/components/Calendar';
 import { buildOrgCalendarEvents } from '@/lib/orgCalendarEvents';
+import { seedOrgCalendarEvents } from '@/lib/calendarSeed';
 import { orgService, useOrgSync } from '@/lib/orgService';
 import MathSymbolAnimation from '@/components/MathSymbolAnimation';
 
@@ -20,7 +21,9 @@ export default function OrgCalendarPage() {
   const families = orgService.listFamilies();
   const staffTasks = orgService.listStaffTasks();
 
-  const orgEvents = buildOrgCalendarEvents(org.id, attendance, invoices, payments, students, families, staffTasks);
+  const liveEvents = buildOrgCalendarEvents(org.id, attendance, invoices, payments, students, families, staffTasks);
+  const staticEvents = seedOrgCalendarEvents.filter((e) => e.orgId === org.id);
+  const orgEvents = [...liveEvents, ...staticEvents].sort((a, b) => a.startDate.localeCompare(b.startDate));
 
   const selectedEvents = selectedDate
     ? orgEvents.filter((e) => e.startDate <= selectedDate && (e.endDate ?? e.startDate) >= selectedDate)

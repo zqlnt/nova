@@ -1,6 +1,7 @@
-import type { CalendarEvent, TermDate } from '@/lib/calendarTypes';
+import type { CalendarEvent } from '@/lib/calendarTypes';
 
-/** No demo events — connect org/schedule data when available. */
+/** UK term bands — shared with org/student calendar defaults. */
+export { uk2026TermDates } from '@/lib/calendarSeed';
+
+/** @deprecated Live events come from `buildTeacherCalendarFromOrg` + Firestore org data. */
 export const teacherCalendarEvents: CalendarEvent[] = [];
-
-export const uk2026TermDates: TermDate[] = [];

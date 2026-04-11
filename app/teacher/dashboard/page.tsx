@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import Card from '@/components/Card';
@@ -10,16 +11,32 @@ import MathSymbolAnimation from '@/components/MathSymbolAnimation';
 import MiniCalendar from '@/components/MiniCalendar';
 import TaskWidget from '@/components/TaskWidget';
 import { SoftBarChart } from '@/components/NovaCharts';
-import { teacherCalendarEvents } from '@/lib/teacherCalendarSeed';
-import { getTeacherClassSummaries } from '@/lib/teacherOrgData';
+import { buildTeacherCalendarFromOrg } from '@/lib/teacherCalendarFromOrg';
+import {
+  getTeacherClassSummariesForUser,
+  getStudentCountForTeacherUser,
+  getStudentsForClass,
+} from '@/lib/teacherOrgData';
 import { orgService, useOrgSync } from '@/lib/orgService';
+import { useAuth } from '@/contexts/AuthContext';
 import { masteryService } from '@/lib/services';
 
 export default function TeacherDashboard() {
-  useOrgSync();
-  const classSummaries = getTeacherClassSummaries();
-  const totalStudents = orgService.listStudents().length;
-  const topByPoints = [...orgService.listStudents()].sort((a, b) => b.totalPoints - a.totalPoints).slice(0, 5);
+  const sync = useOrgSync();
+  const { user } = useAuth();
+  const teacherCalEvents = useMemo(
+    () => buildTeacherCalendarFromOrg(user?.email ?? null),
+    [user?.email, sync]
+  );
+  const classSummaries = getTeacherClassSummariesForUser(user?.email ?? null);
+  const totalStudents = getStudentCountForTeacherUser(user?.email ?? null);
+  const teacherStudentIds = new Set(
+    classSummaries.flatMap((c) => getStudentsForClass(c.id).map((s) => s.id))
+  );
+  const topByPoints = [...orgService.listStudents()]
+    .filter((s) => teacherStudentIds.has(s.id))
+    .sort((a, b) => b.totalPoints - a.totalPoints)
+    .slice(0, 5);
 
   const mathsStrands: StrandMastery[] = masteryService.getStrandMastery('Mathematics');
   const totalSecure = mathsStrands.reduce((sum, s) => sum + s.secure, 0);
@@ -68,7 +85,7 @@ export default function TeacherDashboard() {
                 </svg>
                 <span className="text-2xl font-bold tabular-nums">{totalStudents}</span>
               </div>
-              <div className="text-xs text-white/90 mt-1">Students (org)</div>
+              <div className="text-xs text-white/90 mt-1">Your students</div>
             </div>
             <div className="rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-4 text-white shadow-sm">
               <div className="flex items-center justify-between gap-2">
@@ -92,7 +109,7 @@ export default function TeacherDashboard() {
         </Card>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <MiniCalendar events={teacherCalendarEvents} href="/teacher/calendar" title="Teaching calendar" />
+          <MiniCalendar events={teacherCalEvents} href="/teacher/calendar" title="Teaching calendar" />
           <TaskWidget
             title="Reminders"
             href="/teacher/calendar"
