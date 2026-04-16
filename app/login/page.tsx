@@ -42,6 +42,9 @@ function LoginForm() {
     try {
       await signIn(email, password);
     } catch (err: unknown) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('[login] email sign-in:', err);
+      }
       setError(firebaseAuthMessage(err));
     } finally {
       setSubmitting(false);
@@ -55,6 +58,9 @@ function LoginForm() {
     try {
       await signInWithGoogle();
     } catch (err: unknown) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('[login] Google sign-in:', err);
+      }
       setError(firebaseAuthMessage(err));
     } finally {
       setSubmitting(false);
