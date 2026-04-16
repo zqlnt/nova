@@ -8,7 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
 import { firebaseAuthMessage } from '@/lib/authErrors';
-import { safeNextPath } from '@/lib/authRedirect';
+import { resolvePostLoginPath, safeNextPath } from '@/lib/authRedirect';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -25,8 +25,8 @@ function LoginForm() {
   // After sign-in, Firebase updates `user`; single redirect here avoids racing router.replace in submit handlers.
   useEffect(() => {
     if (authLoading || !user) return;
-    router.replace(nextPath);
-  }, [authLoading, user, router, nextPath]);
+    router.replace(resolvePostLoginPath(user.email, rawNext));
+  }, [authLoading, user, router, rawNext]);
 
   const signupHref = useMemo(() => {
     const q = new URLSearchParams();

@@ -257,6 +257,8 @@ export interface UserAccount {
   orgId?: ID;
   studentId?: ID;
   teacherId?: ID;
+  /** Optional Firebase Auth uid for admin scripts / support */
+  firebaseUid?: string;
   active: boolean;
   createdAt: string;
   updatedAt: string;

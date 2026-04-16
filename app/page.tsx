@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { firebaseAuthMessage } from '@/lib/authErrors';
+import { auth } from '@/lib/firebase';
+import { resolvePostLoginPath } from '@/lib/authRedirect';
 import { useState } from 'react';
 import WelcomeAnimations from '@/components/WelcomeAnimations';
 
@@ -26,7 +28,7 @@ export default function Home() {
     setError('');
     try {
       await signInWithGoogle();
-      router.replace('/student/dashboard');
+      router.replace(resolvePostLoginPath(auth?.currentUser?.email ?? null, null));
     } catch (err: unknown) {
       if (process.env.NODE_ENV === 'development') {
         console.error('[home] Google sign-in:', err);

@@ -40,6 +40,31 @@ const STORAGE_KEYS = {
   CHAT_HISTORY: 'nova_chat_history',
 };
 
+function readJsonFromStorage<T>(
+  key: string,
+  fallback: () => T,
+  validate?: (value: unknown) => value is T
+): T {
+  if (typeof window === 'undefined') return fallback();
+  const stored = localStorage.getItem(key);
+  if (stored == null || stored === '') return fallback();
+  try {
+    const parsed: unknown = JSON.parse(stored);
+    if (validate && !validate(parsed)) throw new Error('invalid shape');
+    return parsed as T;
+  } catch {
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      /* ignore */
+    }
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(`[nova] Cleared invalid localStorage key: ${key}`);
+    }
+    return fallback();
+  }
+}
+
 // ============================================
 // CURRICULUM SERVICE
 // ============================================
@@ -111,13 +136,15 @@ export const curriculumService = {
 export const masteryService = {
   getMasteryData: (): Mastery[] => {
     if (typeof window === 'undefined') return createInitialMastery(allObjectives);
-    const stored = localStorage.getItem(STORAGE_KEYS.MASTERY_DATA);
-    if (stored) {
-      return JSON.parse(stored);
-    }
-    const initial = createInitialMastery(allObjectives);
-    localStorage.setItem(STORAGE_KEYS.MASTERY_DATA, JSON.stringify(initial));
-    return initial;
+    return readJsonFromStorage<Mastery[]>(
+      STORAGE_KEYS.MASTERY_DATA,
+      () => {
+        const initial = createInitialMastery(allObjectives);
+        localStorage.setItem(STORAGE_KEYS.MASTERY_DATA, JSON.stringify(initial));
+        return initial;
+      },
+      (v): v is Mastery[] => Array.isArray(v)
+    );
   },
 
   saveMasteryData: (data: Mastery[]): void => {
@@ -425,16 +452,28 @@ export const practiceService = {
 export const studentService = {
   getProfile: (): StudentProfile => {
     if (typeof window === 'undefined') return defaultStudentProfile;
-    const stored = localStorage.getItem(STORAGE_KEYS.STUDENT_PROFILE);
-    if (stored) {
-      const profile = JSON.parse(stored);
+    const raw = readJsonFromStorage<Record<string, unknown> | null>(
+      STORAGE_KEYS.STUDENT_PROFILE,
+      () => null,
+      (v): v is Record<string, unknown> => v !== null && typeof v === 'object' && !Array.isArray(v)
+    );
+    if (!raw) return defaultStudentProfile;
+    try {
+      const profile = raw as unknown as StudentProfile & {
+        createdAt: string | Date;
+        baselineCompletedAt?: string | Date | null;
+      };
       return {
         ...profile,
-        createdAt: new Date(profile.createdAt),
-        baselineCompletedAt: profile.baselineCompletedAt ? new Date(profile.baselineCompletedAt) : null,
+        createdAt: new Date(profile.createdAt as string | number | Date),
+        baselineCompletedAt: profile.baselineCompletedAt
+          ? new Date(profile.baselineCompletedAt as string | number | Date)
+          : null,
       };
+    } catch {
+      localStorage.removeItem(STORAGE_KEYS.STUDENT_PROFILE);
+      return defaultStudentProfile;
     }
-    return defaultStudentProfile;
   },
 
   saveProfile: (profile: StudentProfile): void => {
@@ -490,11 +529,22 @@ export const progressService = {
     
     const today = new Date().toISOString().split('T')[0];
     const stored = localStorage.getItem(STORAGE_KEYS.DAILY_PROGRESS);
-    
+
     if (stored) {
-      const progress = JSON.parse(stored);
-      if (progress.date === today) {
-        return progress;
+      try {
+        const progress = JSON.parse(stored) as DailyProgress;
+        if (progress && progress.date === today) {
+          return progress;
+        }
+      } catch {
+        try {
+          localStorage.removeItem(STORAGE_KEYS.DAILY_PROGRESS);
+        } catch {
+          /* ignore */
+        }
+        if (process.env.NODE_ENV === 'development') {
+          console.warn(`[nova] Cleared invalid localStorage key: ${STORAGE_KEYS.DAILY_PROGRESS}`);
+        }
       }
     }
     
@@ -542,10 +592,11 @@ export const progressService = {
 export const chatService = {
   getChatHistory: (scope: ChatScope): ChatMessage[] => {
     if (typeof window === 'undefined') return [];
-    const stored = localStorage.getItem(STORAGE_KEYS.CHAT_HISTORY);
-    if (!stored) return [];
-    
-    const allMessages: ChatMessage[] = JSON.parse(stored);
+    const allMessages = readJsonFromStorage<ChatMessage[]>(
+      STORAGE_KEYS.CHAT_HISTORY,
+      () => [],
+      (v): v is ChatMessage[] => Array.isArray(v)
+    );
     // Filter by scope (same subject and objective)
     return allMessages.filter(m => 
       m.scope.subject === scope.subject && 
@@ -555,8 +606,11 @@ export const chatService = {
 
   saveMessage: (message: ChatMessage): void => {
     if (typeof window === 'undefined') return;
-    const stored = localStorage.getItem(STORAGE_KEYS.CHAT_HISTORY);
-    const messages: ChatMessage[] = stored ? JSON.parse(stored) : [];
+    const messages = readJsonFromStorage<ChatMessage[]>(
+      STORAGE_KEYS.CHAT_HISTORY,
+      () => [],
+      (v): v is ChatMessage[] => Array.isArray(v)
+    );
     messages.push(message);
     // Keep last 1000 messages
     const trimmed = messages.slice(-1000);
@@ -689,8 +743,11 @@ export const loggingService = {
       createdAt: new Date(),
     };
 
-    const stored = localStorage.getItem(STORAGE_KEYS.LEARNING_EVENTS);
-    const events: LearningEvent[] = stored ? JSON.parse(stored) : [];
+    const events = readJsonFromStorage<LearningEvent[]>(
+      STORAGE_KEYS.LEARNING_EVENTS,
+      () => [],
+      (v): v is LearningEvent[] => Array.isArray(v)
+    );
     events.push(fullEvent);
     
     // Keep last 10000 events
@@ -700,10 +757,11 @@ export const loggingService = {
 
   getRecentEvents: (studentId: string, limit: number = 100): LearningEvent[] => {
     if (typeof window === 'undefined') return [];
-    const stored = localStorage.getItem(STORAGE_KEYS.LEARNING_EVENTS);
-    if (!stored) return [];
-    
-    const events: LearningEvent[] = JSON.parse(stored);
+    const events = readJsonFromStorage<LearningEvent[]>(
+      STORAGE_KEYS.LEARNING_EVENTS,
+      () => [],
+      (v): v is LearningEvent[] => Array.isArray(v)
+    );
     return events
       .filter(e => e.studentId === studentId)
       .slice(-limit);

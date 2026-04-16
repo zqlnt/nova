@@ -21,6 +21,12 @@ export default function Error({
         <p className="text-gray-600 mb-6">
           The app encountered an error. You can try again or go to the home page.
         </p>
+        {process.env.NODE_ENV === 'development' && (
+          <p className="text-xs text-gray-500 mb-6 font-mono break-all text-left" role="status">
+            {error.message}
+            {error.digest ? ` · ${error.digest}` : ''}
+          </p>
+        )}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={reset}

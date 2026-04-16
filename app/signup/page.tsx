@@ -8,7 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { firebaseAuthMessage } from '@/lib/authErrors';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
-import { safeNextPath } from '@/lib/authRedirect';
+import { resolvePostLoginPath, safeNextPath } from '@/lib/authRedirect';
 
 function SignUpForm() {
   const [email, setEmail] = useState('');
@@ -25,8 +25,8 @@ function SignUpForm() {
 
   useEffect(() => {
     if (authLoading || !user) return;
-    router.replace(nextPath);
-  }, [authLoading, user, router, nextPath]);
+    router.replace(resolvePostLoginPath(user.email, rawNext));
+  }, [authLoading, user, router, rawNext]);
 
   const loginHref = useMemo(() => {
     const q = new URLSearchParams();
