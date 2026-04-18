@@ -1,0 +1,27 @@
+billingRecordExternalId,billingPeriod,billingGroupId,studentExternalId,studentDisplayName,fundingType,amountDue,expectedPaymentDate,invoiceTargetSubmissionDate,statementReadyDate,invoiceSubmittedDate,amountPaid,datePaid,paymentStatus,flaggedIssue,notes
+MBR-FAM002-2026-03,2026-03,FAM002,STU010,Ibrahim Abdille,universal_credit,,2026-03-09,2026-02-25,2026-03-05,,,,unsubmitted,,Jamaad family; invoice before 25th; statement ready 5th; payment on 9th
+MBR-STU012-2026-03,2026-03,STU012,STU012,Christobel Manu,universal_credit,,,,,,,,flagged_in_progress,yes,Angelina / Christobel flagged UC case in progress
+MBR-STU013-2026-03,2026-03,STU013,STU013,Faiza Al-Ashai,universal_credit,,2026-03-11,2026-02-24,2026-03-03,,,,unsubmitted,,Faiza Al-Ashai; invoice before 24th; statement ready around 3rd
+MBR-FAM003-2026-03,2026-03,FAM003,STU014,Elijah Martina,universal_credit,,,,,,,,unsubmitted,,Usual payment 15th-20th; exact amount/date still needed
+MBR-STU016-2026-03,2026-03,STU016,STU016,Zain Patel,universal_credit,,2026-03-13,2026-02-25,,,,,unsubmitted,,Zain Patel; pays on 13th; statement before 25th
+MBR-FAM002-2026-04,2026-04,FAM002,STU010,Ibrahim Abdille,universal_credit,,2026-04-09,2026-03-25,2026-04-05,,,,unsubmitted,,Jamaad family; invoice before 25th; statement ready 5th; payment on 9th
+MBR-STU012-2026-04,2026-04,STU012,STU012,Christobel Manu,universal_credit,,,,,,,,flagged_in_progress,yes,Angelina / Christobel flagged UC case in progress
+MBR-STU013-2026-04,2026-04,STU013,STU013,Faiza Al-Ashai,universal_credit,,2026-04-11,2026-03-24,2026-04-03,,,,unsubmitted,,Faiza Al-Ashai; invoice before 24th; statement ready around 3rd
+MBR-FAM003-2026-04,2026-04,FAM003,STU014,Elijah Martina,universal_credit,,,,,,,,unsubmitted,,Usual payment 15th-20th; exact amount/date still needed
+MBR-STU016-2026-04,2026-04,STU016,STU016,Zain Patel,universal_credit,,2026-04-13,2026-03-25,,,,,unsubmitted,,Zain Patel; pays on 13th; statement before 25th
+MBR-STU001-2026-03,2026-03,STU001,STU001,Aisha Hassan,private,120,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU002-2026-03,2026-03,STU002,STU002,Tahreem Abbass,private,120,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-FAM001-2026-03,2026-03,FAM001,STU003,Zaynab Wasim + Muhammad Ismaeel,private,250,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU005-2026-03,2026-03,STU005,STU005,Hzar,private,140,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU006-2026-03,2026-03,STU006,STU006,Rudainah Ahmed,private,140,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU007-2026-03,2026-03,STU007,STU007,Suraya Robinson,private,140,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU008-2026-03,2026-03,STU008,STU008,Ahmed Hassan,private,140,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU009-2026-03,2026-03,STU009,STU009,Latifa,private,98,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU001-2026-04,2026-04,STU001,STU001,Aisha Hassan,private,120,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU002-2026-04,2026-04,STU002,STU002,Tahreem Abbass,private,120,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-FAM001-2026-04,2026-04,FAM001,STU003,Zaynab Wasim + Muhammad Ismaeel,private,250,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU005-2026-04,2026-04,STU005,STU005,Hzar,private,140,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU006-2026-04,2026-04,STU006,STU006,Rudainah Ahmed,private,140,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU007-2026-04,2026-04,STU007,STU007,Suraya Robinson,private,140,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU008-2026-04,2026-04,STU008,STU008,Ahmed Hassan,private,140,,,,,,,unknown,,Starter row only; actual paid date/status still needed
+MBR-STU009-2026-04,2026-04,STU009,STU009,Latifa,private,98,,,,,,,unknown,,Starter row only; actual paid date/status still needed

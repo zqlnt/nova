@@ -21,6 +21,13 @@ import type {
   Expense,
   UserAccount,
 } from '@/lib/orgTypes';
+import type {
+  GcseAttendanceFirestoreDoc,
+  GcseBillingGroupFirestoreDoc,
+  GcseClassClosureFirestoreDoc,
+  GcseMonthlyBillingFirestoreDoc,
+  GcseStudentMasterFirestoreDoc,
+} from '@/lib/gcseImport/types';
 import { seedOrg } from '@/lib/orgSeed';
 import {
   DEFAULT_ORG_ID,
@@ -59,6 +66,11 @@ type OrgCache = {
   userAccounts: UserAccount[];
   families: Family[];
   staffTasks: StaffTask[];
+  gcseStudentsMaster: GcseStudentMasterFirestoreDoc[];
+  gcseBillingGroups: GcseBillingGroupFirestoreDoc[];
+  gcseAttendance: GcseAttendanceFirestoreDoc[];
+  gcseClassClosures: GcseClassClosureFirestoreDoc[];
+  gcseMonthlyBilling: GcseMonthlyBillingFirestoreDoc[];
 };
 
 /** Empty collections until Firestore (or explicit dev seed) loads — no demo rows in production. */
@@ -82,6 +94,11 @@ function emptyOrgCache(): OrgCache {
     userAccounts: [],
     families: [],
     staffTasks: [],
+    gcseStudentsMaster: [],
+    gcseBillingGroups: [],
+    gcseAttendance: [],
+    gcseClassClosures: [],
+    gcseMonthlyBilling: [],
   };
 }
 
@@ -236,6 +253,21 @@ function attachListeners(firestore: NonNullable<ReturnType<typeof getFirestoreDb
   sub<StaffTask>('staffTasks', (rows) => {
     cache.staffTasks = rows;
   });
+  sub<GcseStudentMasterFirestoreDoc>('gcseStudentsMaster', (rows) => {
+    cache.gcseStudentsMaster = rows;
+  });
+  sub<GcseBillingGroupFirestoreDoc>('gcseBillingGroups', (rows) => {
+    cache.gcseBillingGroups = rows;
+  });
+  sub<GcseAttendanceFirestoreDoc>('gcseAttendance', (rows) => {
+    cache.gcseAttendance = rows;
+  });
+  sub<GcseClassClosureFirestoreDoc>('gcseClassClosures', (rows) => {
+    cache.gcseClassClosures = rows;
+  });
+  sub<GcseMonthlyBillingFirestoreDoc>('gcseMonthlyBilling', (rows) => {
+    cache.gcseMonthlyBilling = rows;
+  });
 }
 
 async function initFirestore() {
@@ -386,6 +418,26 @@ export const orgService = {
 
   listStaffTasks(): StaffTask[] {
     return cache.staffTasks;
+  },
+
+  listGcseStudentsMaster(): GcseStudentMasterFirestoreDoc[] {
+    return cache.gcseStudentsMaster;
+  },
+
+  listGcseBillingGroups(): GcseBillingGroupFirestoreDoc[] {
+    return cache.gcseBillingGroups;
+  },
+
+  listGcseAttendanceImport(): GcseAttendanceFirestoreDoc[] {
+    return cache.gcseAttendance;
+  },
+
+  listGcseClassClosures(): GcseClassClosureFirestoreDoc[] {
+    return cache.gcseClassClosures;
+  },
+
+  listGcseMonthlyBilling(): GcseMonthlyBillingFirestoreDoc[] {
+    return cache.gcseMonthlyBilling;
   },
 
   getFamily(id: string): Family | undefined {

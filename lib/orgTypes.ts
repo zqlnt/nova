@@ -48,6 +48,8 @@ export interface Teacher {
 export interface Family {
   id: ID;
   orgId: ID;
+  /** GCSE billing group id when this row came from starter data (e.g. FAM001). */
+  billingGroupId?: string;
   /** Display name e.g. "Smith household" */
   name: string;
   primaryContactName?: string;
@@ -71,6 +73,12 @@ export interface Student {
   orgId: ID;
   /** Links child to household (Nova Org). Optional for legacy rows. */
   familyId?: ID;
+  /** GCSE starter / import: stable id from spreadsheet (e.g. STU001). */
+  studentExternalId?: string;
+  /** Sibling / shared billing unit from starter data (e.g. FAM001). */
+  billingGroupId?: string;
+  /** GCSE import: completeness of roster row (provisional rows kept). */
+  dataCompleteness?: 'complete' | 'provisional' | 'incomplete';
   name: string;
   age?: number;
   yearGroup: 7 | 8 | 9 | 10 | 11;
@@ -107,6 +115,16 @@ export interface OrgStudentRecord {
   paymentPaidDate?: string;
   paymentStatus?: PaymentStatusType;
   paymentFundingType?: PaymentFundingType;
+  /** UC / starter workflow — expected UC payment into account */
+  expectedPaymentDate?: string;
+  /** Target date to submit invoice (e.g. to DWP journal) */
+  invoiceTargetSubmissionDate?: string;
+  /** Date childcare statement is ready */
+  statementReadyDate?: string;
+  /** Raw payment status from monthly billing starter (unsubmitted, flagged_in_progress, …) */
+  billingWorkflowStatus?: string;
+  /** UC case flagged (starter monthly billing) */
+  ucCaseFlagged?: boolean;
   parentGuardianName?: string;
   parentGuardianPhone?: string;
   parentGuardianEmail?: string;

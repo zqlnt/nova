@@ -1,0 +1,22 @@
+studentExternalId,studentFirstName,studentLastName,academicYear,className,tutorName,fundingType,monthlyFee,billingGroupId,scheduleDays,status,joinDate,parentName,parentEmail,parentPhone,usualPaymentTiming,expectedPaymentDay,invoiceLeadDays,statementLeadDays,notes
+STU001,Aisha,Hassan,Yr 11,GCSE class,Zain Gul,private,120,STU001,Saturday,active,,,,,first week of month,,,,
+STU002,Tahreem,Abbass,Yr 11,GCSE class,Zain Gul,private,120,STU002,Saturday,active,,,,,first week of month,,,,
+STU003,Zaynab,Wasim,Yr 11,GCSE class,Zain Gul,private,125,FAM001,Saturday,active,,,,,first week of month,,,,Shared sibling payment total 250 with Muhammad Ismaeel
+STU004,Muhammad,Ismaeel,Yr 12,GCSE class,Zain Gul,private,125,FAM001,Saturday,active,,,,,first week of month,,,,Shared sibling payment total 250 with Zaynab Wasim
+STU005,Hzar,,Yr 9,GCSE class,Zain Gul,private,140,STU005,Sunday,active,,,,,unknown,,,,
+STU006,Rudainah,Ahmed,Yr 9,GCSE class,Zain Gul,private,140,STU006,Saturday,active,,,,,near end of month,,,,
+STU007,Suraya,Robinson,Yr 10,GCSE class,Zain Gul,private,140,STU007,Sunday,active,,,,,mid month,,,,
+STU008,Ahmed,Hassan,Yr 9,GCSE class,Zain Gul,private,140,STU008,Saturday,active,,,,,early in month,,,,
+STU009,Latifa,,Yr 11,GCSE class,Zain Gul,private,98,STU009,,active,,,,,unknown,,,,Lesson day not yet confirmed
+STU010,Ibrahim,Abdille,Yr 11,GCSE class,Zain Gul,universal_credit,,FAM002,Saturday|Sunday,active,,Jamaad,,,pays on 9th,9,14,5,Sibling with Suraya Abdille Abdi
+STU011,Suraya,Abdille Abdi,Yr 9,GCSE class,Zain Gul,universal_credit,,FAM002,Saturday|Sunday,active,,Jamaad,,,pays on 9th,9,14,5,Sibling with Ibrahim Abdille
+STU012,Christobel,Manu,Yr 11,GCSE class,Zain Gul,universal_credit,,STU012,Saturday,active,,Angelina,,,,,14,5,Universal credit flagged case in progress
+STU013,Faiza,Al-Ashai,Yr 9,GCSE class,Zain Gul,universal_credit,,STU013,Saturday|Sunday,active,,,,,pays on 11th,11,14,5,
+STU014,Elijah,Martina,Yr 8,GCSE class,Zain Gul,universal_credit,,FAM003,Sunday,active,,,,,pays 15th-20th,15,14,5,Sibling with Alyaa Martina
+STU015,Alyaa,Martina,Yr 7,GCSE class,Zain Gul,universal_credit,,FAM003,Sunday,active,,,,,pays 15th-20th,15,14,5,Sibling with Elijah Martina
+STU016,Zain,Patel,Yr 8,GCSE class,Zain Gul,universal_credit,,STU016,Tuesday|Wednesday,active,,Aisha Iqbal,,,pays on 13th,13,14,5,
+STU017,Anum,M,,GCSE class,Zain Gul,unknown,,STU017,,active,,,,,,,,,Provisional student from attendance; full details needed
+STU018,Zara,,,GCSE class,Zain Gul,unknown,,STU018,,active,,,,,,,,,Provisional student from attendance; full details needed
+STU019,Maissa,,,GCSE class,Zain Gul,unknown,,STU019,,active,,,,,,,,,Provisional student from attendance; full details needed
+STU020,Maida,H,,GCSE class,Zain Gul,unknown,,STU020,,active,,,,,,,,,Provisional student from attendance; full details needed
+STU021,Musa,,,GCSE class,Zain Gul,unknown,,STU021,,active,,,,,,,,,Provisional student from attendance; full details needed

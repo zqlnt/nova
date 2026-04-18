@@ -31,6 +31,11 @@ import {
   seedTuitionPlans,
   seedFamilies,
   seedStaffTasks,
+  seedGcseStudentsMasterDocs,
+  seedGcseBillingGroupsDocs,
+  seedGcseAttendanceDocs,
+  seedGcseClassClosuresDocs,
+  seedGcseMonthlyBillingDocs,
 } from '@/lib/orgSeed';
 import { seedIncomeRecords, seedExpenses } from '@/lib/incomeExpenseSeed';
 import { seedUserAccounts, PRIMARY_OWNER_EMAIL } from '@/lib/userAccountSeed';
@@ -57,6 +62,12 @@ export const ORG_SUBCOLLECTIONS = {
   invoices: 'invoices',
   tuitionPlans: 'tuitionPlans',
   userAccounts: 'userAccounts',
+  gcseStudentsMaster: 'gcseStudentsMaster',
+  gcseBillingGroups: 'gcseBillingGroups',
+  /** Starter attendance sheet import (separate from operational `attendance`). */
+  gcseAttendance: 'gcseAttendance',
+  gcseClassClosures: 'gcseClassClosures',
+  gcseMonthlyBilling: 'gcseMonthlyBilling',
 } as const;
 
 export type OrgSubKey = keyof typeof ORG_SUBCOLLECTIONS;
@@ -123,6 +134,11 @@ export async function seedOrgCollections(firestore: Firestore, orgId: string): P
     { col: 'userAccounts', rows: seedUserAccounts },
     { col: 'families', rows: seedFamilies },
     { col: 'staffTasks', rows: seedStaffTasks },
+    { col: 'gcseStudentsMaster', rows: seedGcseStudentsMasterDocs },
+    { col: 'gcseBillingGroups', rows: seedGcseBillingGroupsDocs },
+    { col: 'gcseAttendance', rows: seedGcseAttendanceDocs },
+    { col: 'gcseClassClosures', rows: seedGcseClassClosuresDocs },
+    { col: 'gcseMonthlyBilling', rows: seedGcseMonthlyBillingDocs },
   ];
 
   for (const { col, rows } of writeMaps) {

@@ -1,4 +1,5 @@
-/** Demo org data — aligned with `data/starter_csvs/` (students, billing, attendance templates). */
+/** Demo org data — GCSE class roster & ops from `data/gcse-import/*.csv` + Elevate Youth demo class. */
+import generatedGcse from '@/lib/gcseImport/generatedIntegration';
 import type {
   Organisation,
   OrgAdmin,
@@ -46,17 +47,7 @@ export const seedTeachers: Teacher[] = [
 ];
 
 export const seedClasses: Class[] = [
-  {
-    id: 'class_zain_001',
-    orgId: seedOrg.id,
-    teacherId: seedTeachers[0].id,
-    name: "Zain Gul's Class",
-    subject: 'Mathematics',
-    subjects: ['English', 'Mathematics', 'Science'],
-    yearGroup: 10 as const,
-    active: true,
-    createdAt: '2026-03-02T10:00:00Z',
-  },
+  generatedGcse.gcseClass,
   {
     id: 'class_elevate_youth',
     orgId: seedOrg.id,
@@ -70,33 +61,9 @@ export const seedClasses: Class[] = [
   },
 ];
 
-// Households for Nova Org (daycare / tuition operations)
+/** Billing groups / households from GCSE starter + Elevate-only families. */
 export const seedFamilies: Family[] = [
-  {
-    id: 'fam_001',
-    orgId: seedOrg.id,
-    name: 'Ali household',
-    primaryContactName: 'Sarah Ali',
-    primaryContactPhone: '07400111222',
-    primaryContactEmail: 'sarah.ali@example.com',
-    universalCreditActive: false,
-    createdAt: '2026-03-01T10:00:00Z',
-    updatedAt: '2026-03-15T10:00:00Z',
-  },
-  {
-    id: 'fam_002',
-    orgId: seedOrg.id,
-    name: 'Martina household',
-    primaryContactName: 'James Martina',
-    primaryContactPhone: '07400222333',
-    primaryContactEmail: 'j.martina@example.com',
-    universalCreditActive: true,
-    nextUcPaymentDate: '2026-04-05',
-    nextJournalCheckDate: '2026-03-28',
-    ucNotes: 'Confirm childcare element in UC journal after payment date.',
-    createdAt: '2026-03-01T10:00:00Z',
-    updatedAt: '2026-03-15T10:00:00Z',
-  },
+  ...generatedGcse.families,
   {
     id: 'fam_ey_ali',
     orgId: seedOrg.id,
@@ -122,34 +89,9 @@ export const seedFamilies: Family[] = [
   },
 ];
 
-const TT_STUDENT_FAMILY: Partial<Record<string, string>> = {
-  s_tt_001: 'fam_001',
-  s_tt_002: 'fam_001',
-  s_tt_005: 'fam_002',
-  s_tt_006: 'fam_002',
-};
-
-const STUDENT_NAMES = [
-  'Aahil Ali',
-  'Aliza Ali',
-  'Ares Ali',
-  'Muhammed Subhan',
-  'Elijah Martina',
-  'Aliyah Martina',
-  'Ibrahim Abdille',
-  'Suraya Abdi Adille',
-  'Christobel Manu',
-  'Aisha Hassan',
-  'Tahreem Abbas',
-  'Rudaina Ahmed',
-  'Zaynab Wasim',
-  'Muhammad Ismaeel',
-  'Hzar Abdirahman',
-  'Suraya Robinson',
-  'Zain Patel',
-  'Faiza Al-Ashai',
-  'Annam Mehmood',
-];
+function gcseSid(ext: string): string {
+  return `gcse_${ext}`;
+}
 
 // Elevate Youth Class (8–16) - full roster with unique IDs for duplicate names
 const ELEVATE_YOUTH_NAMES = [
@@ -182,69 +124,6 @@ const elevateYouthStudents: Student[] = ELEVATE_YOUTH_NAMES.map((name, i) => {
   };
 });
 
-// Funding: first 8 private, rest Universal Credit. Some with flags, parent contacts, amounts owed.
-const FUNDING: Array<'private' | 'universal_credit'> = ['private', 'private', 'private', 'private', 'private', 'private', 'private', 'private', 'universal_credit', 'universal_credit', 'universal_credit', 'universal_credit', 'universal_credit', 'universal_credit', 'universal_credit', 'universal_credit', 'universal_credit', 'universal_credit', 'universal_credit'];
-const AMOUNT_OWED: (number | undefined)[] = [0, 0, 3500, 0, 7000, 0, 0, 0, 0, 0, 0, 3500, 0, 0, 0, 0, 0, 0, 0]; // pence
-const FLAGS: (string[] | undefined)[] = [
-  undefined,
-  ['low_attendance'],
-  ['overdue_payment'],
-  undefined,
-  ['overdue_payment', 'parent_contact_needed'],
-  undefined,
-  ['follow_up_required'],
-  undefined,
-  undefined,
-  ['low_attendance'],
-  undefined,
-  ['overdue_payment'],
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-  undefined,
-];
-const PARENT_NAMES = ['Sarah Ali', 'Ali Family', 'Ares Parent', 'Subhan Family', 'Martina Family', 'Martina Family', 'Abdille Family', 'Adille Family', 'Manu Family', 'Hassan Family', 'Abbas Family', 'Ahmed Family', 'Wasim Family', 'Ismaeel Family', 'Abdirahman Family', 'Robinson Family', 'Patel Family', 'Al-Ashai Family', 'Mehmood Family'];
-const HOURS_COMPLETED = [12, 8, 14, 16, 6, 18, 10, 20, 22, 4, 15, 11, 19, 14, 16, 12, 18, 10, 14];
-const DAYS_ATTENDED = [6, 4, 7, 8, 3, 9, 5, 10, 11, 2, 7, 5, 9, 7, 8, 6, 9, 5, 7];
-
-// Org records for Zain's class (first 19 students)
-const ttStudents = STUDENT_NAMES.map((name, i) => {
-  const id = `s_tt_${String(i + 1).padStart(3, '0')}`;
-  return {
-    id,
-    orgId: seedOrg.id,
-    familyId: TT_STUDENT_FAMILY[id],
-    name,
-    yearGroup: 10 as const,
-    subjects: ['Mathematics', 'English', 'Science'] as Array<'Mathematics' | 'English' | 'Science'>,
-    mathsTier: 'Higher' as const,
-    examBoard: undefined,
-    literatureTexts: undefined,
-    createdAt: '2026-03-02T10:00:00Z',
-    totalPoints: 0,
-    level: 1,
-  };
-});
-const ttOrgRecords: OrgStudentRecord[] = ttStudents.map((s, i) => ({
-    id: `osr_${s.id}`,
-    orgId: seedOrg.id,
-    studentId: s.id,
-    daysAttended: DAYS_ATTENDED[i],
-    hoursCompleted: HOURS_COMPLETED[i],
-    amountOwedPence: AMOUNT_OWED[i],
-    paymentFundingType: FUNDING[i],
-    parentGuardianName: i < 15 ? PARENT_NAMES[i] : undefined,
-    parentGuardianPhone: i < 12 ? `07${400000000 + i}00` : undefined,
-    parentGuardianEmail: i < 10 ? `parent${i + 1}@example.com` : undefined,
-    flaggedIssues: FLAGS[i],
-    adminNotes: i === 4 ? 'Parent requested call re payment plan' : undefined,
-    createdAt: '2026-03-02T10:00:00Z',
-    updatedAt: '2026-03-15T10:00:00Z',
-}));
-
 // Org records for Elevate Youth (mix of private/UC, some flags)
 const eyFunding: Array<'private' | 'universal_credit'> = [...Array(20)].map((_, i) => (i < 12 ? 'private' : 'universal_credit'));
 const eyOrgRecords: OrgStudentRecord[] = elevateYouthStudents.map((s, i) => ({
@@ -264,12 +143,18 @@ const eyOrgRecords: OrgStudentRecord[] = elevateYouthStudents.map((s, i) => ({
   updatedAt: '2026-03-15T10:00:00Z',
 }));
 
-export const seedStudents: Student[] = [...ttStudents, ...elevateYouthStudents];
-export const seedOrgStudentRecords: OrgStudentRecord[] = [...ttOrgRecords, ...eyOrgRecords];
+export const seedStudents: Student[] = [...generatedGcse.students, ...elevateYouthStudents];
+export const seedOrgStudentRecords: OrgStudentRecord[] = [...generatedGcse.orgStudentRecords, ...eyOrgRecords];
 
 export const seedEnrollments: Enrollment[] = [
-  ...ttStudents.map((s) => ({ id: `en_${s.id}`, orgId: seedOrg.id, classId: seedClasses[0].id, studentId: s.id, startDate: '2026-03-02' })),
-  ...elevateYouthStudents.map((s) => ({ id: `en_${s.id}`, orgId: seedOrg.id, classId: seedClasses[1].id, studentId: s.id, startDate: '2026-03-02' })),
+  ...generatedGcse.enrollments,
+  ...elevateYouthStudents.map((s) => ({
+    id: `en_${s.id}`,
+    orgId: seedOrg.id,
+    classId: seedClasses[1].id,
+    studentId: s.id,
+    startDate: '2026-03-02',
+  })),
 ];
 
 export const seedTuitionPlans: TuitionPlan[] = [
@@ -289,22 +174,21 @@ export const seedBillingAccounts: BillingAccount[] = seedStudents.map((s) => {
   };
 });
 
-// Invoices: paid, partial, overdue, sent (unpaid)
+// Sample invoices (amounts in pence) — GCSE student ids from starter roster
 export const seedInvoices: Invoice[] = [
-  { id: 'inv_1', orgId: seedOrg.id, studentId: ttStudents[2].id, periodStart: '2026-02-01', periodEnd: '2026-02-28', amountPence: 3500, status: 'overdue', dueDate: '2026-03-07' },
-  { id: 'inv_2', orgId: seedOrg.id, studentId: ttStudents[4].id, periodStart: '2026-02-01', periodEnd: '2026-02-28', amountPence: 7000, status: 'overdue', dueDate: '2026-03-01' },
-  { id: 'inv_3', orgId: seedOrg.id, studentId: ttStudents[11].id, periodStart: '2026-03-01', periodEnd: '2026-03-31', amountPence: 3500, status: 'sent', dueDate: '2026-04-07' },
-  { id: 'inv_4', orgId: seedOrg.id, studentId: ttStudents[0].id, periodStart: '2026-03-01', periodEnd: '2026-03-31', amountPence: 3500, status: 'paid', dueDate: '2026-04-07' },
-  { id: 'inv_5', orgId: seedOrg.id, studentId: ttStudents[1].id, periodStart: '2026-03-01', periodEnd: '2026-03-31', amountPence: 3500, status: 'paid', dueDate: '2026-04-07' },
-  { id: 'inv_6', orgId: seedOrg.id, studentId: ttStudents[6].id, periodStart: '2026-03-01', periodEnd: '2026-03-31', amountPence: 7000, status: 'partial', dueDate: '2026-04-07' },
+  { id: 'inv_1', orgId: seedOrg.id, studentId: gcseSid('STU003'), periodStart: '2026-02-01', periodEnd: '2026-02-28', amountPence: 12500, status: 'overdue', dueDate: '2026-03-07' },
+  { id: 'inv_2', orgId: seedOrg.id, studentId: gcseSid('STU014'), periodStart: '2026-02-01', periodEnd: '2026-02-28', amountPence: 7000, status: 'overdue', dueDate: '2026-03-01' },
+  { id: 'inv_3', orgId: seedOrg.id, studentId: gcseSid('STU006'), periodStart: '2026-03-01', periodEnd: '2026-03-31', amountPence: 14000, status: 'sent', dueDate: '2026-04-07' },
+  { id: 'inv_4', orgId: seedOrg.id, studentId: gcseSid('STU001'), periodStart: '2026-03-01', periodEnd: '2026-03-31', amountPence: 12000, status: 'paid', dueDate: '2026-04-07' },
+  { id: 'inv_5', orgId: seedOrg.id, studentId: gcseSid('STU002'), periodStart: '2026-03-01', periodEnd: '2026-03-31', amountPence: 12000, status: 'paid', dueDate: '2026-04-07' },
+  { id: 'inv_6', orgId: seedOrg.id, studentId: gcseSid('STU008'), periodStart: '2026-03-01', periodEnd: '2026-03-31', amountPence: 14000, status: 'partial', dueDate: '2026-04-07' },
 ];
 
-// Payments this month
 export const seedPayments: Payment[] = [
-  { id: 'pay_1', orgId: seedOrg.id, studentId: ttStudents[0].id, invoiceId: 'inv_4', amountPence: 3500, status: 'succeeded', paidAt: '2026-03-05T10:00:00Z', paymentDate: '2026-03-05', paymentMethod: 'card', paymentType: 'private' },
-  { id: 'pay_2', orgId: seedOrg.id, studentId: ttStudents[1].id, invoiceId: 'inv_5', amountPence: 3500, status: 'succeeded', paidAt: '2026-03-08T14:00:00Z', paymentDate: '2026-03-08', paymentMethod: 'bank', paymentType: 'private' },
-  { id: 'pay_3', orgId: seedOrg.id, studentId: ttStudents[3].id, amountPence: 3500, status: 'succeeded', paidAt: '2026-03-10T09:00:00Z', paymentDate: '2026-03-10', paymentMethod: 'UC', paymentType: 'universal_credit' },
-  { id: 'pay_4', orgId: seedOrg.id, studentId: ttStudents[5].id, amountPence: 3500, status: 'succeeded', paidAt: '2026-03-12T11:00:00Z', paymentDate: '2026-03-12', paymentMethod: 'card', paymentType: 'private' },
+  { id: 'pay_1', orgId: seedOrg.id, studentId: gcseSid('STU001'), invoiceId: 'inv_4', amountPence: 12000, status: 'succeeded', paidAt: '2026-03-05T10:00:00Z', paymentDate: '2026-03-05', paymentMethod: 'card', paymentType: 'private' },
+  { id: 'pay_2', orgId: seedOrg.id, studentId: gcseSid('STU002'), invoiceId: 'inv_5', amountPence: 12000, status: 'succeeded', paidAt: '2026-03-08T14:00:00Z', paymentDate: '2026-03-08', paymentMethod: 'bank', paymentType: 'private' },
+  { id: 'pay_3', orgId: seedOrg.id, studentId: gcseSid('STU004'), amountPence: 12500, status: 'succeeded', paidAt: '2026-03-10T09:00:00Z', paymentDate: '2026-03-10', paymentMethod: 'UC', paymentType: 'universal_credit' },
+  { id: 'pay_4', orgId: seedOrg.id, studentId: gcseSid('STU005'), amountPence: 14000, status: 'succeeded', paidAt: '2026-03-12T11:00:00Z', paymentDate: '2026-03-12', paymentMethod: 'card', paymentType: 'private' },
 ];
 
 // Attendance: last 2 weeks, mix of present/absent/late
@@ -333,27 +217,33 @@ function genAttendance(students: Student[], classId: string): AttendanceRecord[]
 }
 
 export const seedAttendance: AttendanceRecord[] = [
-  ...genAttendance(ttStudents, seedClasses[0].id),
+  ...generatedGcse.attendance,
   ...genAttendance(elevateYouthStudents, seedClasses[1].id),
 ];
 
-// Staff notes / follow-ups
 export const seedNotes: StaffNote[] = [
-  { id: 'n1', orgId: seedOrg.id, studentId: ttStudents[4].id, teacherId: seedTeachers[0].id, authorOrgAdminId: 'admin_001', createdAt: '2026-03-14T09:00:00Z', type: 'parent_call', risk: 'medium', text: 'Parent requested call re payment plan', pinned: true },
-  { id: 'n2', orgId: seedOrg.id, studentId: ttStudents[1].id, teacherId: seedTeachers[0].id, createdAt: '2026-03-13T14:00:00Z', type: 'follow_up', risk: 'low', text: 'Low attendance - 2 sessions missed this week' },
-  { id: 'n3', orgId: seedOrg.id, studentId: ttStudents[6].id, teacherId: seedTeachers[0].id, createdAt: '2026-03-12T10:00:00Z', type: 'follow_up', risk: 'low', text: 'Follow-up required' },
-  { id: 'n4', orgId: seedOrg.id, studentId: ttStudents[9].id, teacherId: seedTeachers[0].id, createdAt: '2026-03-11T11:00:00Z', type: 'intervention', risk: 'high', text: 'Multiple absences - welfare check needed' },
-  { id: 'n5', orgId: seedOrg.id, familyId: 'fam_002', authorOrgAdminId: 'admin_002', createdAt: '2026-03-10T15:00:00Z', type: 'follow_up', risk: 'medium', text: 'Household-level: confirm UC childcare costs submitted for both children.', pinned: false },
+  { id: 'n1', orgId: seedOrg.id, studentId: gcseSid('STU014'), teacherId: seedTeachers[0].id, authorOrgAdminId: 'admin_001', createdAt: '2026-03-14T09:00:00Z', type: 'parent_call', risk: 'medium', text: 'Parent requested call re payment plan', pinned: true },
+  { id: 'n2', orgId: seedOrg.id, studentId: gcseSid('STU002'), teacherId: seedTeachers[0].id, createdAt: '2026-03-13T14:00:00Z', type: 'follow_up', risk: 'low', text: 'Low attendance - 2 sessions missed this week' },
+  { id: 'n3', orgId: seedOrg.id, studentId: gcseSid('STU008'), teacherId: seedTeachers[0].id, createdAt: '2026-03-12T10:00:00Z', type: 'follow_up', risk: 'low', text: 'Follow-up required' },
+  { id: 'n4', orgId: seedOrg.id, studentId: gcseSid('STU012'), teacherId: seedTeachers[0].id, createdAt: '2026-03-11T11:00:00Z', type: 'intervention', risk: 'high', text: 'Multiple absences - welfare check needed' },
+  { id: 'n5', orgId: seedOrg.id, familyId: 'fam_gcse_FAM003', authorOrgAdminId: 'admin_002', createdAt: '2026-03-10T15:00:00Z', type: 'follow_up', risk: 'medium', text: 'Household-level: confirm UC childcare costs submitted for both children.', pinned: false },
 ];
+
+/** GCSE starter mirrors for Firestore (`orgs/{orgId}/gcse*`). */
+export const seedGcseStudentsMasterDocs = generatedGcse.firestore.gcseStudentsMaster;
+export const seedGcseBillingGroupsDocs = generatedGcse.firestore.gcseBillingGroups;
+export const seedGcseAttendanceDocs = generatedGcse.firestore.gcseAttendance;
+export const seedGcseClassClosuresDocs = generatedGcse.firestore.gcseClassClosures;
+export const seedGcseMonthlyBillingDocs = generatedGcse.firestore.gcseMonthlyBilling;
 
 export const seedStaffTasks: StaffTask[] = [
   {
     id: 'st_1',
     orgId: seedOrg.id,
-    title: 'Check UC journal — Martina household',
+    title: 'Check UC journal — Martina household (GCSE billing group)',
     dueDate: '2026-03-26',
     status: 'open',
-    relatedFamilyId: 'fam_002',
+    relatedFamilyId: 'fam_gcse_FAM003',
     assigneeTeacherId: seedTeachers[0].id,
     notes: 'After next UC payment date',
     createdAt: '2026-03-14T10:00:00Z',
@@ -365,7 +255,7 @@ export const seedStaffTasks: StaffTask[] = [
     title: 'Chase overdue invoice',
     dueDate: '2026-03-24',
     status: 'open',
-    relatedStudentId: ttStudents[2].id,
+    relatedStudentId: gcseSid('STU003'),
     createdAt: '2026-03-14T10:00:00Z',
     updatedAt: '2026-03-14T10:00:00Z',
   },
