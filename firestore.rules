@@ -1,0 +1,22 @@
+rules_version = '2';
+
+// Paste into Firebase Console → Firestore → Rules, or: firebase deploy --only firestore:rules
+//
+// Your previous rules denied everything (if false). The Nova client reads/writes under orgs/{orgId}/...
+// This version allows any signed-in user to access org data — OK for a small team / staging.
+// Tighten later (e.g. custom claims, allowlist emails, or per-user org membership docs).
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Nova Org: all subcollections (students, attendance, gcse*, etc.)
+    match /orgs/{orgId}/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Deny everything else by default (explicit is clearer than a catch-all deny after allows)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
