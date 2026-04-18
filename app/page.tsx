@@ -70,7 +70,15 @@ export default function Home() {
   ];
 
   return (
-    <div className="h-screen min-h-[568px] bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50 min-w-[320px] overflow-hidden flex flex-col">
+    <div className="relative h-screen min-h-[568px] bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50 min-w-[320px] overflow-hidden flex flex-col">
+      <div
+        className="pointer-events-none fixed inset-x-0 top-0 z-[6] h-20 sm:h-28 bg-gradient-to-b from-white from-20% to-transparent"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-[6] h-24 sm:h-36 bg-gradient-to-t from-white from-15% to-transparent"
+        aria-hidden
+      />
       {/* Grid lines overlay */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-[0.4]">
         <div

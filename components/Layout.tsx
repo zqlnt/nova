@@ -295,7 +295,7 @@ export default function Layout({ children, role }: LayoutProps) {
       
       {/* Main column — floating header/footer match sidebar; chrome always available */}
       <main className="flex-1 flex flex-col overflow-hidden relative z-10 w-full min-w-0 min-h-0 lg:p-3 lg:gap-3">
-        <header className="nova-frost-shell flex items-center justify-between flex-shrink-0 gap-2 px-4 py-3 mx-3 mt-3 lg:mx-0 lg:mt-0 sticky top-3 z-30 safe-area-pt">
+        <header className="nova-frost-shell flex items-center justify-between flex-shrink-0 gap-2 px-3 sm:px-4 py-3 mx-2 sm:mx-3 mt-2 sm:mt-3 lg:mx-0 lg:mt-0 sticky top-3 z-30 safe-area-pt">
           <button
             type="button"
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -351,12 +351,12 @@ export default function Layout({ children, role }: LayoutProps) {
           />
 
           <div className="flex-1 overflow-y-auto relative custom-scrollbar">
-            <div className="px-5 sm:px-8 lg:px-10 xl:px-12 pt-4 sm:pt-6 pb-8 sm:pb-10 min-w-0">
+            <div className="px-3 sm:px-8 lg:px-10 xl:px-12 pt-3 sm:pt-6 pb-7 sm:pb-10 min-w-0">
               <div className="max-w-7xl mx-auto min-w-0">{children}</div>
             </div>
 
-            <footer className="nova-frost-shell mx-3 mb-3 mt-2 lg:mx-0 lg:mb-0 safe-area-pb">
-              <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 xl:px-12 py-5 sm:py-6">
+            <footer className="nova-frost-shell mx-2 sm:mx-3 mb-2 sm:mb-3 mt-2 lg:mx-0 lg:mb-0 safe-area-pb">
+              <div className="max-w-7xl mx-auto px-3 sm:px-8 lg:px-10 xl:px-12 py-4 sm:py-6">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-xs sm:text-sm text-gray-600">
                   <div className="flex items-center gap-4 sm:gap-6 flex-wrap justify-center">
                     <Link href="/about" className="hover:text-ios-blue transition-colors">

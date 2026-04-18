@@ -29,24 +29,28 @@ export default function MiniCalendar({ events = [], href = '/student/calendar', 
   const upcomingEvents = events.filter((e) => e.startDate >= todayStr).slice(0, 3);
 
   return (
-    <div className="nova-frost-panel rounded-3xl p-5">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
-        <Link href={href} className="text-xs text-indigo-600 hover:underline">View</Link>
+    <div className="nova-frost-panel rounded-3xl p-3.5 sm:p-5 w-full min-w-0">
+      <div className="flex items-center justify-between mb-2 sm:mb-3 gap-2">
+        <h3 className="text-xs sm:text-sm font-semibold text-gray-800 truncate">{title}</h3>
+        <Link href={href} className="text-[10px] sm:text-xs text-indigo-600 hover:underline shrink-0">
+          View
+        </Link>
       </div>
-      <div className="grid grid-cols-7 gap-0.5 text-center text-[10px] font-medium text-gray-500 mb-1">
-        {DAYS.map((d) => (
-          <div key={d}>{d}</div>
+      <div className="grid grid-cols-7 gap-px sm:gap-0.5 text-center text-[9px] sm:text-[10px] font-medium text-gray-500 mb-0.5 sm:mb-1">
+        {DAYS.map((d, i) => (
+          <div key={i} className="truncate px-px">
+            {d}
+          </div>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-0.5">
+      <div className="grid grid-cols-7 gap-px sm:gap-0.5 w-full min-w-0">
         {grid.map((d, i) => {
           if (d === null) return <div key={i} />;
           const isToday = today.getDate() === d && today.getMonth() === month && today.getFullYear() === year;
           return (
             <div
               key={i}
-              className={`aspect-square flex items-center justify-center rounded text-xs font-medium ${
+              className={`aspect-square min-h-0 flex items-center justify-center rounded text-[10px] sm:text-xs font-medium tabular-nums ${
                 isToday
                   ? 'bg-gradient-to-br from-indigo-500 to-blue-600 text-white shadow-[0_4px_14px_-4px_rgba(79,70,229,0.45)]'
                   : 'text-gray-700 hover:bg-white/50'

@@ -7,9 +7,10 @@ html {
   overflow-x: hidden;
 }
 
-body {
-  overflow-x: hidden;
-  min-width: 320px;
+@media (max-width: 640px) {
+  html {
+    font-size: 93.75%;
+  }
 }
 
 /* Safe area for notched devices (iOS, etc.) */
@@ -23,7 +24,7 @@ body {
 /* Ensure cards and grids are responsive */
 @media (max-width: 640px) {
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)) !important;
   }
 }
 
@@ -41,8 +42,12 @@ body {
 }
 
 body {
+  overflow-x: hidden;
+  min-width: 320px;
   color: var(--foreground);
   background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0) 12%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0) 14%),
     radial-gradient(ellipse 100% 80% at 50% -20%, rgba(186, 210, 253, 0.35), transparent 58%),
     radial-gradient(ellipse 75% 55% at 100% 8%, rgba(251, 207, 232, 0.22), transparent 52%),
     radial-gradient(ellipse 70% 50% at 0% 95%, rgba(199, 210, 254, 0.2), transparent 55%),

@@ -61,36 +61,38 @@ export default function Calendar({ events = [], termDates = [], onDateClick, mod
   for (let d = 1; d <= daysInMonth; d++) grid.push(d);
 
   return (
-    <div className="nova-frost-panel rounded-3xl p-5 sm:p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">
+    <div className="nova-frost-panel rounded-3xl p-3.5 sm:p-6 w-full min-w-0">
+      <div className="flex items-center justify-between mb-3 sm:mb-4 gap-2">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
           {MONTHS[month]} {year}
         </h3>
-        <div className="flex gap-2">
+        <div className="flex gap-1 sm:gap-2 shrink-0">
           <button
             type="button"
             onClick={prevMonth}
-            className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
+            className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </button>
           <button
             type="button"
             onClick={nextMonth}
-            className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
+            className="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 text-center text-xs font-medium text-gray-500 mb-2">
-        {DAYS.map((d) => (
-          <div key={d}>{d}</div>
+      <div className="grid grid-cols-7 gap-0.5 sm:gap-1 text-center text-[10px] sm:text-xs font-medium text-gray-500 mb-1.5 sm:mb-2">
+        {DAYS.map((d, di) => (
+          <div key={di} className="truncate px-0.5">
+            {d}
+          </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-7 gap-0.5 sm:gap-1 w-full min-w-0">
         {grid.map((d, i) => {
           if (d === null) return <div key={i} />;
           const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
@@ -103,16 +105,16 @@ export default function Calendar({ events = [], termDates = [], onDateClick, mod
               key={i}
               type="button"
               onClick={() => onDateClick?.(dateStr)}
-              className={`min-h-[72px] p-2 rounded-lg text-left text-sm transition-colors ${
+              className={`min-h-[52px] sm:min-h-[72px] p-1 sm:p-2 rounded-md sm:rounded-lg text-left text-xs sm:text-sm transition-colors ${
                 isToday ? 'ring-2 ring-blue-400 bg-blue-50' : 'hover:bg-gray-50'
               } ${isWeekend ? 'bg-gray-50/50' : ''}`}
             >
-              <span className={`font-medium ${isToday ? 'text-blue-600' : 'text-gray-900'}`}>{d}</span>
-              <div className="mt-1 space-y-0.5">
+              <span className={`font-medium tabular-nums ${isToday ? 'text-blue-600' : 'text-gray-900'}`}>{d}</span>
+              <div className="mt-0.5 sm:mt-1 space-y-0.5">
                 {dayEvents.slice(0, 2).map((e) => (
                   <div
                     key={e.id}
-                    className={`truncate px-1.5 py-0.5 rounded text-[10px] border ${EVENT_COLORS[e.type] || 'bg-gray-100'}`}
+                    className={`truncate px-1 sm:px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] border leading-tight ${EVENT_COLORS[e.type] || 'bg-gray-100'}`}
                     title={e.title}
                   >
                     {e.title}
