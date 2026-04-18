@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate:gcse": "tsx scripts/generate-gcse-integration.ts",
-    "import:gcse-firestore": "tsx scripts/import-gcse-firestore.ts"
+    "import:gcse-firestore": "tsx scripts/import-gcse-firestore.ts",
+    "seed:org-firestore": "tsx scripts/seed-full-org-firestore.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
