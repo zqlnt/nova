@@ -28,7 +28,30 @@ import type {
   GcseMonthlyBillingFirestoreDoc,
   GcseStudentMasterFirestoreDoc,
 } from '@/lib/gcseImport/types';
-import { seedOrg } from '@/lib/orgSeed';
+import {
+  seedOrg,
+  seedAdmins,
+  seedTeachers,
+  seedClasses,
+  seedStudents,
+  seedOrgStudentRecords,
+  seedEnrollments,
+  seedAttendance,
+  seedNotes,
+  seedBillingAccounts,
+  seedInvoices,
+  seedPayments,
+  seedTuitionPlans,
+  seedFamilies,
+  seedStaffTasks,
+  seedGcseStudentsMasterDocs,
+  seedGcseBillingGroupsDocs,
+  seedGcseAttendanceDocs,
+  seedGcseClassClosuresDocs,
+  seedGcseMonthlyBillingDocs,
+} from '@/lib/orgSeed';
+import { seedIncomeRecords, seedExpenses } from '@/lib/incomeExpenseSeed';
+import { seedUserAccounts } from '@/lib/userAccountSeed';
 import {
   DEFAULT_ORG_ID,
   getFirestoreDb,
@@ -105,6 +128,36 @@ function emptyOrgCache(): OrgCache {
 let cache: OrgCache = emptyOrgCache();
 let persistenceEnabled = false;
 const syncListeners = new Set<() => void>();
+
+const isDev = process.env.NODE_ENV === 'development';
+
+/** Offline / loading fallback so org dashboards are not blank in local dev. */
+function fillCacheFromEmbeddedSeed(): void {
+  cache.organisation = seedOrg;
+  cache.admins = seedAdmins;
+  cache.teachers = seedTeachers;
+  cache.classes = seedClasses;
+  cache.students = seedStudents;
+  cache.orgStudentRecords = seedOrgStudentRecords;
+  cache.enrollments = seedEnrollments;
+  cache.attendance = seedAttendance;
+  cache.notes = seedNotes;
+  cache.billingAccounts = seedBillingAccounts;
+  cache.invoices = seedInvoices;
+  cache.payments = seedPayments;
+  cache.tuitionPlans = seedTuitionPlans;
+  cache.income = seedIncomeRecords;
+  cache.expenses = seedExpenses;
+  cache.userAccounts = seedUserAccounts;
+  cache.families = seedFamilies;
+  cache.staffTasks = seedStaffTasks;
+  cache.gcseStudentsMaster = seedGcseStudentsMasterDocs as GcseStudentMasterFirestoreDoc[];
+  cache.gcseBillingGroups = seedGcseBillingGroupsDocs as GcseBillingGroupFirestoreDoc[];
+  cache.gcseAttendance = seedGcseAttendanceDocs as GcseAttendanceFirestoreDoc[];
+  cache.gcseClassClosures = seedGcseClassClosuresDocs as GcseClassClosureFirestoreDoc[];
+  cache.gcseMonthlyBilling = seedGcseMonthlyBillingDocs as GcseMonthlyBillingFirestoreDoc[];
+  bump();
+}
 
 export type OrgSyncState = {
   loading: boolean;
@@ -273,19 +326,33 @@ function attachListeners(firestore: NonNullable<ReturnType<typeof getFirestoreDb
 async function initFirestore() {
   const firestore = getFirestoreDb();
   if (!firestore) {
-    cache = emptyOrgCache();
     persistenceEnabled = false;
-    setSyncState({
-      loading: false,
-      error: 'Firestore is not available.',
-      ready: true,
-      persistenceEnabled: false,
-    });
+    if (isDev) {
+      fillCacheFromEmbeddedSeed();
+      setSyncState({
+        loading: false,
+        error: 'Firestore is not available — showing embedded demo data (check NEXT_PUBLIC_FIREBASE_*).',
+        ready: true,
+        persistenceEnabled: false,
+      });
+    } else {
+      cache = emptyOrgCache();
+      setSyncState({
+        loading: false,
+        error: 'Firestore is not available.',
+        ready: true,
+        persistenceEnabled: false,
+      });
+    }
     return;
   }
 
   persistenceEnabled = true;
   setSyncState({ loading: true, error: null, persistenceEnabled: true });
+
+  if (isDev) {
+    fillCacheFromEmbeddedSeed();
+  }
 
   try {
     await setOrgDocument(firestore, ORG_ID, stripForOrgRoot(cache.organisation));
@@ -305,14 +372,24 @@ async function initFirestore() {
     attachListeners(firestore);
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
-    cache = emptyOrgCache();
     persistenceEnabled = false;
-    setSyncState({
-      loading: false,
-      error: msg,
-      ready: true,
-      persistenceEnabled: false,
-    });
+    if (isDev) {
+      fillCacheFromEmbeddedSeed();
+      setSyncState({
+        loading: false,
+        error: `${msg} — showing embedded demo data locally.`,
+        ready: true,
+        persistenceEnabled: false,
+      });
+    } else {
+      cache = emptyOrgCache();
+      setSyncState({
+        loading: false,
+        error: msg,
+        ready: true,
+        persistenceEnabled: false,
+      });
+    }
   }
 }
 

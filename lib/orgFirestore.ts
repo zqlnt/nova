@@ -72,10 +72,16 @@ export const ORG_SUBCOLLECTIONS = {
 
 export type OrgSubKey = keyof typeof ORG_SUBCOLLECTIONS;
 
-/** Opt-in only: set NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY=true for local/dev seeding. Never defaults on in production. */
+/**
+ * When true, `orgService` will call `seedOrgCollections` if `students` is empty.
+ * - Production: only when NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY=true (avoid writing to shared prod by accident).
+ * - Development: true by default; set NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY=false to skip.
+ */
 export function shouldSeedEmptyOrg(): boolean {
   if (typeof process === 'undefined') return false;
-  return process.env.NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY === 'true';
+  if (process.env.NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY === 'false') return false;
+  if (process.env.NEXT_PUBLIC_FIRESTORE_SEED_ON_EMPTY === 'true') return true;
+  return process.env.NODE_ENV === 'development';
 }
 
 export function stripUndefined<T extends Record<string, unknown>>(obj: T): Record<string, unknown> {
