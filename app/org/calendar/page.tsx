@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import Calendar from '@/components/Calendar';
 import { buildOrgCalendarEvents } from '@/lib/orgCalendarEvents';
@@ -30,7 +30,7 @@ export default function OrgCalendarPage() {
     : [];
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">Calendar <MathSymbolAnimation size="sm" colorIndex={3} /></h1>
@@ -104,6 +104,6 @@ export default function OrgCalendarPage() {
           </div>
         </div>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

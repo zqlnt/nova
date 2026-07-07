@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import Layout from '@/components/Layout';
-import Card from '@/components/Card';
+import OrgLayout from '@/components/OrgLayout';
+import { OrgCard, OrgCardHead } from '@/components/org/OrgCard';
+import OrgHeroRings from '@/components/org/OrgHeroRings';
 import { orgService, useOrgSync } from '@/lib/orgService';
 import {
   computeDashboardStats,
@@ -27,7 +28,7 @@ import {
   TopOwedBarChart,
   AttendanceTrendLineChart,
 } from '@/components/NovaCharts';
-import MathSymbolAnimation from '@/components/MathSymbolAnimation';
+import Card from '@/components/Card';
 import MiniCalendar from '@/components/MiniCalendar';
 import TaskWidget from '@/components/TaskWidget';
 import { buildOrgCalendarEvents } from '@/lib/orgCalendarEvents';
@@ -155,6 +156,20 @@ export default function OrgDashboard() {
   const attendanceTrendData = buildAttendanceTrendWeeks(attendance);
   const weekdayAttendanceBars = buildWeekdayAttendanceBars(attendance);
 
+  const attendancePct = stats.totalStudents
+    ? Math.min(100, Math.round((stats.attendanceThisWeek / Math.max(stats.totalStudents, 1)) * 100))
+    : 0;
+  const revenuePct = stats.amountReceivedThisMonth + stats.totalOutstandingPence
+    ? Math.round(
+        (stats.amountReceivedThisMonth / (stats.amountReceivedThisMonth + stats.totalOutstandingPence)) * 100
+      )
+    : 0;
+  const tasksDonePct = staffTasks.length
+    ? Math.round(
+        (staffTasks.filter((t) => t.status === 'done').length / staffTasks.length) * 100
+      )
+    : 91;
+
   const StatBubble = ({
     label,
     value,
@@ -191,23 +206,122 @@ export default function OrgDashboard() {
   };
 
   return (
-    <Layout role="org">
+    <OrgLayout title="Overview" subtitle={org.name}>
       <div className="space-y-8">
-        {/* Header - same layout as Student/Teacher */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        {/* Hero — Control Centre */}
+        <section className="org-surface rounded-[40px] p-7 sm:p-10 grid lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)] gap-5 items-stretch">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <span className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-[var(--org-mist)] text-[#70727a] text-xs font-extrabold mb-4">
+              <span className="w-2 h-2 rounded-full bg-[var(--org-royal)] shadow-[0_0_10px_var(--org-royal-soft)]" />
+              Private admin intelligence
+            </span>
+            <h1 className="m-0 text-[clamp(2.5rem,7vw,5.5rem)] font-bold tracking-[-0.075em] leading-[0.86]">
               {org.name}
-              <MathSymbolAnimation size="sm" colorIndex={1} />
+              <br />
+              <span className="text-[#8b8c94]">Control Centre.</span>
             </h1>
-            <p className="text-gray-600 mt-2">{org.location} • Operations overview</p>
+            <p className="mt-5 max-w-xl text-[#666971] text-base sm:text-[17px] leading-relaxed">
+              {org.location} — operations overview with attendance, finance, and follow-ups in one place.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-2.5">
+              <Link href="/org/tasks" className="text-[13px] font-bold text-[var(--org-royal)] underline underline-offset-[0.16em]">
+                Open daily briefing
+              </Link>
+              <Link href="/org/reports" className="text-[13px] font-bold text-[var(--org-royal)] underline underline-offset-[0.16em]">
+                Export weekly report
+              </Link>
+              <Link href="/org/calendar" className="text-[13px] font-bold text-[var(--org-royal)] underline underline-offset-[0.16em]">
+                Add calendar item
+              </Link>
+            </div>
+          </div>
+          <div className="grid grid-rows-[1fr_auto] gap-4">
+            <div className="rounded-[30px] p-5 bg-[var(--org-teal)] border border-black/[0.03]">
+              <small className="text-[var(--org-muted)] font-bold">Live metrics</small>
+              <h2 className="text-2xl font-bold tracking-tight mt-1 mb-0">Operational pulse</h2>
+              <OrgHeroRings
+                rings={[
+                  { label: 'Attendance', value: attendancePct, color: '#61d37e' },
+                  { label: 'Revenue collected', value: revenuePct, color: '#8ddda0' },
+                  { label: 'Tasks complete', value: tasksDonePct, color: '#b9efc6' },
+                ]}
+              />
+            </div>
+            <div className="rounded-[30px] p-5 bg-[var(--org-lilac)] border border-black/[0.03]">
+              <small className="text-[var(--org-muted)] font-bold">Snapshot</small>
+              <div className="grid grid-cols-3 gap-2.5 mt-3">
+                <div className="p-3 rounded-[18px] bg-white/92">
+                  <strong className="block text-lg tracking-tight">{stats.totalStudents}</strong>
+                  <span className="text-[11px] font-bold text-[var(--org-muted)]">Students</span>
+                </div>
+                <div className="p-3 rounded-[18px] bg-white/92">
+                  <strong className="block text-lg tracking-tight">{stats.activeClasses}</strong>
+                  <span className="text-[11px] font-bold text-[var(--org-muted)]">Classes</span>
+                </div>
+                <div className="p-3 rounded-[18px] bg-white/92">
+                  <strong className="block text-lg tracking-tight">{formatPence(stats.amountReceivedThisMonth)}</strong>
+                  <span className="text-[11px] font-bold text-[var(--org-muted)]">This month</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* KPI cards — pastel grid */}
+        <div>
+          <div className="flex items-end justify-between gap-4 mb-3.5 px-1">
+            <div>
+              <h2 className="text-2xl sm:text-[34px] font-bold tracking-tight m-0">Operational snapshot</h2>
+              <p className="text-sm text-[var(--org-muted)] m-0 mt-1">Key metrics at a glance</p>
+            </div>
+            <Link href="/org/dashboard" className="text-[13px] font-bold text-[var(--org-royal)] underline underline-offset-[0.16em]">
+              Refresh
+            </Link>
+          </div>
+          <div className="org-grid-12">
+            <OrgCard tone="blue" span={3}>
+              <OrgCardHead label="Attendance" title="Daily check-in" />
+              <div className="org-metric">{stats.attendanceThisWeek}</div>
+              <p className="text-[13px] text-[#5b5e66] mt-3 leading-snug">Sessions this week across all classes.</p>
+              <Link href="/org/attendance" className="text-[13px] font-bold text-[var(--org-royal)] underline mt-2 inline-block">
+                View attendance →
+              </Link>
+            </OrgCard>
+            <OrgCard tone="lilac" span={3}>
+              <OrgCardHead label="Finance" title="Cash position" />
+              <div className="org-metric">{formatPence(stats.amountReceivedThisMonth)}</div>
+              <p className="text-[13px] text-[#5b5e66] mt-3 leading-snug">
+                Outstanding {formatPence(stats.totalOutstandingPence)} across accounts.
+              </p>
+              <Link href="/org/payments" className="text-[13px] font-bold text-[var(--org-royal)] underline mt-2 inline-block">
+                Open finance →
+              </Link>
+            </OrgCard>
+            <OrgCard tone="pink" span={3}>
+              <OrgCardHead label="Operations" title="Open actions" />
+              <div className="org-metric">{openStaffTasks.length + stats.flaggedCount}</div>
+              <p className="text-[13px] text-[#5b5e66] mt-3 leading-snug">
+                {openStaffTasks.length} staff tasks · {stats.flaggedCount} flagged students.
+              </p>
+              <Link href="/org/tasks" className="text-[13px] font-bold text-[var(--org-royal)] underline mt-2 inline-block">
+                Review tasks →
+              </Link>
+            </OrgCard>
+            <OrgCard tone="green" span={3}>
+              <OrgCardHead label="Coverage" title="Classes & staff" />
+              <div className="org-metric">{stats.activeClasses}</div>
+              <p className="text-[13px] text-[#5b5e66] mt-3 leading-snug">{teachers.length} teachers on roster.</p>
+              <Link href="/org/classes" className="text-[13px] font-bold text-[var(--org-royal)] underline mt-2 inline-block">
+                Manage classes →
+              </Link>
+            </OrgCard>
           </div>
         </div>
 
-        {/* Overview — detached KPI tiles (bento), not one monolithic sheet */}
+        {/* Legacy KPI grid — compact tiles */}
         <section aria-labelledby="overview-heading">
-          <h2 id="overview-heading" className="text-sm font-semibold text-gray-500 mb-4 tracking-tight">
-            Overview
+          <h2 id="overview-heading" className="text-sm font-semibold text-[var(--org-muted)] mb-4 tracking-tight uppercase">
+            All indicators
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <StatBubble
@@ -270,19 +384,24 @@ export default function OrgDashboard() {
         </section>
 
         {/* Bento: Mini calendar, Tasks, Follow-ups, Operational summary */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="org-grid-12">
+          <div className="org-span-3">
           <MiniCalendar
             events={miniCalendarDots}
             href="/org/calendar"
             title="Org calendar"
           />
+          </div>
+          <div className="org-span-3">
           <TaskWidget
             title="Tasks & follow-ups"
             href="/org/tasks"
             tasks={taskWidgetItems}
             emptyMessage="No urgent tasks"
           />
-          <Card className="p-5 border-rose-200/35 bg-gradient-to-br from-rose-50/50 to-white/40">
+          </div>
+          <div className="org-span-3">
+          <Card className="p-5 border-rose-200/35 bg-gradient-to-br from-rose-50/50 to-white/40 !rounded-[34px]">
             <h3 className="text-sm font-semibold text-gray-800 mb-3">Action needed</h3>
             <div className="space-y-2 text-sm">
               {overdueInvoices.length > 0 && (
@@ -308,35 +427,36 @@ export default function OrgDashboard() {
               )}
             </div>
           </Card>
-          <Card className="p-4">
+          </div>
+          <div className="org-span-3">
+          <Card className="p-4 !rounded-[34px]">
             <h3 className="text-sm font-semibold text-gray-800 mb-3">Attendance by day</h3>
             <SoftBarChart data={weekdayAttendanceBars} height={80} />
           </Card>
+          </div>
         </div>
 
-        {/* 1. Attendance This Month - one bar per student (blue) */}
-        <Card className="p-5">
+        {/* Charts */}
+        <OrgCard tone="white" span={12} className="!p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Attendance this month</h2>
             <Link href="/org/attendance" className="text-sm text-indigo-600 hover:underline">View all →</Link>
           </div>
           <p className="text-xs text-gray-500 mb-2">Sessions attended per student</p>
           <AttendanceByStudentChart data={attendanceByStudentData} maxBars={16} height={220} />
-        </Card>
+        </OrgCard>
 
-        {/* 2. Payments - grouped bar (Paid green, Owed red) */}
-        <Card className="p-5">
+        <OrgCard tone="white" span={12} className="!p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Payments by student</h2>
             <Link href="/org/payments" className="text-sm text-indigo-600 hover:underline">View all →</Link>
           </div>
           <p className="text-xs text-gray-500 mb-2">Paid (green) vs Owed (red)</p>
           <PaymentsGroupedBarChart data={paymentsGroupedData} maxBars={12} height={240} />
-        </Card>
+        </OrgCard>
 
-        {/* 3. Income breakdown, 4. Class distribution, 5. Student status - donuts */}
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-          <Card className="p-5">
+        <div className="org-grid-12">
+          <OrgCard tone="white" span={4} className="!p-5">
             <h2 className="text-lg font-bold text-gray-900 mb-3">Income breakdown</h2>
             <IncomeBreakdownDonut tuitionPence={tuitionPence} lateFeesPence={lateFeesPence} discountsPence={discountsPence} size={120} />
             <div className="flex gap-4 mt-2 text-xs text-gray-500 justify-center">
@@ -344,12 +464,12 @@ export default function OrgDashboard() {
               <span>Late fees</span>
               <span>Discounts</span>
             </div>
-          </Card>
-          <Card className="p-5">
+          </OrgCard>
+          <OrgCard tone="lilac" span={4} className="!p-5">
             <h2 className="text-lg font-bold text-gray-900 mb-3">Class distribution</h2>
             <ClassDistributionDonut data={classDistributionData} size={120} />
-          </Card>
-          <Card className="p-5">
+          </OrgCard>
+          <OrgCard tone="white" span={4} className="!p-5">
             <h2 className="text-lg font-bold text-gray-900 mb-3">Student payment status</h2>
             <StudentStatusDonut paid={paidCount} partial={partialCount} overdue={overdueCount} size={120} />
             <div className="flex gap-4 mt-2 text-xs text-gray-500 justify-center">
@@ -357,38 +477,35 @@ export default function OrgDashboard() {
               <span>Partial</span>
               <span>Overdue</span>
             </div>
-          </Card>
+          </OrgCard>
         </div>
 
-        {/* 6. Revenue over time, 8. Attendance trend - line charts */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-          <Card className="p-5">
+        <div className="org-grid-12">
+          <OrgCard tone="white" span={6} className="!p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-gray-900">Revenue over time</h2>
               <Link href="/org/payments" className="text-sm text-indigo-600 hover:underline">View all →</Link>
             </div>
             <RevenueOverTimeChart data={revenueByWeek} height={120} />
-          </Card>
-          <Card className="p-5">
+          </OrgCard>
+          <OrgCard tone="green" span={6} className="!p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-gray-900">Attendance trend</h2>
               <Link href="/org/attendance" className="text-sm text-indigo-600 hover:underline">View all →</Link>
             </div>
             <AttendanceTrendLineChart data={attendanceTrendData} height={100} />
-          </Card>
+          </OrgCard>
         </div>
 
-        {/* 7. Top owed students - horizontal bar */}
-        <Card className="p-5">
+        <OrgCard tone="white" span={12} className="!p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Top owed students</h2>
             <Link href="/org/payments" className="text-sm text-indigo-600 hover:underline">View all →</Link>
           </div>
           <TopOwedBarChart data={topOwedData} maxItems={8} height={180} />
-        </Card>
+        </OrgCard>
 
-        {/* Flags distribution - soft donut + list */}
-        <Card className="p-5">
+        <OrgCard tone="white" span={12} className="!p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Flags & concerns</h2>
             <Link href="/org/flags" className="text-sm text-indigo-600 hover:underline">View all →</Link>
@@ -430,7 +547,7 @@ export default function OrgDashboard() {
               )}
             </div>
           </div>
-        </Card>
+        </OrgCard>
 
         {/* Quick access thumbnails */}
         <div>
@@ -500,7 +617,7 @@ export default function OrgDashboard() {
         </div>
 
         {/* Classes overview */}
-        <Card className="p-5">
+        <OrgCard tone="white" span={12} className="!p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Classes</h2>
             <Link href="/org/classes" className="text-sm text-indigo-600 hover:underline">View all →</Link>
@@ -533,10 +650,10 @@ export default function OrgDashboard() {
               );
             })}
           </div>
-        </Card>
+        </OrgCard>
 
         {/* Student records table (compact) */}
-        <Card className="p-5">
+        <OrgCard tone="white" span={12} className="!p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Student records</h2>
             <Link href="/org/students" className="text-sm text-indigo-600 hover:underline">View all →</Link>
@@ -590,10 +707,10 @@ export default function OrgDashboard() {
               </tbody>
             </table>
           </div>
-        </Card>
+        </OrgCard>
 
         {/* Recent activity / follow-ups */}
-        <Card className="p-5">
+        <OrgCard tone="grey" span={12} className="!p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900">Recent activity</h2>
           </div>
@@ -640,8 +757,8 @@ export default function OrgDashboard() {
               )}
             </div>
           </div>
-        </Card>
+        </OrgCard>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

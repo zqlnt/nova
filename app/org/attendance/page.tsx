@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import { orgService } from '@/lib/orgService';
 import { enrichStudentsWithOrgData } from '@/lib/orgOperations';
@@ -77,7 +77,7 @@ export default function OrgAttendancePage() {
   };
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Attendance</h1>
@@ -253,6 +253,6 @@ export default function OrgAttendancePage() {
           )}
         </Card>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

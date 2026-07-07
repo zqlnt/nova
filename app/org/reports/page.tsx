@@ -1,11 +1,11 @@
 'use client';
 
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 
 export default function OrgReportsPage() {
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Reports</h1>
@@ -23,6 +23,6 @@ export default function OrgReportsPage() {
           </ul>
         </Card>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import { orgService } from '@/lib/orgService';
 import type { StaffTask, StaffTaskStatus } from '@/lib/orgTypes';
@@ -91,7 +91,7 @@ export default function OrgStaffTasksPage() {
   const orgTasks = tasks.filter((t) => t.orgId === org.id).sort((a, b) => (a.dueDate ?? '').localeCompare(b.dueDate ?? ''));
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6 max-w-5xl">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Staff tasks</h1>
@@ -216,6 +216,6 @@ export default function OrgStaffTasksPage() {
           <Link href="/org/dashboard" className="text-indigo-600 hover:underline">Dashboard</Link>
         </p>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

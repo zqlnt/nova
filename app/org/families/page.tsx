@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import { orgService } from '@/lib/orgService';
 import type { Family } from '@/lib/orgTypes';
@@ -35,7 +35,7 @@ export default function OrgFamiliesPage() {
   };
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -114,6 +114,6 @@ export default function OrgFamiliesPage() {
           )}
         </div>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import { orgService } from '@/lib/orgService';
 import { computeDashboardStats, formatPence } from '@/lib/orgOperations';
@@ -103,7 +103,7 @@ export default function OrgPaymentsPage() {
   };
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -411,6 +411,6 @@ export default function OrgPaymentsPage() {
           )}
         </Card>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

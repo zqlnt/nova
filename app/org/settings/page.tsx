@@ -1,11 +1,11 @@
 'use client';
 
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 
 export default function OrgSettings() {
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6 max-w-3xl">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Organisation Settings</h1>
@@ -16,7 +16,7 @@ export default function OrgSettings() {
           <div className="text-gray-900 font-medium">Not configured yet</div>
         </Card>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }
 

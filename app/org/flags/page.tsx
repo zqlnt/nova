@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import { orgService } from '@/lib/orgService';
 import { enrichStudentsWithOrgData, FLAG_LABELS } from '@/lib/orgOperations';
@@ -21,7 +21,7 @@ export default function OrgFlagsPage() {
   const byFlag = (flag: string) => flagged.filter((s) => s.record?.flaggedIssues?.includes(flag));
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Flags & concerns</h1>
@@ -99,6 +99,6 @@ export default function OrgFlagsPage() {
           )}
         </Card>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

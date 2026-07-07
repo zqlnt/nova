@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import { orgService } from '@/lib/orgService';
 import type { Family, NoteType, RiskLevel } from '@/lib/orgTypes';
@@ -61,22 +61,22 @@ export default function OrgFamilyDetailPage() {
 
   if (!id) {
     return (
-      <Layout role="org">
+      <OrgLayout>
         <p className="text-gray-500">Invalid family</p>
-      </Layout>
+      </OrgLayout>
     );
   }
 
   if (!familyRecord) {
     return (
-      <Layout role="org">
+      <OrgLayout>
         <div className="py-12 text-center">
           <p className="text-gray-500">Household not found</p>
           <Link href="/org/families" className="text-indigo-600 hover:underline mt-2 inline-block">
             Back to families
           </Link>
         </div>
-      </Layout>
+      </OrgLayout>
     );
   }
 
@@ -128,7 +128,7 @@ export default function OrgFamilyDetailPage() {
   };
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6 max-w-4xl">
         <div>
           <Link href="/org/families" className="text-sm text-indigo-600 hover:underline">
@@ -282,6 +282,6 @@ export default function OrgFamilyDetailPage() {
           )}
         </Card>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

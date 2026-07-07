@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import { orgService } from '@/lib/orgService';
 
@@ -13,7 +13,7 @@ export default function OrgClassesPage() {
   const students = orgService.listStudents();
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Classes</h1>
@@ -63,6 +63,6 @@ export default function OrgClassesPage() {
           })}
         </div>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

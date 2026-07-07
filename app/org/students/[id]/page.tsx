@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import { orgService } from '@/lib/orgService';
 import { formatPence, FLAG_LABELS } from '@/lib/orgOperations';
@@ -36,23 +36,23 @@ export default function OrgStudentProfilePage() {
 
   if (!id) {
     return (
-      <Layout role="org">
+      <OrgLayout>
         <div className="py-12 text-center">
           <p className="text-gray-500">Invalid student ID</p>
           <Link href="/org/students" className="text-indigo-600 hover:underline mt-2 inline-block">Back to Students</Link>
         </div>
-      </Layout>
+      </OrgLayout>
     );
   }
 
   if (!student) {
     return (
-      <Layout role="org">
+      <OrgLayout>
         <div className="py-12 text-center">
           <p className="text-gray-500">Student not found</p>
           <Link href="/org/students" className="text-indigo-600 hover:underline mt-2 inline-block">Back to Students</Link>
         </div>
-      </Layout>
+      </OrgLayout>
     );
   }
 
@@ -88,7 +88,7 @@ export default function OrgStudentProfilePage() {
   };
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -323,6 +323,6 @@ export default function OrgStudentProfilePage() {
           </Link>
         </Card>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }

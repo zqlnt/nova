@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Layout from '@/components/Layout';
+import OrgLayout from '@/components/OrgLayout';
 import Card from '@/components/Card';
 import { orgService } from '@/lib/orgService';
 import { formatPence } from '@/lib/orgOperations';
@@ -60,7 +60,7 @@ export default function OrgExpensesPage() {
   const sortedExpenses = [...expenses].sort((a, b) => b.date.localeCompare(a.date));
 
   return (
-    <Layout role="org">
+    <OrgLayout>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -243,6 +243,6 @@ export default function OrgExpensesPage() {
           )}
         </Card>
       </div>
-    </Layout>
+    </OrgLayout>
   );
 }
